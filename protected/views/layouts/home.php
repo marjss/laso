@@ -16,98 +16,35 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 <![endif]-->
-
 <!-- CSS
 ================================================== -->
 <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap.css" media="screen, projection" />
 <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/jNice.css" media="screen, projection" />
 <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/template.css" media="screen, projection" />
-
 <!--[if lt IE 9]>
 	<script src="js/shiv.js"></script>
 <![endif]-->
-
 </head>
 <body> 
-
 <header>
 <?php $this->widget('Header'); ?>
 </header>
-
 <section class="content">
-
-	<!--Search Panel-->
+    <!--Search Panel-->
 	<div class="search-pannel">
-    	<div class="search-inside">
-        	<form action="#" class="jNice no-margin clearfix">
-                <ul class="search-options-col clearfix">
-                    <li class="options-col">
-                        <h3>לתחום פתרון</h3>
-                        <ul class="options-list">
-                            <li class="dark-gray">הגבוהים <input type="checkbox" value="" /></li>
-                            <li class="dark-gray">והים <input type="checkbox" value="" /></li>
-                            <li>גבוהים <input type="checkbox" value="" /></li>
-                            <li>חדשני לתחום <input type="checkbox" value="" /></li>
-                            <li class="dark-gray">חדשני לתחום</li>
-                        </ul>
-                    </li>
-                    <li class="options-col">
-                        <h3>לתחום פתרון</h3>
-                        <ul class="options-list">
-                            <li class="dark-gray">הגבוהים <input type="checkbox" value="" /></li>
-                            <li class="dark-gray">והים <input type="checkbox" value="" /></li>
-                            <li>גבוהים <input type="checkbox" value="" /></li>
-                            <li>חדשני לתחום <input type="checkbox" value="" /></li>
-                            <li class="dark-gray">חדשני לתחום</li>
-                        </ul>
-                    </li>
-                    <li class="options-col">
-                        <h3>לתחום פתרון</h3>
-                        <ul class="options-list">
-                            <li class="dark-gray">הגבוהים <input type="checkbox" value="" /></li>
-                            <li class="dark-gray">והים <input type="checkbox" value="" /></li>
-                            <li>גבוהים <input type="checkbox" value="" /></li>
-                            <li>חדשני לתחום <input type="checkbox" value="" /></li>
-                            <li class="dark-gray">חדשני לתחום</li>
-                        </ul>
-                    </li>
-                    <li class="options-col width140">
-                        <h3>לתחום פתרון</h3>
-                        <ul class="options-list">
-                            <li class="dark-gray">הגבוהים <input type="checkbox" value="" /></li>
-                            <li class="dark-gray">והים <input type="checkbox" value="" /></li>
-                            <li>גבוהים <input type="checkbox" value="" /></li>
-                            <li>חדשני לתחום <input type="checkbox" value="" /></li>
-                            <li class="dark-gray">חדשני לתחום</li>
-                        </ul>
-                    </li>
-                </ul>
-                <div class="search-submitter">
-                	<input type="text" value="" class="submit-options" />
-                    <a href="#"><strong>לאבק בזכות</strong></a>
-                </div>
-            </form>
-        </div>
+    	<?php $this->widget('SearchPanel'); ?>
     </div>
     <!--/Search Panel-->
-    
     <!--Search Result-->
 	<div class="result-pannel">
             <?php  echo $content;?>
     	 <a href="#" class="page-scroller">&nbsp;</a>
     </div>
-    
     <a href="javascript:void(0)" class="more-loader">&nbsp;</a>
-    
     <!--/Search Result-->
-    
 </section>
-
 <footer>
     <?php $this->widget('Footer'); ?>
 </footer>
-
-
-
 </body>
 </html>
