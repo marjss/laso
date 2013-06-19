@@ -120,7 +120,7 @@ class SiteController extends Controller
         }
          public function actionhotels()
         {
-           
+             $this->render('hotels',array());
 //            $this->render('hotels',array());
         }
 }
