@@ -22,7 +22,7 @@
 
 <!-- JS
 ================================================== --> 
-<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script> 
+<!--<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>--> 
 <script type="text/javascript" src="js/bootstrap.js"></script>
 
 <script type="text/javascript" src="js/jNice.js"></script>
@@ -40,4 +40,4 @@
     });
 </script>
 
-<script type="text/javascript" src="js/script.js"></script>
+<!--<script type="text/javascript" src="js/script.js"></script>-->

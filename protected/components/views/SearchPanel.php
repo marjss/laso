@@ -1,50 +1,33 @@
 <div class="search-inside">
-        	<form action="#" class="jNice no-margin clearfix">
-                <ul class="search-options-col clearfix">
+   <?php $form=$this->beginWidget('CActiveForm', array(
+	'id'=>'hotels-filter-form',
+       'action' => array('site/search'),
+	'enableAjaxValidation'=>true,
+        'htmlOptions' => array('class'=>'jNice no-margin clearfix'),
+)); ?>
+            <ul class="search-options-col clearfix">
+                    <?php foreach($models as $model){  
+                        $criteria2= new CDbCriteria;
+                        $criteria2->limit = 5;
+                        $criteria2->condition = 'cat_id = '.$model->id;
+                        $filters = Filters::model()->findAll($criteria2);
+                        ?>
                     <li class="options-col">
-                        <h3>לתחום פתרון</h3>
+                        <h3><?php echo CHtml::encode($model->title);?>  </h3>
                         <ul class="options-list">
-                            <li class="dark-gray">הגבוהים <input type="checkbox" value="" /></li>
-                            <li class="dark-gray">והים <input type="checkbox" value="" /></li>
-                            <li>גבוהים <input type="checkbox" value="" /></li>
-                            <li>חדשני לתחום <input type="checkbox" value="" /></li>
-                            <li class="dark-gray">חדשני לתחום</li>
+                            <?php foreach ($filters as $filter){?>
+                            <li class="dark-gray"><?php echo CHtml::encode($filter->title);?> <?php echo CHtml::CheckBox($filter->title,false, array ('value'=>'',)); ?>
+<!--                                <input type="checkbox" value="" />-->
+                            </li>
+                            <?php }?>
                         </ul>
                     </li>
-                    <li class="options-col">
-                        <h3>לתחום פתרון</h3>
-                        <ul class="options-list">
-                            <li class="dark-gray">הגבוהים <input type="checkbox" value="" /></li>
-                            <li class="dark-gray">והים <input type="checkbox" value="" /></li>
-                            <li>גבוהים <input type="checkbox" value="" /></li>
-                            <li>חדשני לתחום <input type="checkbox" value="" /></li>
-                            <li class="dark-gray">חדשני לתחום</li>
-                        </ul>
-                    </li>
-                    <li class="options-col">
-                        <h3>לתחום פתרון</h3>
-                        <ul class="options-list">
-                            <li class="dark-gray">הגבוהים <input type="checkbox" value="" /></li>
-                            <li class="dark-gray">והים <input type="checkbox" value="" /></li>
-                            <li>גבוהים <input type="checkbox" value="" /></li>
-                            <li>חדשני לתחום <input type="checkbox" value="" /></li>
-                            <li class="dark-gray">חדשני לתחום</li>
-                        </ul>
-                    </li>
-                    <li class="options-col width140">
-                        <h3>לתחום פתרון</h3>
-                        <ul class="options-list">
-                            <li class="dark-gray">הגבוהים <input type="checkbox" value="" /></li>
-                            <li class="dark-gray">והים <input type="checkbox" value="" /></li>
-                            <li>גבוהים <input type="checkbox" value="" /></li>
-                            <li>חדשני לתחום <input type="checkbox" value="" /></li>
-                            <li class="dark-gray">חדשני לתחום</li>
-                        </ul>
-                    </li>
-                </ul>
+                    <?php }?>
+                  </ul>
                 <div class="search-submitter">
-                	<input type="text" value="" class="submit-options" />
+                        <?php echo CHtml::submitButton('',array('class'=>'submit-options')); ?>
+                	<!--<input type="text" value="" class="submit-options" />-->
                     <a href="#"><strong>לאבק בזכות</strong></a>
                 </div>
-            </form>
-        </div>
+        <?php $this->endWidget(); ?>
+    </div>

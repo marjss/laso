@@ -118,9 +118,14 @@ class SiteController extends Controller
 //            die;
 //            $this->render('search',array());
         }
+        /**
+         * Public default action to show all the lists of hotels before the filter applied
+         */
          public function actionhotels()
         {
-             $this->render('hotels',array());
+            // $this->layout = 'admin_layout';
+             $model=new Hotels;
+             $this->render('hotels',array('model'=>$model));
 //            $this->render('hotels',array());
         }
 }

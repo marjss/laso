@@ -39,8 +39,8 @@
 	<div class="result-pannel">
             <?php  echo $content;?>
     	 <a href="#" class="page-scroller">&nbsp;</a>
-    </div>
-    <a href="javascript:void(0)" class="more-loader">&nbsp;</a>
+        </div>
+    <!--<a href="javascript:void(0)" class="more-loader">&nbsp;</a>-->
     <!--/Search Result-->
 </section>
 <footer>

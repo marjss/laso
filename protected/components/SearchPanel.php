@@ -6,8 +6,14 @@ Yii::import('zii.widgets.CPortlet');
 class SearchPanel extends CPortlet
 {
     protected function renderContent()
-	{
-            $this->render('SearchPanel');
+	{   
+            $criteria = new CDbCriteria;
+            $criteria->limit =  4;
+            $criteria->order = 'pos';
+            
+            $model = Categories::model()->findAll($criteria);
+            
+            $this->render('SearchPanel',array('models'=>$model));
 	}
 	
 }
