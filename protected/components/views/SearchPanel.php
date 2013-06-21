@@ -1,7 +1,7 @@
 <div class="search-inside">
    <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'hotels-filter-form',
-       'action' => array('site/search'),
+       'action' => array('site/hotfilter'),
 	'enableAjaxValidation'=>true,
         'htmlOptions' => array('class'=>'jNice no-margin clearfix'),
 )); ?>
@@ -16,7 +16,7 @@
                         <h3><?php echo CHtml::encode($model->title);?>  </h3>
                         <ul class="options-list">
                             <?php foreach ($filters as $filter){?>
-                            <li class="dark-gray"><?php echo CHtml::encode($filter->title);?> <?php echo CHtml::CheckBox($filter->title,false, array ('value'=>'',)); ?>
+                            <li class="dark-gray"><?php echo CHtml::encode($filter->title);?> <?php echo CHtml::CheckBox($filter->id,'',Chtml::listData(Filters::model()->findAll(),'id','title') ); ?>
 <!--                                <input type="checkbox" value="" />-->
                             </li>
                             <?php }?>

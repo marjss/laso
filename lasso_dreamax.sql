@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jun 20, 2013 at 12:47 PM
+-- Generation Time: Jun 21, 2013 at 06:13 PM
 -- Server version: 5.5.16
 -- PHP Version: 5.3.8
 
@@ -58,7 +58,6 @@ INSERT INTO `ld_categories` (`id`, `title`, `description`, `pos`, `added_date`, 
 CREATE TABLE IF NOT EXISTS `ld_filters` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `cat_id` int(11) NOT NULL,
-  `hotel_id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `description` varchar(500) DEFAULT NULL,
   `pos` int(11) DEFAULT NULL,
@@ -72,10 +71,10 @@ CREATE TABLE IF NOT EXISTS `ld_filters` (
 -- Dumping data for table `ld_filters`
 --
 
-INSERT INTO `ld_filters` (`id`, `cat_id`, `hotel_id`, `title`, `description`, `pos`, `added_date`, `status`, `note`) VALUES
-(1, 2, 1, 'refrigerator', 'refrigerator', 1, '2013-06-20 12:02:02', 1, 'asdasd'),
-(2, 2, 1, 'A.C', 'A.C', 2, '2013-06-20 12:21:04', 1, 'asdasd'),
-(3, 1, 1, 'New Place', 'New okca', 2, '2013-06-20 12:23:13', 1, 'asdasd');
+INSERT INTO `ld_filters` (`id`, `cat_id`, `title`, `description`, `pos`, `added_date`, `status`, `note`) VALUES
+(1, 2, 'refrigerator', 'refrigerator', 1, '2013-06-20 12:02:02', 1, 'asdasd'),
+(2, 2, 'A.C', 'A.C', 2, '2013-06-20 12:21:04', 1, 'asdasd'),
+(3, 1, 'New Place', 'New okca', 2, '2013-06-20 12:23:13', 1, 'asdasd');
 
 -- --------------------------------------------------------
 
@@ -98,7 +97,7 @@ CREATE TABLE IF NOT EXISTS `ld_hotels` (
   `other` varchar(1024) DEFAULT '0',
   `status` varchar(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `ld_hotels`
@@ -106,7 +105,34 @@ CREATE TABLE IF NOT EXISTS `ld_hotels` (
 
 INSERT INTO `ld_hotels` (`id`, `user_id`, `name`, `description`, `avatar`, `street`, `city`, `address`, `state`, `country`, `album_id`, `other`, `status`) VALUES
 (1, 0, 'test', 'this is test description in the htoel description', 'avatar/77456665_16.JPG', 'test', 'test', 'test', 'test', 'test', 1, 'test note', '1'),
-(2, 0, 'new hotel', 'this is new hotel description', 'avatar/92407226_4zapytj.jpg', 'street', 'city', 'address sddress', 'state', 'country', 2, 'other notes', '1');
+(2, 0, 'new hotel', 'this is new hotel description', 'avatar/92407226_4zapytj.jpg', 'street', 'city', 'address sddress', 'state', 'country', 2, 'other notes', '1'),
+(3, 0, 'tester 2', 'this is test description in the htoel description', 'avatar/40341187_6gvwyn8.jpg', 'street', 'city', 'address', 'state', 'country', 3, 'this', '1'),
+(4, 0, 'gifa', 'hello this is one of the most lorem', 'avatar/67675781_18_09_2008_0938361001221752191_soemone.jpg', 'street', 'city', 'adasd0', 'state', 'country', 4, 'test note', '1'),
+(5, 0, 'sudhanshu', 'this is awesome site on the web', 'avatar/64334106_663iy6o.jpg', 'street', 'city', 'address', 'state', 'country', 5, 'test note', '1'),
+(6, 0, 'human', 'humar cybrg in the modified society of the nature in the q', 'avatar/73529052_18_09_2008_0976336001221752191_soemone.jpg', 'street', 'city', 'address', 'state', 'country', 6, 'test note', '1'),
+(7, 0, 'kite', 'kite is one of the most powerful source in the universe.thics can be dont', 'avatar/80465698_18_09_2008_0954610001221752191_soemone.jpg', 'street', 'hiedi', 'address', 'state', 'country', 7, '4', '1');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ld_hotel_filters`
+--
+
+CREATE TABLE IF NOT EXISTS `ld_hotel_filters` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `hotel_id` int(11) NOT NULL,
+  `filter_id` int(11) NOT NULL,
+  `status` int(2) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `ld_hotel_filters`
+--
+
+INSERT INTO `ld_hotel_filters` (`id`, `hotel_id`, `filter_id`, `status`) VALUES
+(1, 1, 1, 1),
+(2, 2, 2, 1);
 
 -- --------------------------------------------------------
 

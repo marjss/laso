@@ -66,6 +66,7 @@ class Hotels extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+//                    'feature' => array(self::HAS_MANY, 'Filters', 'hotel_id'),
 		);
 	}
 
@@ -120,14 +121,32 @@ class Hotels extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+        /**
+         * The default home search criteria which return the full list of hotels without any filter
+         */
         public function hotelsearch()
 	{
-		// Warning: Please modify the following code to remove attributes that
-		// should not be searched.
-
 		$criteria=new CDbCriteria;
                 return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
-		));
+                        'pagination'=>array('pagesize'=>9)
+                ));
 	}
+        /**
+         * The filter function to display the filtered hotels choosen by the users
+         */
+        public function hotsearch($id)
+	{       
+        $criteria = new CDbCriteria;
+        if ($id) {
+        $criteria2 = new CDbCriteria;
+        foreach ($id as $filteringCriteria=>$value) {
+            $filtermodel= HotelFilters::model()->findByAttributes(array('filter_id'=>$filteringCriteria));
+            $uid = $filtermodel['hotel_id']; 
+            $criteria2->compare('id', $uid, false, 'OR');
+        }
+        $criteria->mergeWith($criteria2);
+    }
+    return new CActiveDataProvider($this, array('criteria' => $criteria,'pagination'=>array('pagesize'=>9)));
+}
 }

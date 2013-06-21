@@ -2,7 +2,7 @@
 
 class SiteController extends Controller
 {
-    public $defaultAction = 'hotels';
+    public $defaultAction = 'hotfilter';
     public $layout='//layouts/home';
 	/**
 	 * Declares class-based actions.
@@ -124,8 +124,29 @@ class SiteController extends Controller
          public function actionhotels()
         {
             // $this->layout = 'admin_layout';
-             $model=new Hotels;
+             $model=Hotels::model()->hotelsearch();
              $this->render('hotels',array('model'=>$model));
 //            $this->render('hotels',array());
+        }
+        /**
+         * Public hotel filter action which perform filteration of the hotels according to choosed user options
+         */
+        public function actionHotfilter()
+        {
+            if($_POST){
+            $filters = $_POST;
+            $model= Hotels::model()->hotsearch($filters);
+            } else{
+           $model= Hotels::model()->hotelsearch();}
+           $this->render('hotels',array('model'=>$model));
+            
+        }
+        /**
+         * Action to load the subsite
+         */
+        public function actionSubsite($id){
+            $this->layout = 'site';
+            $model = Hotels::model()->findByPk($id);
+            $this->render('subsite',array('model'=>$model));
         }
 }

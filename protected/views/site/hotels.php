@@ -1,7 +1,7 @@
 <ul class="clearfix result-land" id="resultLand">
 <?php 
 $this->widget('ext.isotope.Isotope',array(
-            'dataProvider'=>$model->hotelsearch(),
+            'dataProvider'=>$model,
             'itemView'=>'_searchhotels',
             'template' => '{items}{pager}',
             'itemSelectorClass'=>'result-item',
