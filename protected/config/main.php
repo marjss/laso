@@ -10,12 +10,16 @@ return array(
 	'name'=>'Lasso',
 
 	// preloading 'log' component
-	'preload'=>array('log'),
+	'preload'=>array('log', 'urlAccess'),
 
 	// autoloading model and component classes
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
+                 'application.extensions.*',
+                'ext.yii-mail.YiiMailMessage',
+                'ext.timepicker.EJuiDateTimePicker',
+                'ext.EchMultiSelect.EchMultiSelect',
 	),
 
 	'modules'=>array(
@@ -27,6 +31,9 @@ return array(
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
 			'ipFilters'=>array('127.0.0.1','::1'),
 		),
+            'cal' => array(
+                    'debug' => true // For first run only!
+                ),
 		
 	),
 
@@ -64,7 +71,7 @@ return array(
 		// uncomment the following to use a MySQL database
 		
 		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=laso',
+			'connectionString' => 'mysql:host=localhost;dbname=lasso_dreamax',
 			'emulatePrepare' => true,
 			'username' => 'root',
 			'password' => '',
@@ -83,12 +90,12 @@ return array(
 					'class'=>'CFileLogRoute',
 					'levels'=>'error, warning',
 				),
-				// uncomment the following to show log messages on web pages
-				/*
-				array(
-					'class'=>'CWebLogRoute',
-				),
-				*/
+//				// uncomment the following to show log messages on web pages
+//				/*
+//				array(
+//					'class'=>'CWebLogRoute',
+//				),
+//				*/
 			),
 		),
 	),
