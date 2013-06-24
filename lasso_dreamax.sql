@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jun 22, 2013 at 02:20 PM
+-- Generation Time: Jun 24, 2013 at 03:27 AM
 -- Server version: 5.5.8
 -- PHP Version: 5.3.5
 
@@ -63,8 +63,8 @@ CREATE TABLE IF NOT EXISTS `ld_categories` (
 INSERT INTO `ld_categories` (`id`, `title`, `description`, `pos`, `added_date`, `modified_date`, `status`) VALUES
 (1, 'place', 'places', 3, '2013-06-20 00:00:00', '2013-06-20 00:00:00', 1),
 (2, 'interior', 'interiors', 2, '2013-06-20 00:00:00', '2013-06-20 00:00:00', 1),
-(3, 'street', 'street', 4, '2013-06-20 00:00:00', '2013-06-20 00:00:00', 1),
-(4, 'views', 'views', 1, '2013-06-20 00:00:00', '2013-06-20 00:00:00', 1),
+(3, 'street', 'street', 1, '2013-06-20 00:00:00', '2013-06-20 00:00:00', 1),
+(4, 'views', 'views', 4, '2013-06-20 00:00:00', '2013-06-20 00:00:00', 1),
 (5, 'test 2', 'test 2', 5, '2013-06-20 00:00:00', '2013-06-20 00:00:00', 1),
 (6, 'test1', 'test1', 6, '2013-06-20 00:00:00', '2013-06-20 00:00:00', 1);
 
@@ -165,14 +165,17 @@ CREATE TABLE IF NOT EXISTS `ld_gallery` (
   `thumb_image` varchar(255) NOT NULL,
   `full_image` varchar(255) NOT NULL,
   `add_date` datetime NOT NULL,
-  `status` enum('Y','N') NOT NULL DEFAULT 'N',
+  `status` enum('1','0') NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
 --
 -- Dumping data for table `ld_gallery`
 --
 
+INSERT INTO `ld_gallery` (`id`, `product_id`, `thumb_image`, `full_image`, `add_date`, `status`) VALUES
+(9, 2, '126602_Penguins.jpg', '126602_Penguins.jpg', '2013-06-23 11:02:25', '1'),
+(10, 2, '126602_Jellyfish.jpg', '126602_Jellyfish.jpg', '2013-06-23 11:02:25', '1');
 
 -- --------------------------------------------------------
 
