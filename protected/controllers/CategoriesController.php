@@ -62,6 +62,7 @@ class CategoriesController extends Controller
 	 */
 	public function actionCreate()
 	{
+            $this->layout = 'control_panel';
 		$model=new Categories;
 
 		// Uncomment the following line if AJAX validation is needed
@@ -133,6 +134,7 @@ class CategoriesController extends Controller
 	 */
 	public function actionAdmin()
 	{
+            $this->layout = 'control_panel';
 		$model=new Categories('search');
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['Categories']))

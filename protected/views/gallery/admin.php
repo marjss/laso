@@ -32,11 +32,21 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 
 <?php echo CHtml::link('Advanced Search','#',array('class'=>'search-button')); ?>
 <div class="search-form" style="display:none">
-<?php $this->renderPartial('_search',array(
-	'model'=>$model,
-)); ?>
+<?php // $this->renderPartial('_search',array(
+//	'model'=>$model,
+//)); ?>
 </div><!-- search-form -->
+<?php
+//$tabs=array();
+$tabs['Select Hotel']=$this->renderPartial("_form2", array("model"=>$model,"hotel"=>$hotel));
 
+$this->widget('zii.widgets.jui.CJuiTabs', array(
+    'tabs'=>$tabs,
+    'options'=>array(
+        'collapsible'=>true,
+    ),
+));
+?>
 <?php  $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'gallery-grid',
 	'dataProvider'=>$model->search(),
@@ -47,10 +57,31 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'thumb_image',
 		'full_image',
 		'add_date',
-		'status',
-                array('header'=>'hotel','value'=>$model->hotel->name),
+		array(            
+                    'name'=>'status',
+                    'value'=>array($this,'gridStatusColumn'), 
+                ),
+
 		array(
 			'class'=>'CButtonColumn',
 		),
 	),
 )); ?>
+
+<script>
+    $(document).ready(function(){
+       $('.imgactive').click(function(){
+          var gid = $(this).attr('rel');
+          var status = $('.status').attr('rel');
+          $.ajax({
+              type:'POST',
+              data:{gid:gid,status:status},
+              url: '<?php echo Yii::app()->baseUrl.'/gallery/Activeinactive'; ?>',
+              success:function(res){
+          console.log(res);
+                    $('.status').attr('src',res);
+              }
+          })
+       }); 
+    });
+    </script>

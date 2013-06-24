@@ -4,8 +4,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Admin Panel</title>
 <!--<script type="text/javascript" src="js/jquery.js"></script>-->
-<script type="text/javascript" src="js/treeMenu.js"></script>
-<link href="css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/treeMenu.js"></script>
+<link href="<?php echo Yii::app()->request->baseUrl; ?>/css/style.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <table style="height:100%;" width="100%" cellpadding="1" cellspacing="0">
@@ -19,7 +19,7 @@
 </tr>
 <tr>
 	<td colspan="2" valign="top">
-    <table width="100%" style="height:100%;" cellpadding="0" cellspacing="0" background="images/bg_body.jpg">
+    <table width="100%" style="height:100%;" cellpadding="0" cellspacing="0" background="<?php echo Yii::app()->request->baseUrl; ?>/images/bg_body.jpg">
     	<tr>
         	<td class="left" width="20%" valign="top">
             <div class="admin-header">

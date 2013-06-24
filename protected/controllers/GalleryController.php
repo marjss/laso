@@ -27,7 +27,7 @@ class GalleryController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('index','view','gethotels','activeinactive'),
 				'users'=>array('*'),
 			),
 //			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -61,36 +61,54 @@ class GalleryController extends Controller
 	 */
 	public function actionCreate()
 	{
-           
+           $this->layout = 'control_panel';
+           $hotel = new Hotels;
                 $model=new Gallery;
-                $id= Yii::app()->user->id;
-                $user= Users::model()->findByPk($id);
+//                $id= Yii::app()->user->id;
+//                $user= Users::model()->findByPk($id);
                 // Uncomment the following line if AJAX validation is needed
 		$this->performAjaxValidation($model);
-               if(!isset($_GET['ajax']))
-		{
-                    
-			$model->attributes=$_POST['Photo'];
+               if(isset($_POST['Hotels']))
+		{ 
+                        $hid = $_POST['Hotels']['name'];
+                        
+                        $date = date('Y-m-d h:i:s');
+                        
+			$model->attributes=$_POST['Hotels'];
                         $rand= rand(1,505050);
-			$images = CUploadedFile::getInstancesByName('image');
+			$images = CUploadedFile::getInstancesByName('full_image');
+                       
 			if(isset($images) && count($images)> 0) 
 			{  
                            
 				foreach ($images as $image=>$pic) 
 				{
-                                    $path = Yii::getPathOfAlias('webroot').'/gallery/'.$user->username;
+                                    $path = Yii::getPathOfAlias('webroot').'/gallery/'.$hid;
                                     $pathrel = Yii::getPathOfAlias('webroot').'/gallery/';
+                                    $tpath =Yii::getPathOfAlias('webroot').'/gallery/'.$hid.'/thumbs';
+                                    $tpathrel = Yii::getPathOfAlias('webroot').'/gallery/'.$hid.'/thumbs/';
                                     if (!file_exists($path) && is_writeable($pathrel)) {
-                                       mkdir(Yii::getPathOfAlias('webroot').'/gallery/'.$user->username, 0777);
-                                   }
-                    			if ($pic->saveAs(Yii::getPathOfAlias('webroot').'/gallery/'.$user->username.'/'.$rand.'_'.$pic->name)) 	
-					{	
-						$model->setIsNewRecord(true);
+                                       mkdir(Yii::getPathOfAlias('webroot').'/gallery/'.$hid, 0777);
+                                       mkdir(Yii::getPathOfAlias('webroot').'/gallery/'.$hid.'/thumbs/', 0777);
+                                  
+                                    }
+                    			if ($pic->saveAs(Yii::getPathOfAlias('webroot').'/gallery/'.$hid.'/'.$rand.'_'.$pic->name)) 	
+					{	$filename = Yii::getPathOfAlias('webroot').'/gallery/'.$hid.'/'.$rand.'_'.$pic->name;
+                                                $thumbimagename = $tpath.'/'.$rand.'_'.$pic->name;
+                                               
+                                                copy($filename,$thumbimagename);
+                                                $image = Yii::app()->image->load($thumbimagename);
+                                                
+                                                $image->resize(150, 150);
+						$image->save();
+                                                $model->setIsNewRecord(true);
 						$model->id = null;
-                        			$model->image = $rand.'_'.$pic->name;
-                                                $model->setAttribute('user_id',$id);
-                                                $model->setAttribute('description',$_POST['Gallery']['description']);
-                    	 			$model->save();
+                                                $model->thumb_image = $rand.'_'.$pic->name;
+                        			$model->full_image = $rand.'_'.$pic->name;
+                                                $model->setAttribute('product_id',$hid);
+                                                $model->setAttribute('add_date',$date);
+                                                $model->setAttribute('status',1);
+                                                $model->save();
 					}				
 				}
         				$this->redirect(array('admin','id'=>$model->id));
@@ -107,14 +125,15 @@ class GalleryController extends Controller
                     if( Yii::app()->request->isAjaxRequest )
                         {
 
-                        $this->renderPartial('_form',array('model'=>$model),false,true);
+                        $this->renderPartial('_form',array('model'=>$model,'hotel'=>$hotel),false,true);
                         //Yii::app()->end();
 
                         }else{
                
-//		$this->render('create',array(
-//			'model'=>$model,
-//		));
+		$this->render('create',array(
+			'model'=>$model,
+                        'hotel'=>$hotel
+		));
                 }
             }
 
@@ -149,17 +168,35 @@ class GalleryController extends Controller
 	 */
 	public function actionDelete($id)
 	{
-		if(Yii::app()->request->isPostRequest)
-		{
-			// we only allow deletion via POST request
-			$this->loadModel($id)->delete();
-
-			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-			if(!isset($_GET['ajax']))
-				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-		}
-		else
-			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
+            $model=$this->loadModel($id);
+           
+            $hid = $model->product_id;
+                
+                $image = Yii::app()->request->baseUrl."/gallery/".$hid."/".$model->full_image;
+                $exploded    = explode("/",$image);
+                $relpath= $exploded[2]."/".$exploded[3];
+//               echo $relpath; die;
+                if(unlink(getcwd().'/'.$relpath.'/'.$model->full_image)){
+                    if(unlink(getcwd().'/'.$relpath.'/thumbs/'.$model->full_image)){
+                    $model->delete();
+                
+		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+		if(!isset($_GET['ajax']))
+                   
+			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+                }
+                }
+//		if(Yii::app()->request->isPostRequest)
+//		{
+//			// we only allow deletion via POST request
+//			$this->loadModel($id)->delete();
+//
+//			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+//			if(!isset($_GET['ajax']))
+//				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+//		}
+//		else
+//			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
 	}
 
 	/**
@@ -178,6 +215,10 @@ class GalleryController extends Controller
 	 */
 	public function actionAdmin()
 	{
+                    $criteria = new CDbCriteria;
+                    
+                    
+             $hotel = new Hotels('search');
             $this->layout='control_panel';
 		$model=new Gallery('search');
 		$model->unsetAttributes();  // clear any default values
@@ -186,6 +227,7 @@ class GalleryController extends Controller
 
 		$this->render('admin',array(
 			'model'=>$model,
+                        'hotel'=>$hotel
 		));
 	}
 
@@ -214,4 +256,34 @@ class GalleryController extends Controller
 			Yii::app()->end();
 		}
 	}
+        
+        public function actionGethotels(){
+                    if(isset($_POST['hid']) && !empty($_POST['hid'])){
+                        $id = $_POST['hid'];
+                        $model=Gallery::model()->findAllByAttributes(array('product_id'=>$id)); 
+                             
+                    }
+        }
+        
+        public function actionActiveinactive(){
+            if((isset($_POST['gid']) && !empty($_POST['gid'])) && (isset($_POST['status']) && !empty($_POST['status']))){
+                $gid = $_POST['gid'];
+                $status = $_POST['status'];
+                                                        $model = Gallery::model()->findByPk($gid);
+                        if(Webnut::updateStatus($status,$model) == 1){
+                                    echo Yii::app()->baseUrl.'/images/active.png';
+                        }else{
+                            echo Yii::app()->baseUrl.'/images/inactive.png';
+                        }
+                
+            }
+        }
+        
+         protected function gridStatusColumn($data,$row)
+        {
+          $image = $data->status == 1 ? '/images/active.png' : '/images/inactive.png';   
+
+          $imghtml = CHtml::image(Yii::app()->baseUrl . $image,'Status',array('rel'=>$data->status,'class'=>'status'));  
+          echo CHtml::link($imghtml, '', array('class'=>'imgactive','rel'=>$data->id,'style'=>'cursor:pointer;',));
+        } 
 }

@@ -39,9 +39,30 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 	'model'=>$model,
 )); ?>
 </div><!-- search-form -->
+<div class="content-box">
+<div class="content-box-header">
+<h3 style="cursor: s-resize; ">Categories Grid</h3>
+</div>
+<?php 
 
-<?php $this->widget('zii.widgets.grid.CGridView', array(
+$this->widget('zii.widgets.jui.CJuiSortable', array(
+    'id'=>'sortable',
+    'items'=>array(
+        'id1'=>'Item 1',
+        'id2'=>'Item 2',
+        'id3'=>'Item 3',
+    ),
+    'options'=>array(
+        'cursor'=>'n-resize',
+    ),
+));
+
+
+
+
+$this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'categories-grid',
+    'itemsCssClass' => 'datagrid',
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
 	'columns'=>array(
@@ -56,3 +77,4 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		),
 	),
 )); ?>
+</div>
