@@ -25,19 +25,22 @@ $('.search-form form').submit(function(){
 });
 ");
 ?>
-
+<style>
+        .thumb {width: 100px;}
+        .thumb img{height: 100px; width:80px;}
+    </style>
 <h1>Manage Hotels</h1>
-
-<p>
+<br>
+<!--<p>
 You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
 or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.
-</p>
+</p>-->
 
-<?php echo CHtml::link('Advanced Search','#',array('class'=>'search-button')); ?>
+<?php // echo CHtml::link('Advanced Search','#',array('class'=>'search-button')); ?>
 <div class="search-form" style="display:none">
-<?php $this->renderPartial('_search',array(
-	'model'=>$model,
-)); ?>
+<?php // $this->renderPartial('_search',array(
+//	'model'=>$model,
+//)); ?>
 </div><!-- search-form -->
 <div class="content-box">
 <div class="content-box-header">
@@ -52,10 +55,16 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
         
 	'columns'=>array(
 		'id',
-		'user_id',
+//		'user_id',
 		'name',
 		'description',
-		'avatar',
+                array(      
+                'name'=>'avatar',
+                     'type'=>'image',
+                     'value'=>array($this,'imagePath'),
+                     'htmlOptions'=>array('class'=>'thumb','rel'=>'gallery'),
+			    ),
+		//'avatar',
 		'street',
 		/*
 		'city',

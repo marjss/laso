@@ -88,7 +88,7 @@ return array(
 			'routes'=>array(
 				array(
                                         'class'=>'ext.yii-debug-toolbar.YiiDebugToolbarRoute',
-					'class'=>'CFileLogRoute',
+//					'class'=>'CFileLogRoute',
 					'levels'=>'error, warning',
 				),
 //				// uncomment the following to show log messages on web pages

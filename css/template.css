@@ -60,14 +60,13 @@ input.keywords { float:left; background:#f2f2f2; padding:10px 10px; width:300px;
 .options-list { list-style:none; padding:0; margin:0;}
 .options-list li { position:relative; display:list-item; padding:0 20px 0 0; margin:0 0 6px 0; color:#9a9a9a;}
 .options-list li.dark-gray { color:#545452;}
-
+#double li{ line-height:1.5em;width:40%; position:relative; float:left;display:inline; padding:0 20px 0 0; margin:0 0 6px 0; color:#9a9a9a;}
 .options-col h3 { margin:0 0 20px 0; line-height:24px;}
 .search-submitter { width:164px; float:left; text-align:left;}
 input.submit-options { width:164px; height:108px; background:url(../images/search_button.png) no-repeat 0 0; border:none; cursor:pointer; padding:0; margin:0 0 40px 0;}
 input.submit-options:hover { background:url(../images/search_button_hover.png) no-repeat 0 0;}
 .search-submitter a { color:#555;}
-
-
+#fixes ul {width: 225px;}
 /* Search Result -------------------------*/
 .result-pannel { margin:0 0 35px 0; border:1px solid #cccccc; -moz-box-shadow: 1px 1px #fff; -webkit-box-shadow: 1px 1px #fff; box-shadow: 1px 1px #fff; padding-bottom:12px; position:relative;}
 .result-land { position:relative; list-style:none; padding:0; margin:0; overflow:hidden;}

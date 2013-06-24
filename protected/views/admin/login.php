@@ -35,7 +35,7 @@
 
 
 <table style="height:100%;" width="100%" cellpadding="1" cellspacing="0">
-    <tr bgcolor="#006699" height="100" style="background:url(images/bg_body.jpg) 0 0 repeat">
+    <tr bgcolor="#006699" height="100" style="background:url(<?php echo Yii::app()->request->baseUrl;?>/images/bg_body.jpg) 0 0 repeat">
 	<td valign="middle" align="center">
     	<table width="500" height="200px">
         	<tr>
@@ -66,7 +66,7 @@
 <br />
 <br />
 <?php // echo CHtml::submitButton('Login'); 
- echo CHtml::imageButton('images/login-btn.png',array('width'=>'103','height'=>'42','style'=>'margin-left:90px;'));
+ echo CHtml::imageButton(Yii::app()->request->baseUrl.'/images/login-btn.png',array('width'=>'103','height'=>'42','style'=>'margin-left:90px;'));
 ?>
 <!--<img src="images/login-btn.png" width="103" height="42" style="margin-left:90px;" />-->
 </div>

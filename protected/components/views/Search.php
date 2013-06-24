@@ -16,9 +16,9 @@
         </div>
  <?php $this->endWidget(); ?>
         	<ul class="main_nav">
-            	<li><a href="#">אודות</a></li>
-                <li><a href="#">אודות</a></li>
-                <li><a href="#">אודות</a></li>
+                    <?php foreach($pages as $page){ ?>
+            	<li><a href="#"><?php echo $page->title; ?></a></li>
+                <?php }?>
                 <li class="logo"><a href="#">&nbsp;</a></li>
             </ul>
         </div>

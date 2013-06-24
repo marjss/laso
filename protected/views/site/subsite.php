@@ -1,28 +1,30 @@
 <a href="#" class="sub-button"><span><?php echo $model->name; ?></span></a>
     <div class="subcontent clearfix">
     	<div class="slide-pannel">
-        	
+        	<?php if($gallery){?>
             <div class="carousel-wrapper">
                 <ul class="bxslider">
-                  <li><img src="img/gallery/Le-Loft-Villa-Villa-deck.jpg" width="440" height="493" /></li>
-                  <li><img src="img/gallery/Le-Loft-Villa-Villa-deck.jpg" width="440" height="493" /></li>
-                  <li><img src="img/gallery/Le-Loft-Villa-Villa-deck.jpg" width="440" height="493" /></li>
-                  <li><img src="img/gallery/Le-Loft-Villa-Villa-deck.jpg" width="440" height="493" /></li>
-                  <li><img src="img/gallery/Le-Loft-Villa-Villa-deck.jpg" width="440" height="493" /></li>
-                  <li><img src="img/gallery/Le-Loft-Villa-Villa-deck.jpg" width="440" height="493" /></li>
-                  <li><img src="img/gallery/Le-Loft-Villa-Villa-deck.jpg" width="440" height="493" /></li>
-                  <li><img src="img/gallery/Le-Loft-Villa-Villa-deck.jpg" width="440" height="493" /></li>
+                    <?php foreach($gallery as $img){ ?>
+                    <li><img src="<?php echo Yii::app()->request->baseUrl;?>/gallery/<?php echo $img->product_id.'/'. $img->full_image;?>" width="440" height="493" /></li>
+                     <?php }?>
                 </ul>
                 <div id="bx-pager" class="clearfix">
-                  <a data-slide-index="0" href=""><img src="img/gallery/Le-Loft-Villa-Villa-deck.jpg" width="66" height="66" /></a>
-                  <a data-slide-index="1" href=""><img src="img/gallery/Le-Loft-Villa-Villa-deck.jpg" width="66" height="66" /></a>
-                  <a data-slide-index="2" href=""><img src="img/gallery/Le-Loft-Villa-Villa-deck.jpg" width="66" height="66" /></a>
-                  <a data-slide-index="3" href=""><img src="img/gallery/Le-Loft-Villa-Villa-deck.jpg" width="66" height="66" /></a>
-                  <a data-slide-index="4" href=""><img src="img/gallery/Le-Loft-Villa-Villa-deck.jpg" width="66" height="66" /></a>
-                  <a data-slide-index="5" href=""><img src="img/gallery/Le-Loft-Villa-Villa-deck.jpg" width="66" height="66" /></a>
+                    <?php $i = 0; foreach($gallery as $img){ ?>
+                  <a data-slide-index="<?php echo $i;?>" href=""><img src="<?php echo Yii::app()->request->baseUrl;?>/gallery/<?php echo $img->product_id.'/thumbs/'. $img->thumb_image;?>" width="66" height="66" /></a>
+                    <?php $i++; }?>
                 </div>
+                
             </div>
-        	
+        	<?php }else{ ?> 
+                    <div class="carousel-wrapper">
+                <ul class="bxslider">
+                    <li><img src="<?php echo Yii::app()->request->baseUrl;?>/images/Le-Loft-Villa-Villa-deck.jpg" width="440" height="493" /></li>
+                </ul>
+                <div id="bx-pager" class="clearfix">
+                  <a data-slide-index="0" href=""><img src="<?php echo Yii::app()->request->baseUrl;?>/images/Le-Loft-Villa-Villa-deck.jpg" width="66" height="66" /></a>
+                </div>
+               </div>
+                    <?php }?>
             <div class="slide-bottom-info">
             	<h4>עשייתית</h4>
                 <div>
@@ -47,41 +49,24 @@
             <div class="subwhite-box">
             	<h4>חדשני לתחום </h4>
                 <form action="#" class="jNice no-margin clearfix">
-                    <ul class="search-options-col subwhite-checks clearfix">
+                    <ul class="search-options-col subwhite-checks clearfix" id="fixes">
                         <li class="options-col">
-                            <ul class="options-list">
-                                <li class="dark-gray">הגבוהים <input type="checkbox" value="" /></li>
-                                <li class="dark-gray">והים <input type="checkbox" value="" /></li>
-                                <li class="dark-gray">גבוהים <input type="checkbox" value="" /></li>
-                                <li class="dark-gray">חדשני לתחום <input type="checkbox" value="" /></li>
-                                <li class="dark-gray">הגבוהים <input type="checkbox" value="" /></li>
+                            <ul id="double" class="options-list">
+                                <?php if($filters){ foreach( $filters as $filter){ ?>
+                                <li class="dark-gray"><?php echo $filter->title?><input type="checkbox" value="" /></li>
+                                <?php } }else { ?>
+                                    <li class="dark-gray"><?php echo "No Features found"?></li>
+                                    <?php }?>
+                               
                             </ul>
                         </li>
-                        <li class="options-col">
-                            <ul class="options-list">
-                                <li class="dark-gray">הגבוהים <input type="checkbox" value="" /></li>
-                                <li class="dark-gray">והים <input type="checkbox" value="" /></li>
-                                <li class="dark-gray">גבוהים <input type="checkbox" value="" /></li>
-                                <li class="dark-gray">חדשני לתחום <input type="checkbox" value="" /></li>
-                                <li class="dark-gray">הגבוהים <input type="checkbox" value="" /></li>
-                            </ul>
-                        </li>
-                        <li class="options-col">
-                            <ul class="options-list">
-                                <li class="dark-gray">הגבוהים <input type="checkbox" value="" /></li>
-                                <li class="dark-gray">והים <input type="checkbox" value="" /></li>
-                                <li class="dark-gray">גבוהים <input type="checkbox" value="" /></li>
-                                <li class="dark-gray">חדשני לתחום <input type="checkbox" value="" /></li>
-                                <li class="dark-gray">הגבוהים <input type="checkbox" value="" /></li>
-                            </ul>
-                        </li>
-                    </ul>
+                      </ul>
                 </form>
             </div>
             
             <div class="clearfix">
-            	<div class="fb-place"><img src="img/fb-place.jpg" alt="" ></div>
-                <a href="#" class="fb-like-plc"><img src="img/fb-btn.gif" alt="" /></a>
+            	<div class="fb-place"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/fb-place.jpg" alt="" ></div>
+                <a href="#" class="fb-like-plc"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/fb-btn.gif" alt="" /></a>
             </div>
         </div>
     </div>
@@ -90,23 +75,23 @@
         <h4 class="bottom-title">תעשייתית תע</h4>
         <ul class="bottom-series clearfix">
         	<li class="no-margin">
-            	<span class="thumb"><img src="img/sub-bottom-thumb.jpg" alt="" width="127" height="124" /></span>
+            	<span class="thumb"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/sub-bottom-thumb.jpg" alt="" width="127" height="124" /></span>
                 <div class="caption">תעשייתית תע תעשייתית תע תעש</div>
             </li>
             <li>
-            	<span class="thumb"><img src="img/sub-bottom-thumb.jpg" alt="" width="127" height="124" /></span>
+            	<span class="thumb"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/sub-bottom-thumb.jpg" alt="" width="127" height="124" /></span>
                 <div class="caption">תעשייתית תע תעשייתית תע תעש</div>
             </li>
             <li>
-            	<span class="thumb"><img src="img/sub-bottom-thumb.jpg" alt="" width="127" height="124" /></span>
+            	<span class="thumb"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/sub-bottom-thumb.jpg" alt="" width="127" height="124" /></span>
                 <div class="caption">תעשייתית תע תעשייתית תע תעש</div>
             </li>
             <li>
-            	<span class="thumb"><img src="img/sub-bottom-thumb.jpg" alt="" width="127" height="124" /></span>
+            	<span class="thumb"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/sub-bottom-thumb.jpg" alt="" width="127" height="124" /></span>
                 <div class="caption">תעשייתית תע תעשייתית תע תעש</div>
             </li>
             <li>
-            	<span class="thumb"><img src="img/sub-bottom-thumb.jpg" alt="" width="127" height="124" /></span>
+            	<span class="thumb"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/sub-bottom-thumb.jpg" alt="" width="127" height="124" /></span>
                 <div class="caption">תעשייתית תע תעשייתית תע תעש</div>
             </li>
         </ul>

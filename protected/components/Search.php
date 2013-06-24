@@ -7,7 +7,10 @@ class Search extends CPortlet
 {
     protected function renderContent()
 	{
-            $this->render('Search');
+        $criteria = new CDbCriteria;
+        $criteria->order = 'menu_order';
+            $model = Pages::model()->findAll($criteria);
+            $this->render('Search',array('pages'=>$model));
 	}
 	
 }

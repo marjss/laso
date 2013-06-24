@@ -39,6 +39,7 @@ class SiteController extends Controller
 	 */
 	public function actionError()
 	{
+//            $this->layout = '';
 		if($error=Yii::app()->errorHandler->error)
 		{
 			if(Yii::app()->request->isAjaxRequest)
@@ -77,8 +78,8 @@ class SiteController extends Controller
 	/**
 	 * Displays the login page
 	 */
-//	public function actionLogin()
-//	{
+	public function actionLogin()
+	{
 //		$model=new LoginForm;
 //
 //		// if it is ajax validation request
@@ -96,9 +97,9 @@ class SiteController extends Controller
 //			if($model->validate() && $model->login())
 //				$this->redirect(Yii::app()->user->returnUrl);
 //		}
-//		// display the login form
-//		$this->render('login',array('model'=>$model));
-//	}
+		// display the login form
+		$this->redirect(array('admin/login'));
+	}
         
 	/**
 	 * Logs out the current user and redirect to homepage.
@@ -147,6 +148,8 @@ class SiteController extends Controller
         public function actionSubsite($id){
             $this->layout = 'site';
             $model = Hotels::model()->findByPk($id);
-            $this->render('subsite',array('model'=>$model));
+            $filters = Filters::model()->findAllByAttributes(array('hotel_id'=>$id));
+            $gallery = Gallery::model()->findAllByAttributes(array('product_id'=>$id));
+            $this->render('subsite',array('model'=>$model,'gallery'=>$gallery,'filters'=>$filters));
         }
 }

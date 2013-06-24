@@ -258,32 +258,40 @@ class GalleryController extends Controller
 	}
         
         public function actionGethotels(){
-                    if(isset($_POST['hid']) && !empty($_POST['hid'])){
-                        $id = $_POST['hid'];
+                    if(isset($_POST['hotel']) && !empty($_POST['hotel'])){
+                        $id = $_POST['hotel'];
+                       
                         $model=Gallery::model()->findAllByAttributes(array('product_id'=>$id)); 
-                             
+                        $this->renderPartial('admin',array('model'=>$model),false,true);     
+//                        return $model;
                     }
         }
         
         public function actionActiveinactive(){
-            if((isset($_POST['gid']) && !empty($_POST['gid'])) && (isset($_POST['status']) && !empty($_POST['status']))){
+            if((isset($_POST['gid']) && !empty($_POST['gid'])) && (isset($_POST['status']))){
                 $gid = $_POST['gid'];
                 $status = $_POST['status'];
-                                                        $model = Gallery::model()->findByPk($gid);
+                                 $model = Gallery::model()->findByPk($gid);
                         if(Webnut::updateStatus($status,$model) == 1){
                                     echo Yii::app()->baseUrl.'/images/active.png';
-                        }else{
+                                    Gallery::model()->updateByPk($gid,array('status'=>1));
+                        }else if(Webnut::updateStatus($status,$model) == 0){
                             echo Yii::app()->baseUrl.'/images/inactive.png';
+                            Gallery::model()->updateByPk($gid,array('status'=>0));
                         }
                 
             }
         }
-        
-         protected function gridStatusColumn($data,$row)
-        {
-          $image = $data->status == 1 ? '/images/active.png' : '/images/inactive.png';   
+        /**
+         * Protected function to update the flag status
+         */
+         protected function gridStatusColumn($data,$row){ 
+             if ($data->status == 1) {
+                 $image = '/images/active.png';}
+             else{ 
+                 $image = '/images/inactive.png';}
+        $imghtml = CHtml::image(Yii::app()->baseUrl . $image, 'Status', array('rel' => $data->status, 'class' => 'status-' . $data->id));
+        echo CHtml::link($imghtml, '', array('class' => 'imgactive', 'rel' => $data->id, 'style' => 'cursor:pointer;',));
+    }
 
-          $imghtml = CHtml::image(Yii::app()->baseUrl . $image,'Status',array('rel'=>$data->status,'class'=>'status'));  
-          echo CHtml::link($imghtml, '', array('class'=>'imgactive','rel'=>$data->id,'style'=>'cursor:pointer;',));
-        } 
 }

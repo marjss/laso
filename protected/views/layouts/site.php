@@ -37,10 +37,10 @@
 	<?php $this->widget('Footer'); ?>
 </footer>
 <!-- Box Slider -->
-<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
-<script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
-<script type="text/javascript" src="js/jquery.fitvids.js"></script>
-<script defer src="js/jquery.bxslider.js"></script>
+<!--<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery-1.8.3.min.js"></script>-->
+<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery.easing.1.3.js"></script>
+<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery.fitvids.js"></script>
+<script defer src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery.bxslider.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
 		$('.bxslider').bxSlider({
@@ -48,6 +48,6 @@
 		});
 	});
 </script>
-<script type="text/javascript" src="js/script.js"></script>
+<!--<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/script.js"></script>-->
 </body>
 </html>

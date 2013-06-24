@@ -13,9 +13,9 @@
 		<?php echo $form->error($hotel,'name'); ?>
 	</div>
 
-	<div class="buttonHolder">
-		<?php echo CHtml::submitButton('Hotel',array('gallery/admin'),array('complete' => 'function(){$.fn.yiiGridView.update("gallery-grid");}',),array('id'=>'genreport','class'=>'primaryAction', 'style'=>'width:20%')); ?>
-	</div>
+<!--	<div class="buttonHolder">
+		<?php // echo CHtml::submitButton('Hotel',array('gallery/admin'),array('complete' => 'function(){$.fn.yiiGridView.update("gallery-grid");}',),array('id'=>'genreport','class'=>'primaryAction', 'style'=>'width:20%')); ?>
+	</div>-->
     </fieldset>
 <?php $this->endWidget(); ?>
 

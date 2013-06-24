@@ -154,10 +154,12 @@ class AdminController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Hotels');
+            if(Yii::app()->user->id){$this->redirect(array('admin/admin')); }
+            else { $this->redirect(array('admin/login'));}
+		/*$dataProvider=new CActiveDataProvider('Hotels');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
-		));
+		));*/
 	}
 
 	/**
@@ -252,4 +254,18 @@ class AdminController extends Controller
 		Yii::app()->user->logout();
 		$this->redirect(array('admin/login'));
 	}
+        public function imagePath($data,$row)
+        {
+            $no= "No Image";
+            if($data->avatar){
+            $path = Yii::app()->request->baseUrl."/".$data->avatar;
+            return $path;}
+            else{ echo $no; }
+        }
+        /*protected function beforeAction() {
+            if(Yii::app()->user->id){
+                return true;
+            }
+          
+        }*/
 }

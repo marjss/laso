@@ -14,7 +14,7 @@
             </ul>
         </div>
         <div class="bottom-line clearfix">
-        	<div class="footer-logo clearfix"><img src="images/footer-logo.png" alt="" />&copy; 2013 תעשייתית תעשייתית </div>
+        	<div class="footer-logo clearfix"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/footer-logo.png" alt="" />&copy; 2013 תעשייתית תעשייתית </div>
         	<span class="footnote">תעשייתית: AndromediA / תעשייתית: Creadiv</span>
         </div>
     </div>
@@ -23,11 +23,11 @@
 <!-- JS
 ================================================== --> 
 <!--<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>--> 
-<script type="text/javascript" src="js/bootstrap.js"></script>
+<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/bootstrap.js"></script>
 
-<script type="text/javascript" src="js/jNice.js"></script>
+<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/jNice.js"></script>
 
-<script type="text/javascript" src="js/wookmark.js"></script>
+<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/wookmark.js"></script>
 <script type="text/javascript">
     $(document).ready(new function() {
       // Call the layout function.

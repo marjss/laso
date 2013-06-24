@@ -57,8 +57,8 @@ class Gallery extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-                   'hotel' => array(self::HAS_MANY, 'hotels', 'hotel_id'),
-		);
+                    'hotel' => array(self::BELONGS_TO, 'hotels', 'product_id'),
+    );
 	}
 
 	/**
