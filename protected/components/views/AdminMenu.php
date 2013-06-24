@@ -70,8 +70,8 @@
                               <li><a href="#" class="parent">Banner Manager</a><span></span>
                                 <div>
                                   <ul>
-                                    <li><span></span><a href="<?php echo Yii::app()->createUrl('banner/admin') ?>">View Banner</a></li>
-                                    <li><span></span><a href="<?php echo Yii::app()->createUrl('banner/create') ?>">Add Banner</a></li>
+                                    <li><span></span><a href="<?php echo Yii::app()->createUrl('admin/banneradmin') ?>">View Banner</a></li>
+                                    <li><span></span><a href="<?php echo Yii::app()->createUrl('admin/banner') ?>">Add Banner</a></li>
                                   </ul>
                                 </div>
                               </li>

@@ -8,6 +8,7 @@ class AdminController extends Controller
 	 */
 	public $layout='//layouts/control_panel';
         public $avatarPath = 'avatar';
+        public $bannerPath = 'banner';
 	/**
 	 * @return array action filters
 	 */
@@ -28,7 +29,7 @@ class AdminController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','create','update','admin','delete','Administrator','login','logout'),
+				'actions'=>array('index','view','create','update','admin','delete','Administrator','login','logout','banner','banneradmin'),
 				'users'=>array('admin'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -262,10 +263,65 @@ class AdminController extends Controller
             return $path;}
             else{ echo $no; }
         }
+         public function bannerPath($data,$row)
+        {
+            $no= "No Image";
+            if($data->banner_image){
+            $path = Yii::app()->request->baseUrl."/".$data->banner_image;
+            return $path;}
+            else{ echo $no; }
+        }
+        public function actionBanner(){
+            $model = new Banner;
+            if(isset($_POST['Banner']))
+		{
+               
+                    $model->attributes=$_POST['Banner'];
+                    $date = date('Y-m-d h:i:s');
+                    if($_FILES['Banner']['name']['banner_image'] != '')
+			{ 
+                        
+                                
+				$model->banner_image = CUploadedFile::getInstanceByName('Banner[banner_image]');
+				 
+                                    
+					if ($model->banner_image instanceof CUploadedFile) {
+                                                $rand = rand(1,99999999);
+						$filename = $this->bannerPath .'/'.  $rand . '_' . $_FILES['Banner']['name']['banner_image'];
+						$model->banner_image->saveAs($filename);
+						$image = Yii::app()->image->load($filename);
+						$image->save();
+                                                $model->setAttribute('banner_image',$filename);
+					}
+				
+                                $model->setAttribute('adddate',$date);
+                                $model->setAttribute('status',1);
+                                if($model->save(false)){
+                                 Yii::app()->user->setFlash('success', "Success!.");
+				$this->redirect(array('banneradmin','id'=>$model->id));
+                        } else {Yii::app()->user->setFlash('error', "Oh! Please try again."); }
+			}
+			
+                        
+		}
+               $this->render('bannerAdmin',array('model'=>$model));
+        }
+        public function actionBanneradmin(){
+            $model=new Banner('search');
+           
+            $model->unsetAttributes();  // clear any default values
+		if(isset($_GET['Banner']))
+			$model->attributes=$_GET['Banner'];
+
+		$this->render('bannergrid',array(
+			'model'=>$model,
+		));
+        }
         /*protected function beforeAction() {
             if(Yii::app()->user->id){
                 return true;
             }
           
         }*/
+        
 }

@@ -1,16 +1,7 @@
 <?php
-/* @var $this PagesController */
-/* @var $model Pages */
+/* @var $this HotelsController */
+/* @var $model Hotels */
 
-$this->breadcrumbs=array(
-	'Pages'=>array('index'),
-	'Manage',
-);
-
-$this->menu=array(
-	array('label'=>'List Pages', 'url'=>array('index')),
-	array('label'=>'Create Pages', 'url'=>array('create')),
-);
 
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){
@@ -18,17 +9,20 @@ $('.search-button').click(function(){
 	return false;
 });
 $('.search-form form').submit(function(){
-	$('#pages-grid').yiiGridView('update', {
+	$('#hotels-grid').yiiGridView('update', {
 		data: $(this).serialize()
 	});
 	return false;
 });
 ");
 ?>
-
-<!--<h1>Manage Pages</h1>-->
-<!--
-<p>
+<style>
+        .thumb {width: 100px;}
+        .thumb img{height: 100px; width:80px;}
+    </style>
+<h1>Manage Banners</h1>
+<br>
+<!--<p>
 You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
 or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.
 </p>-->
@@ -41,29 +35,36 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 </div><!-- search-form -->
 <div class="content-box">
 <div class="content-box-header">
-<h3 style="cursor: s-resize; ">Manage Pages</h3>
+<h3 style="cursor: s-resize; ">Banners Grid</h3>
 </div>
 <?php $this->widget('zii.widgets.grid.CGridView', array(
-	'id'=>'pages-grid',
-         'itemsCssClass' => 'datagrid',
-	'dataProvider'=>$model->search(),
+	'id'=>'hotels-grid',
+        'itemsCssClass' => 'datagrid',
+//    'htmlOptions'=>array('class'=>'content-box-header'),
+        'dataProvider'=>$model->search(),
 	'filter'=>$model,
+        
 	'columns'=>array(
 		'id',
-            'title',
-//		'section_id',
-//		'pagename',
-		'contents',
-		'keyword',
-		
+//		'user_id',
+		'banner_name',
+//		'banner_image',
+                array(      
+                'name'=>'banner_image',
+                     'type'=>'image',
+                     'value'=>array($this,'bannerPath'),
+                     'htmlOptions'=>array('class'=>'thumb','rel'=>'gallery'),
+			    ),
+		//'avatar',
+		'status',
+                'adddate',
 		/*
-		'description',
-		'extpage_link',
-		'published',
-		'parent_id',
-		'secure_access',
-		'footer',
-		'menu_order',
+		'city',
+		'address',
+		'state',
+		'country',
+		'album_id',
+		'other',
 		'status',
 		*/
 		array(
