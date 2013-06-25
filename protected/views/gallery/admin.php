@@ -1,3 +1,4 @@
+
 <?php
 $this->breadcrumbs=array(
 	'Galleries'=>array('index'),
@@ -52,8 +53,7 @@ $this->widget('zii.widgets.jui.CJuiTabs', array(
 	'filter'=>$model,
 	'columns'=>array(
 		array(
-                   'name'=> 'id',
-                    'value'=>$data->id,
+                   'name'=>'id',
                     'htmlOptions'=>array('width'=>'10px')
                     ),
 //		'product_id',

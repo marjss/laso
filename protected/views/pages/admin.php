@@ -43,7 +43,10 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 <div class="content-box-header">
 <h3 style="cursor: s-resize; ">Manage Pages</h3>
 </div>
-<?php $this->widget('zii.widgets.grid.CGridView', array(
+<?php 
+echo Webnut::CurrentDate();
+
+$this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'pages-grid',
          'itemsCssClass' => 'datagrid',
 	'dataProvider'=>$model->search(),
@@ -55,7 +58,10 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 //		'pagename',
 		'contents',
 		'keyword',
-		
+		array(
+                    'name'=>'status',
+                    'value'=>array($this,'gridStatusColumn')
+                ),
 		/*
 		'description',
 		'extpage_link',
@@ -66,9 +72,30 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'menu_order',
 		'status',
 		*/
+              
 		array(
 			'class'=>'CButtonColumn',
 		),
 	),
 )); ?>
+    
+    <!--Function to update the status dynamically via Ajax--->
+<script>
+       $(document).on('click','.imgactive',(function(){
+          var pid = $(this).attr('rel');
+          var status = $('.status-'+pid).attr('rel');
+          $.ajax({
+              type:'POST',
+              data:{pid:pid,status:status},
+              url: '<?php echo Yii::app()->baseUrl;?>/pages/Activeinactive',
+              success:function(res){
+                    var stat = $('.status-'+pid);
+                    $(stat).attr('src',res);
+                    $('#pages-grid').yiiGridView('update');
+                    return false;
+                 }
+          })
+       })); 
+    
+    </script>
 </div>

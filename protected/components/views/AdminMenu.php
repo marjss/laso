@@ -19,6 +19,8 @@
                                   <ul>
                                       <li><span></span><a href="<?php echo Yii::app()->createUrl('categories/admin'); ?>">Manage Categories</a></li>
                                       <li><span></span><a href="<?php echo Yii::app()->createUrl('categories/create'); ?>">Add Category</a></li>
+                                      <li><span></span><a href="<?php echo Yii::app()->createUrl('filters/admin'); ?>">Manage Filters</a></li>
+                                      <li><span></span><a href="<?php echo Yii::app()->createUrl('filters/create'); ?>">Add Filter</a></li>
                                   </ul>
                                 </div>
                               </li>

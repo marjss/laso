@@ -28,7 +28,7 @@ class FiltersController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('index','view','activeinactive'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -62,11 +62,13 @@ class FiltersController extends Controller
 	 */
 	public function actionCreate()
 	{
+            $this->layout = 'control_panel';
 		$model=new Filters;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
-
+                $hotel = new Hotels;
+                 $category = new Categories;
 		if(isset($_POST['Filters']))
 		{
 			$model->attributes=$_POST['Filters'];
@@ -76,6 +78,8 @@ class FiltersController extends Controller
 
 		$this->render('create',array(
 			'model'=>$model,
+                        'hotel'=>$hotel,
+                        'category'=>$category
 		));
 	}
 
@@ -86,8 +90,10 @@ class FiltersController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
+            $this->layout = 'control_panel';
 		$model=$this->loadModel($id);
-
+                 $hotel = new Hotels;
+                 $category = new Categories;
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
@@ -100,6 +106,8 @@ class FiltersController extends Controller
 
 		$this->render('update',array(
 			'model'=>$model,
+                        'hotel'=>$hotel,
+                        'category'=>$category
 		));
 	}
 
@@ -133,13 +141,17 @@ class FiltersController extends Controller
 	 */
 	public function actionAdmin()
 	{
+            $this->layout = 'control_panel';
+                   // $category = new Categories('search');
+                 
 		$model=new Filters('search');
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['Filters']))
 			$model->attributes=$_GET['Filters'];
 
 		$this->render('admin',array(
-			'model'=>$model,
+			'model'=>$model
+                       // 'category'=>$category
 		));
 	}
 
@@ -170,4 +182,55 @@ class FiltersController extends Controller
 			Yii::app()->end();
 		}
 	}
+        /**
+	 * Get Categrories Name
+	 * @param Filters $model the model to be validated
+	 */
+        
+        protected function get_categoryname($data,$row){
+                     $model = Categories::model()->findByPk($data->cat_id);
+                     return $model->title;
+        }
+        
+        /**
+	 * Get Hotels Name
+	 * @param Filters $model the model to be validated
+	 */
+        
+        protected function get_hotelsname($data,$row){
+                             $model = Hotels::model()->findByPk($data->hotel_id);
+                     return $model->name;
+        }
+        
+        /**
+         * Public function to update the flag status
+         */
+         public function gridStatusColumn($data,$row){ 
+             if ($data->status == 1) {
+                 $image = '/images/active.png';}
+             else{ 
+                 $image = '/images/inactive.png';}
+        $imghtml = CHtml::image(Yii::app()->baseUrl . $image, 'Status', array('rel' => $data->status, 'class' => 'status-' . $data->id));
+        echo CHtml::link($imghtml, '', array('class' => 'imgactive', 'rel' => $data->id, 'style' => 'cursor:pointer;',));
+    }
+    
+    /**
+         * Public action to active inactive the flag status
+         */
+    
+     public function actionActiveinactive(){
+            if((isset($_POST['fid']) && !empty($_POST['fid'])) && (isset($_POST['status']))){
+                $fid = $_POST['fid'];
+                $status = $_POST['status'];
+                                         $model = Filters::model()->findByPk($fid);
+                        if(Webnut::updateStatus($status,$model) == 1){
+                                    echo Yii::app()->baseUrl.'/images/active.png';
+                                    Filters::model()->updateByPk($fid,array('status'=>1));
+                        }else if(Webnut::updateStatus($status,$model) == 0){
+                            echo Yii::app()->baseUrl.'/images/inactive.png';
+                            Filters::model()->updateByPk($fid,array('status'=>0));
+                        }
+                
+            }
+        }
 }

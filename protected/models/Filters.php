@@ -66,6 +66,7 @@ class Filters extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'hotel' => array(self::HAS_MANY, 'Hotels', 'hotel_id'),
+                        'cat'=>array(self::HAS_ONE,'Categories','cat_id')
 		);
 	}
 
@@ -112,4 +113,6 @@ class Filters extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+        
+        
 }

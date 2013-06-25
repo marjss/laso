@@ -160,7 +160,7 @@ font-family:Arial, Helvetica, sans-serif;
 }
 
 input[type=text],input[type="password"]	, textarea { 
-	padding: 5px;
+	padding: 0;
 	border: solid 1px #B7B7B7;
 	outline: 0;
 	font: normal 13px/100% Verdana, Tahoma, sans-serif;

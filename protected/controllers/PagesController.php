@@ -28,8 +28,8 @@ class PagesController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
-				'users'=>array('*'),
+				'actions'=>array('index','view','activeinactive'),
+				'users'=>array('admin'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array('create','update'),
@@ -175,4 +175,32 @@ class PagesController extends Controller
 			Yii::app()->end();
 		}
 	}
+        
+         /**
+         * Protected function to update the flag status
+         */
+         protected function gridStatusColumn($data,$row){ 
+             if ($data->status == 1) {
+                 $image = '/images/active.png';}
+             else{ 
+                 $image = '/images/inactive.png';}
+        $imghtml = CHtml::image(Yii::app()->baseUrl . $image, 'Status', array('rel' => $data->status, 'class' => 'status-' . $data->id));
+        echo CHtml::link($imghtml, '', array('class' => 'imgactive', 'rel' => $data->id, 'style' => 'cursor:pointer;',));
+    }
+    
+    public function actionActiveinactive(){
+            if((isset($_POST['pid']) && !empty($_POST['pid'])) && (isset($_POST['status']))){
+                $pid = $_POST['pid'];
+                $status = $_POST['status'];
+                  $model = Pages::model()->findByPk($pid);
+                        if(Webnut::updateStatus($status,$model) == 1){
+                                    echo Yii::app()->baseUrl.'/images/active.png';
+                                    Pages::model()->updateByPk($pid,array('status'=>1));
+                        }else if(Webnut::updateStatus($status,$model) == 0){
+                            echo Yii::app()->baseUrl.'/images/inactive.png';
+                            Pages::model()->updateByPk($pid,array('status'=>0));
+                        }
+                
+            }
+        }
 }

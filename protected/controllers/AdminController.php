@@ -263,6 +263,7 @@ class AdminController extends Controller
             return $path;}
             else{ echo $no; }
         }
+        
          public function bannerPath($data,$row)
         {
             $no= "No Image";
@@ -271,6 +272,7 @@ class AdminController extends Controller
             return $path;}
             else{ echo $no; }
         }
+        
         public function actionBanner(){
             $model = new Banner;
             if(isset($_POST['Banner']))
