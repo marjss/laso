@@ -29,7 +29,7 @@ class AdminController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','create','update','admin','delete','Administrator','login','logout','banner','banneradmin'),
+				'actions'=>array('index','view','create','update','admin','delete','Administrator','login','logout','banner','banneradmin','Activeinactive'),
 				'users'=>array('admin'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -68,18 +68,20 @@ class AdminController extends Controller
 	public function actionCreate()
 	{
 		$model=new Hotels;
-
+                $filter = new Filters;
 		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+//		 $this->performAjaxValidation($model);
 
 		if(isset($_POST['Hotels']))
-		{
-                    $model->attributes=$_POST['Hotels'];
+		{   
+                   $model->attributes=$_POST['Hotels'];
+                   if($model->validate()) {
+                    
                     if($_FILES['Hotels']['name']['avatar'] != '')
 			{ 
                         
 				$model->avatar = CUploadedFile::getInstanceByName('Hotels[avatar]');
-				if($model->validate()) {
+				
                                     
 					if ($model->avatar instanceof CUploadedFile) {
                                                 $rand = rand(1,99999999);
@@ -99,16 +101,17 @@ class AdminController extends Controller
 						$model->avatar = $filename;
 					}
 				}
-			}
-			
-                        if($model->save(false)){
+                                 if($model->save()){
                                  Yii::app()->user->setFlash('success', "Success!.");
 				$this->redirect(array('admin','id'=>$model->id));
-                        } else {Yii::app()->user->setFlash('error', "Oh! Please try again."); }
+                            } else {Yii::app()->user->setFlash('error', "Oh! Please try again."); }
+			}
+			
+                       
 		}
                 
 		$this->render('create',array(
-			'model'=>$model,
+			'model'=>$model,'filter'=>$filter
 		));
 	}
 
@@ -274,6 +277,7 @@ class AdminController extends Controller
         }
         
         public function actionBanner(){
+            
             $model = new Banner;
             if(isset($_POST['Banner']))
 		{
@@ -319,6 +323,33 @@ class AdminController extends Controller
 			'model'=>$model,
 		));
         }
+        
+        public function actionActiveinactive(){
+            if((isset($_POST['bid']) && !empty($_POST['bid'])) && (isset($_POST['status']))){
+                $gid = $_POST['bid'];
+                $status = $_POST['status'];
+                                 $model = Banner::model()->findByPk($gid);
+                        if(Webnut::updateStatus($status,$model) == 1){
+                                    echo Yii::app()->baseUrl.'/images/active.png';
+                                    Banner::model()->updateByPk($gid,array('status'=>1));
+                        }else if(Webnut::updateStatus($status,$model) == 0){
+                            echo Yii::app()->baseUrl.'/images/inactive.png';
+                            Banner::model()->updateByPk($gid,array('status'=>0));
+                        }
+                
+            }
+        }
+         /**
+         * Protected function to update the flag status
+         */
+         protected function gridStatusColumn($data,$row){ 
+             if ($data->status == 1) {
+                 $image = '/images/active.png';}
+             else{ 
+                 $image = '/images/inactive.png';}
+        $imghtml = CHtml::image(Yii::app()->baseUrl . $image, 'Status', array('rel' => $data->status, 'class' => 'status-' . $data->id));
+        echo CHtml::link($imghtml, '', array('class' => 'imgactive', 'rel' => $data->id, 'style' => 'cursor:pointer;',));
+    }
         /*protected function beforeAction() {
             if(Yii::app()->user->id){
                 return true;

@@ -44,7 +44,7 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 <h3 style="cursor: s-resize; ">Manage Pages</h3>
 </div>
 <?php 
-echo Webnut::CurrentDate();
+//echo Webnut::CurrentDate();
 
 $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'pages-grid',

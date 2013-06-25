@@ -25,13 +25,14 @@ $('.search-form form').submit(function(){
 });
 ");
 ?>
-
+ <style>
+#sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+#sortable li {  background: none repeat scroll 0 0 #F7F7F7;margin: 0 11px 10px;width: 150px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; }
+#sortable li span { position: absolute; margin-left: -1.3em; }
+</style>
 <h1>Manage Categories</h1>
 <br>
-<!--<p>
-You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
-or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.
-</p>-->
+
 
 <?php // echo CHtml::link('Advanced Search','#',array('class'=>'search-button')); ?>
 <div class="search-form" style="display:none">
@@ -42,39 +43,89 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 <div class="content-box">
 <div class="content-box-header">
 <h3 style="cursor: s-resize; ">Categories Grid</h3>
+
 </div>
-<?php 
-/*
+    <h4 class="alert success" style="display:none;"></h4>
+    <h4 class="alert error" style="display:none;"></h4>
+    <p>
+You can change the position of the category filter by drag and drop.
+</p><br>
+    <?php if(Yii::app()->user->hasFlash('success')){ ?>
+        
+<h4 class="alert success">
+   	<?php echo Yii::app()->user->getFlash('success'); ?>
+</h4>
+<?php }elseif(Yii::app()->user->hasFlash('error')){ ?>
+        
+<h4 class="alert error">
+   	<?php echo Yii::app()->user->getFlash('error'); ?>
+</h4>
+<?php } ?>
+<?php $data =Webnut::getCats();
 $this->widget('zii.widgets.jui.CJuiSortable', array(
     'id'=>'sortable',
-    'items'=>array(
-        'id1'=>'Item 1',
-        'id2'=>'Item 2',
-        'id3'=>'Item 3',
-    ),
+    'items'=>$data,
     'options'=>array(
         'cursor'=>'n-resize',
-    ),
-));
-*/
-
-
-
+        'class'=>'ui-icon ui-icon-arrowthick-2-n-s',
+        'opacity'=>0.6, //set the dragged object's opacity to 0.6
+      ),
+    ));
+ echo CHtml::ajaxButton('Submit Changes', 'Updateorder', array(
+        'type' => 'POST',
+        'data' => array(
+            // Turn the Javascript array into a PHP-friendly string
+            'Order' => 'js:$("ul.ui-sortable").sortable("toArray").toString()',
+        ),
+     'success'=>'function(resp){
+         $("#categories-grid").yiiGridView("update");
+          $(".success").css("display","block");
+         $(".success").html("Success");
+         }',
+     'error'=>'function(resp){
+         $("#categories-grid").yiiGridView("update");
+          $(".error").css("display","block");
+         $(".error").html("Oh! Some error occured. Try Again.");
+         }',
+    ),array('class'=>'button'));
 $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'categories-grid',
-    'itemsCssClass' => 'datagrid',
+        'itemsCssClass' => 'datagrid',
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
 	'columns'=>array(
 		'id',
+                'pos',
 		'title',
 		'description',
 		'added_date',
 		'modified_date',
-		'status',
+		 array(            
+                    'name'=>'status',
+                    'value'=>array($this,'gridStatusColumn'), 
+                ),
+                
 		array(
 			'class'=>'CButtonColumn',
 		),
 	),
 )); ?>
 </div>
+<script>
+       $(document).on('click','.imgactive',(function(){
+          var cid = $(this).attr('rel');
+          var status = $('.status-'+cid).attr('rel');
+          $.ajax({
+              type:'POST',
+              data:{cid:cid,status:status},
+              url: '<?php echo Yii::app()->baseUrl;?>/categories/Activeinactive',
+              success:function(res){
+                    var stat = $('.status-'+cid);
+                    $(stat).attr('src',res);
+                    $('#categories-grid').yiiGridView('update');
+                    return false;
+                 }
+          })
+       })); 
+    
+    </script>

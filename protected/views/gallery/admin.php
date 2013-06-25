@@ -1,5 +1,6 @@
 
 <?php
+/*
 $this->breadcrumbs=array(
 	'Galleries'=>array('index'),
 	'Manage',
@@ -9,7 +10,7 @@ $this->menu=array(
 	array('label'=>'List Gallery', 'url'=>array('index')),
 	array('label'=>'Create Gallery', 'url'=>array('create')),
 );
-
+*/
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){
 	$('.search-form').toggle();
@@ -26,11 +27,11 @@ $('.search-form form').submit(function(){
 
 <h1>Manage Galleries</h1>
 
-<p>
+<!--<p>
 You may optionally Filter the hotels via the given Product drop-down.
 
-</p>
-
+</p>-->
+<br>
 <?php // echo CHtml::link('Advanced Search','#',array('class'=>'search-button')); ?>
 <div class="search-form" style="display:none">
 <?php // $this->renderPartial('_search',array(
@@ -46,9 +47,14 @@ $this->widget('zii.widgets.jui.CJuiTabs', array(
         'collapsible'=>true,
     ),
 ));*/
-?><div id="output">
+?>
+<div class="content-box">
+<div class="content-box-header">
+<h3 style="cursor: s-resize; ">Banners Grid</h3>
+</div>
 <?php  $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'gallery-grid',
+        'itemsCssClass' => 'datagrid',
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
 	'columns'=>array(

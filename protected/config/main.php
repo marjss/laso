@@ -40,8 +40,10 @@ return array(
 	// application components
 	'components'=>array(
 		'user'=>array(
+                        'class' => 'WebUser',
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
+                        'loginUrl'=>array('admin/login'),
 		),
              //image extension 
             'image'=>array(

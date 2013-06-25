@@ -38,7 +38,7 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 <h3 style="cursor: s-resize; ">Banners Grid</h3>
 </div>
 <?php $this->widget('zii.widgets.grid.CGridView', array(
-	'id'=>'hotels-grid',
+	'id'=>'banner-grid',
         'itemsCssClass' => 'datagrid',
 //    'htmlOptions'=>array('class'=>'content-box-header'),
         'dataProvider'=>$model->search(),
@@ -56,7 +56,11 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
                      'htmlOptions'=>array('class'=>'thumb','rel'=>'gallery'),
 			    ),
 		//'avatar',
-		'status',
+//		'status',
+                array(            
+                    'name'=>'status',
+                    'value'=>array($this,'gridStatusColumn'), 
+                ),
                 'adddate',
 		/*
 		'city',
@@ -73,3 +77,21 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 	),
 )); ?>
 </div>
+<script>
+       $(document).on('click','.imgactive',(function(){
+          var bid = $(this).attr('rel');
+          var status = $('.status-'+bid).attr('rel');
+          $.ajax({
+              type:'POST',
+              data:{bid:bid,status:status},
+              url: '<?php echo Yii::app()->baseUrl;?>/admin/Activeinactive',
+              success:function(res){
+                    var stat = $('.status-'+bid);
+                    $(stat).attr('src',res);
+                    $('#banner-grid').yiiGridView('update');
+                    return false;
+                 }
+          })
+       })); 
+    
+    </script>

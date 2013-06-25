@@ -36,7 +36,7 @@ class CategoriesController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
+				'actions'=>array('admin','delete','Updateorder','Activeinactive'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -51,6 +51,7 @@ class CategoriesController extends Controller
 	 */
 	public function actionView($id)
 	{
+            $this->layout = 'control_panel';
 		$this->render('view',array(
 			'model'=>$this->loadModel($id),
 		));
@@ -87,6 +88,7 @@ class CategoriesController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
+                $this->layout='control_panel';
 		$model=$this->loadModel($id);
 
 		// Uncomment the following line if AJAX validation is needed
@@ -123,6 +125,7 @@ class CategoriesController extends Controller
 	 */
 	public function actionIndex()
 	{
+            $this->layout='control_panel';
 		$dataProvider=new CActiveDataProvider('Categories');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
@@ -136,12 +139,12 @@ class CategoriesController extends Controller
 	{
             $this->layout = 'control_panel';
 		$model=new Categories('search');
-		$model->unsetAttributes();  // clear any default values
+                $model->unsetAttributes();  // clear any default values
 		if(isset($_GET['Categories']))
 			$model->attributes=$_GET['Categories'];
 
 		$this->render('admin',array(
-			'model'=>$model,
+			'model'=>$model,'list'=>$list
 		));
 	}
 
@@ -172,4 +175,69 @@ class CategoriesController extends Controller
 			Yii::app()->end();
 		}
 	}
+        /**
+         * Update the Category filter position via drag-drop functionality
+         */
+        public function actionUpdateorder(){
+             if (isset($_POST['Order']))
+        {
+        // Since we converted the Javascript array to a string,
+        // convert the string back to a PHP array
+                 
+        $models = explode(',', $_POST['Order']);
+         for ($i = 0; $i < sizeof($models); $i++)
+            {
+                if ($model = Categories::model()->findbyPk($models[$i]))
+                {
+                    // Use updateByPK to avoid running model validate
+                   $model->updateByPk( $models[$i],array("pos"=>$i));
+                   
+                }
+            }
+        }
+            // Handle the regular model order view
+            else
+            {
+                $dataProvider = new CActiveDataProvider('Categories', array(
+                    'pagination' => false,
+                    'criteria' => array(
+                        'order' => 'pos ASC, id DESC',
+                    ),
+                ));
+
+                $this->render('admin',array(
+                    'dataProvider' => $dataProvider,
+                ));
+            }
+        }
+        /**
+         * Change the Status via Ajax
+         */
+        public function actionActiveinactive(){
+            if((isset($_POST['cid']) && !empty($_POST['cid'])) && (isset($_POST['status']))){
+                $gid = $_POST['cid'];
+                $status = $_POST['status'];
+                                 $model = Categories::model()->findByPk($gid);
+                        if(Webnut::updateStatus($status,$model) == 1){
+                                    echo Yii::app()->baseUrl.'/images/active.png';
+                                    Categories::model()->updateByPk($gid,array('status'=>1));
+                        }else if(Webnut::updateStatus($status,$model) == 0){
+                            echo Yii::app()->baseUrl.'/images/inactive.png';
+                            Categories::model()->updateByPk($gid,array('status'=>0));
+                        }
+                
+            }
+            
+        }
+        /**
+         * protected function to change the dynamic images of status
+         */
+        protected function gridStatusColumn($data,$row){ 
+             if ($data->status == 1) {
+                 $image = '/images/active.png';}
+             else{ 
+                 $image = '/images/inactive.png';}
+        $imghtml = CHtml::image(Yii::app()->baseUrl . $image, 'Status', array('rel' => $data->status, 'class' => 'status-' . $data->id));
+        echo CHtml::link($imghtml, '', array('class' => 'imgactive', 'rel' => $data->id, 'style' => 'cursor:pointer;',));
+    }
 }

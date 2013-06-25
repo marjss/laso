@@ -36,7 +36,7 @@ class FiltersController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
+				'actions'=>array('admin','delete','create','update'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -68,12 +68,17 @@ class FiltersController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
                 $hotel = new Hotels;
-                 $category = new Categories;
+                $category = new Categories;
 		if(isset($_POST['Filters']))
-		{
+		{       
+                        $date = date('Y-m-d h:i:s');
 			$model->attributes=$_POST['Filters'];
+                        $model->setAttribute('added_date', $date);
+                        $model->setAttribute('status',1);
+                            $model->setAttribute('hotel_id',$_POST['Hotels']['name']);
+                            $model->setAttribute('cat_id',$_POST['Categories']['title']);
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+				$this->redirect(array('admin','id'=>$model->id));
 		}
 
 		$this->render('create',array(
@@ -101,7 +106,7 @@ class FiltersController extends Controller
 		{
 			$model->attributes=$_POST['Filters'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+				$this->redirect(array('admin','id'=>$model->id));
 		}
 
 		$this->render('update',array(

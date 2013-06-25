@@ -2,7 +2,9 @@
 /* @var $this HotelsController */
 /* @var $model Hotels */
 /* @var $form CActiveForm */
-?>
+?><style>
+input[type="radio"], input[type="checkbox"]{margin-left: 21px;margin-right: -11px;}
+</style>
 <div class="content-box">
     <div class="content-box-header">
 <h3 style="cursor: s-resize; ">Create Hotels</h3>
@@ -21,9 +23,9 @@
 <?php } ?>
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'hotels-form',
-	'enableAjaxValidation'=>true,
+	'enableAjaxValidation'=>false,
         'htmlOptions' => array('enctype' => 'multipart/form-data','class'=>'datagrid_form'),
-)); ?>
+'clientOptions'=>array('validateOnSubmit'=>true)));?>
 
 	<!--<p class="note">Fields with <span class="required">*</span> are required.</p>-->
 
@@ -104,6 +106,13 @@
 		<td><?php echo $form->labelEx($model,'status'); ?></td>
 		<td><?php echo $form->textField($model,'status',array('size'=>11,'maxlength'=>11)); ?></td>
 		<td><?php echo $form->error($model,'status'); ?></td>
+	</div>
+        </tr>
+        <tr class="filter">
+	
+		<td><?php echo $form->labelEx($filter,'Filter',array('display'=>'inline-block')); ?></td>
+		<td><?php echo $form->checkBoxList($filter,'title',Webnut::getFilters(),array('separator'=>'')); ?></div></td>
+		<td><?php echo $form->error($filter,'title'); ?></td>
 	</div>
         </tr>
         <tr>

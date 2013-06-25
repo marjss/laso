@@ -1,7 +1,7 @@
 <?php
 /* @var $this FiltersController */
 /* @var $model Filters */
-
+/*
 $this->breadcrumbs=array(
 	'Filters'=>array('index'),
 	'Manage',
@@ -11,7 +11,7 @@ $this->menu=array(
 	array('label'=>'List Filters', 'url'=>array('index')),
 	array('label'=>'Create Filters', 'url'=>array('create')),
 );
-
+*/
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){
 	$('.search-form').toggle();
@@ -27,11 +27,7 @@ $('.search-form form').submit(function(){
 ?>
 
 <h1>Manage Filters</h1>
-
-<p>
-You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
-or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.
-</p>
+<br>
 
 <?php // echo CHtml::link('Advanced Search','#',array('class'=>'search-button')); ?>
 <div class="search-form" style="display:none">
@@ -39,11 +35,15 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 //	'model'=>$model,
 //)); ?>
 </div><!-- search-form -->
-
+<div class="content-box">
+<div class="content-box-header">
+<h3 style="cursor: s-resize; ">Filters / Features Grid</h3>
+</div>
 <?php 
 $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'filters-grid',
 	'dataProvider'=>$model->search(),
+        'itemsCssClass' => 'datagrid',
 	'filter'=>$model,
 	'columns'=>array(
 		array(
@@ -96,3 +96,4 @@ $this->widget('zii.widgets.grid.CGridView', array(
        })); 
     
     </script>
+    </div>

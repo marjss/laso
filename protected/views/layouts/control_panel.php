@@ -23,7 +23,7 @@
     	<tr>
         	<td class="left" width="20%" valign="top">
             <div class="admin-header">
-		Welcome User
+               Welcome <?php echo  ucfirst(Yii::app()->user->name);?>
 			</div>
                  <div id="treeMenu">
                      <?php $this->widget('AdminMenu'); ?>

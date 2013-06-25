@@ -43,7 +43,18 @@ class Webnut extends CController
     public function getCategories(){
                         return CHtml::listData(Categories::model()->findAll(array('order'=>'title ASC')),'id','title');
     } 
-    
+    /**
+     * Return the list of Filters with corresponding ID's
+     */
+    public function getFilters(){
+                        return CHtml::listData(Filters::model()->findAll(array('order'=>'title ASC')),'id','title');
+    } 
+    /**
+     * Return the list of Categories with corresponding Order by their Positions to sort via sortable ID's
+     */
+    public function getCats(){
+                        return CHtml::listData(Categories::model()->findAll(array('order'=>'pos ASC')),'id','title');
+    } 
      /**
          * Public function to update the flag status
          */
