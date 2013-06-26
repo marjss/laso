@@ -1,20 +1,19 @@
 <?php
 
 /**
- * This is the model class for table "ld_hotel_filters".
+ * This is the model class for table "ld_state".
  *
- * The followings are the available columns in table 'ld_hotel_filters':
+ * The followings are the available columns in table 'ld_state':
  * @property integer $id
- * @property integer $hotel_id
- * @property integer $filter_id
- * @property integer $status
+ * @property integer $country_id
+ * @property string $state_name
  */
-class HotelFilters extends CActiveRecord
+class State extends CActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
-	 * @return HotelFilters the static model class
+	 * @return State the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -26,7 +25,7 @@ class HotelFilters extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'ld_hotel_filters';
+		return 'ld_state';
 	}
 
 	/**
@@ -37,11 +36,11 @@ class HotelFilters extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('hotel_id, filter_id', 'required'),
-			array('hotel_id','numerical', 'integerOnly'=>true),
+			array('country_id', 'numerical', 'integerOnly'=>true),
+			array('state_name', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, hotel_id, filter_id, status', 'safe', 'on'=>'search'),
+			array('id, country_id, state_name', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -53,7 +52,6 @@ class HotelFilters extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-                    'hotel' => array(self::HAS_MANY, 'Hotels', 'hotel_id'),
 		);
 	}
 
@@ -64,9 +62,8 @@ class HotelFilters extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'hotel_id' => 'Hotel',
-			'filter_id' => 'Filter',
-			'status' => 'Status',
+			'country_id' => 'Country',
+			'state_name' => 'State Name',
 		);
 	}
 
@@ -82,19 +79,11 @@ class HotelFilters extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('hotel_id',$this->hotel_id);
-		$criteria->compare('filter_id',$this->filter_id);
-		$criteria->compare('status',$this->status);
+		$criteria->compare('country_id',$this->country_id);
+		$criteria->compare('state_name',$this->state_name,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
 	}
-        public function hotelfilter($keyword){
-            $criteria=new CDbCriteria;
-            $criteria->compare('filter_id',$keyword);
-            return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
-        }
 }

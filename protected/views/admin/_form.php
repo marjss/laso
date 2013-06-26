@@ -69,7 +69,7 @@ input[type="radio"], input[type="checkbox"]{margin-left: 21px;margin-right: -11p
         <tr>
 	<div class="row">
 		<td><?php echo $form->labelEx($model,'address'); ?></td>
-		<td><?php echo $form->textField($model,'address',array('size'=>60,'maxlength'=>1024)); ?></td>
+		<td><?php echo $form->textArea($model,'address',array('size'=>60,'maxlength'=>1024)); ?></td>
 		<td><?php echo $form->error($model,'address'); ?></td>
 	</div>
         </tr>
@@ -82,8 +82,8 @@ input[type="radio"], input[type="checkbox"]{margin-left: 21px;margin-right: -11p
         </tr>
         <tr>
 	<div class="row">
-		<td><?php echo $form->labelEx($model,'country'); ?></td>
-		<td><?php echo $form->textField($model,'country',array('size'=>60,'maxlength'=>255)); ?></td>
+		<td><?php echo $form->labelEx($model,'country'); ?></td> 
+                <td><?php echo $form->dropDownList($model,'country',Webnut::getListCountries(),array('empty'=>'Select Country'),array('class'=>'selectInput')); ?></td>
 		<td><?php echo $form->error($model,'country'); ?></td>
 	</div>
         </tr>
@@ -101,13 +101,13 @@ input[type="radio"], input[type="checkbox"]{margin-left: 21px;margin-right: -11p
 		<td><?php echo $form->error($model,'other'); ?></td>
 	</div>
         </tr>
-        <tr>
+<!--        <tr>
 	<div class="row">
-		<td><?php echo $form->labelEx($model,'status'); ?></td>
-		<td><?php echo $form->textField($model,'status',array('size'=>11,'maxlength'=>11)); ?></td>
-		<td><?php echo $form->error($model,'status'); ?></td>
+		<td><?php // echo $form->labelEx($model,'status'); ?></td>
+		<td><?php // echo $form->textField($model,'status',array('size'=>11,'maxlength'=>11)); ?></td>
+		<td><?php // echo $form->error($model,'status'); ?></td>
 	</div>
-        </tr>
+        </tr>-->
         <tr class="filter">
 	
 		<td><?php echo $form->labelEx($filter,'Filter',array('display'=>'inline-block')); ?></td>

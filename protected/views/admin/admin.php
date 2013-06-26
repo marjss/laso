@@ -66,6 +66,10 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 			    ),
 		//'avatar',
 		'street',
+                 array(
+                   'name'=>'status',
+                    'value'=>array($this,'gridStatuscolumn')
+                 ),
 		/*
 		'city',
 		'address',
@@ -80,4 +84,23 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		),
 	),
 )); ?>
+    
+    <script>
+       $(document).on('click','.imgactive',(function(){
+          var cid = $(this).attr('rel');
+          var status = $('.status-'+cid).attr('rel');
+          $.ajax({
+              type:'POST',
+              data:{cid:cid,status:status},
+              url: '<?php echo Yii::app()->baseUrl;?>/admin/hotelActiveinactive',
+              success:function(res){
+                    var stat = $('.status-'+cid);
+                    $(stat).attr('src',res);
+                    $('#hotels-grid').yiiGridView('update');
+                    return false;
+                 }
+          })
+       })); 
+    
+    </script>
 </div>

@@ -66,6 +66,19 @@ class Webnut extends CController
         $imghtml = CHtml::image(Yii::app()->baseUrl . $image, 'Status', array('rel' => $data->status, 'class' => 'status-' . $data->id));
         echo CHtml::link($imghtml, '', array('class' => 'imgactive', 'rel' => $data->id, 'style' => 'cursor:pointer;',));
     }
+    
+     /**
+     * Return the list of COuntries with corresponding Order by their Positions to sort via sortable ID's
+     */
+    public function getListCountries(){
+               return CHtml::listData(Country::model()->findAll(),'country_id','short_name');
+    } 
+    
+      public function getCountryname($country_id){
+                  //print_r($idinvoice); print_r($idsku);die();
+           $country = Country::model()->findByPk($country_id);
+          return $country->short_name;
+    }
 }
 
 ?>

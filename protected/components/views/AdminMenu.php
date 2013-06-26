@@ -77,5 +77,15 @@
                                   </ul>
                                 </div>
                               </li>
+                              <li><a href="#" class="parent">Location Manager</a><span></span>
+                                <div>
+                                  <ul>
+                                    <li><span></span><a href="<?php echo Yii::app()->createUrl('country/admin') ?>">View Countries</a></li>
+                                    <li><span></span><a href="<?php echo Yii::app()->createUrl('country/create') ?>">Add Country</a></li>
+                                    <li><span></span><a href="<?php echo Yii::app()->createUrl('country/stateadmin') ?>">View States</a></li>
+                                    <li><span></span><a href="<?php echo Yii::app()->createUrl('country/statecreate') ?>">Add State</a></li>    
+                                      </ul>
+                                </div>
+                              </li>
                             </ul>
     
