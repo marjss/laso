@@ -2,7 +2,8 @@
 /* @var $this HotelsController */
 /* @var $model Hotels */
 /* @var $form CActiveForm */
-?><style>
+?>
+<style>
 input[type="radio"], input[type="checkbox"]{margin-left: 21px;margin-right: -11px;}
 </style>
 <div class="content-box">
@@ -111,13 +112,41 @@ input[type="radio"], input[type="checkbox"]{margin-left: 21px;margin-right: -11p
         <tr class="filter">
 	
 		<td><?php echo $form->labelEx($filter,'Filter',array('display'=>'inline-block')); ?></td>
-		<td><?php echo $form->checkBoxList($filter,'title',Webnut::getFilters(),array('separator'=>'')); ?></div></td>
+                <td><?php echo $form->checkBoxList($filter,'title',Webnut::getFilters(),array('separator'=>'')); ?></div></td>
 		<td><?php echo $form->error($filter,'title'); ?></td>
 	</div>
         </tr>
-        <tr>
+        <tr><div id="duplicate"></div>
 	<div class="row buttons">
-            <td></td>
+            <td><?php //echo CHtml::link('Add New Filter',array('filters/ajaxfilter'),array('class'=>'button')); ?>
+            <?php
+    Yii::app()->clientScript->registerScript('uploadDialog', "
+$(function(){
+    $('#upload-filter').click(function(){
+        $('#filter-form').load('".Yii::app()->createUrl('filters/ajaxfilter')."', function(){
+            $('#filter-form').dialog('open');
+        });
+        return false;
+    });
+});");
+
+echo CHtml::link('Add New Filter', '#', array('id' => 'upload-filter','class'=>'button'));
+    
+    $this->beginWidget('zii.widgets.jui.CJuiDialog',array(
+                'id'=>'filter-form',
+                'options'=>array(
+                    'title'=>Yii::t('Add','Filter'),
+                    'autoOpen'=>false,
+                    'model'=>'true',
+                    'width'=>'340px',
+                    'height'=>'auto',
+                ),
+           
+                ));
+    
+    $this->endWidget('zii.widgets.jui.CJuiDialog');  ?>
+            
+            </td>
             	<td><?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save',array('class'=>'button')); ?></td>
 	</div>
         </tr>
@@ -125,4 +154,5 @@ input[type="radio"], input[type="checkbox"]{margin-left: 21px;margin-right: -11p
 </table>
 </div>
     </div>
+    
     <!-- form -->

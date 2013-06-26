@@ -36,7 +36,7 @@ class FiltersController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','create','update'),
+				'actions'=>array('admin','delete','create','update','ajaxfilter'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -237,5 +237,23 @@ class FiltersController extends Controller
                         }
                 
             }
+        }
+        
+        public function actionAjaxfilter(){
+            $model=new Filters;
+            if(!isset($_GET['Filters']))
+                {
+                
+                if(isset($_POST['Filters']) && !empty($_POST['Filters'])){
+                    //todo
+                    /*saving the posted data into the table ld_filters*/
+                    }
+              }
+             /* Ajax Popup Request */
+                    if( Yii::app()->request->isAjaxRequest )
+                        {
+                        $this->renderPartial('_ajaxform',array('model'=>$model),false,true);
+                        //Yii::app()->end();
+                        }else{}
         }
 }

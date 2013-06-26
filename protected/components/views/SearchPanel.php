@@ -31,3 +31,10 @@
                 </div>
         <?php $this->endWidget(); ?>
     </div>
+<script>
+    $(document).ready(function(){
+        $('.jNiceCheckbox').click(function(){
+            alert($(this));
+        })
+    })
+</script>

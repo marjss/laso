@@ -45,12 +45,12 @@ class Filters extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('cat_id, hotel_id, title', 'required'),
+			array('title', 'required'),
 			array('cat_id, hotel_id, pos, status', 'numerical', 'integerOnly'=>true),
 			array('title', 'length', 'max'=>255),
 			array('description', 'length', 'max'=>500),
 			array('note', 'length', 'max'=>1024),
-			array('added_date', 'safe'),
+			array('added_date,cat_id, hotel_id,', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, cat_id, hotel_id, title, description, pos, added_date, status, note', 'safe', 'on'=>'search'),
