@@ -79,6 +79,11 @@ class Webnut extends CController
            $country = Country::model()->findByPk($country_id);
           return $country->short_name;
     }
+    public function getunserials($id){
+        $hotelfilter = HotelFilters::model()->findByAttributes(array('hotel_id'=>$id));
+       $data = unserialize( $hotelfilter->filter_id);
+       return $data;
+    }
 }
 
 ?>

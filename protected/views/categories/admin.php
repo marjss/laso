@@ -33,7 +33,7 @@ $('.search-form form').submit(function(){
 <h1>Manage Categories</h1>
 <br>
 
-
+<?php Yii::app()->clientScript->registerScriptFile('http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js');?>
 <?php // echo CHtml::link('Advanced Search','#',array('class'=>'search-button')); ?>
 <div class="search-form" style="display:none">
 <?php // $this->renderPartial('_search',array(
@@ -61,17 +61,60 @@ You can change the position of the category filter by drag and drop.
    	<?php echo Yii::app()->user->getFlash('error'); ?>
 </h4>
 <?php } ?>
-<?php $data =Webnut::getCats();
-$this->widget('zii.widgets.jui.CJuiSortable', array(
-    'id'=>'sortable',
-    'items'=>$data,
-    'options'=>array(
-        'cursor'=>'n-resize',
-        'class'=>'ui-icon ui-icon-arrowthick-2-n-s',
-        'opacity'=>0.6, //set the dragged object's opacity to 0.6
-      ),
-    ));
- echo CHtml::ajaxButton('Submit Changes', 'Updateorder', array(
+<?php
+    $str_js = "
+        var fixHelper = function(e, ui) {
+            ui.children().each(function() {
+                $(this).width($(this).width());
+            });
+            return ui;
+        };
+ 
+        $('#categories-grid table.datagrid tbody').sortable({
+            forcePlaceholderSize: true,
+            forceHelperSize: true,
+            items: 'tr',
+            update : function () {
+                serial = $('#categories-grid table.datagrid tbody').sortable('serialize', {key: 'items[]', attribute: 'class'});
+                $.ajax({
+                    'url': '" . $this->createUrl('//categories/sort') . "',
+                    'type': 'post',
+                    'data': serial,
+                    'success': function(data){
+//                    $('#categories-grid').yiiGridView('update');
+                    return false;
+                    },
+                    'error': function(request, status, error){
+                        alert('We are unable to set the sort order at this time.  Please try again in a few minutes.');
+                    }
+                });
+            },
+            helper: fixHelper
+        }).disableSelection();
+    ";
+ 
+    Yii::app()->clientScript->registerScript('sortable-project', $str_js);
+?>
+
+
+
+
+
+
+
+
+
+<?php //$data =Webnut::getCats();
+//$this->widget('zii.widgets.jui.CJuiSortable', array(
+//    'id'=>'sortable',
+//    'items'=>$data,
+//    'options'=>array(
+//        'cursor'=>'n-resize',
+//        'class'=>'ui-icon ui-icon-arrowthick-2-n-s',
+//        'opacity'=>0.6, //set the dragged object's opacity to 0.6
+//      ),
+//    ));
+ /*echo CHtml::ajaxButton('Submit Changes', 'Updateorder', array(
         'type' => 'POST',
         'data' => array(
             // Turn the Javascript array into a PHP-friendly string
@@ -87,15 +130,17 @@ $this->widget('zii.widgets.jui.CJuiSortable', array(
           $(".error").css("display","block");
          $(".error").html("Oh! Some error occured. Try Again.");
          }',
-    ),array('class'=>'button'));
+    ),array('class'=>'button'));*/
 $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'categories-grid',
         'itemsCssClass' => 'datagrid',
 	'dataProvider'=>$model->search(),
+    'rowCssClassExpression'=>'"items[]_{$data->id}"',
 	'filter'=>$model,
+        'ajaxUpdate'=>false,
 	'columns'=>array(
 		'id',
-                'pos',
+                'sortOrder',
 		'title',
 		'description',
 		'added_date',

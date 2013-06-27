@@ -110,14 +110,15 @@ input[type="radio"], input[type="checkbox"]{margin-left: 21px;margin-right: -11p
 	</div>
         </tr>-->
         <tr class="filter">
-	
+                
 		<td><?php echo $form->labelEx($filter,'Filter',array('display'=>'inline-block')); ?></td>
-                <td><?php echo $form->checkBoxList($filter,'title',Webnut::getFilters(),array('separator'=>'')); ?></div></td>
-		<td><?php echo $form->error($filter,'title'); ?></td>
-	</div>
+                <td><?php echo $form->checkBoxList($filter,'filter_id',Webnut::getFilters(),array('separator'=>'')); ?></div></td>
+		<td><?php echo $form->error($filter,'filter_id'); ?></td>
+	
         </tr>
-        <tr><div id="duplicate"></div>
-	<div class="row buttons">
+        <tr>
+        <!--<div id="duplicate"></div>-->
+	<!--<div class="row buttons">-->
             <td><?php //echo CHtml::link('Add New Filter',array('filters/ajaxfilter'),array('class'=>'button')); ?>
             <?php
     Yii::app()->clientScript->registerScript('uploadDialog', "
@@ -130,7 +131,7 @@ $(function(){
     });
 });");
 
-echo CHtml::link('Add New Filter', '#', array('id' => 'upload-filter','class'=>'button'));
+//echo CHtml::link('Add New Filter', '#', array('id' => 'upload-filter','class'=>'button'));
     
     $this->beginWidget('zii.widgets.jui.CJuiDialog',array(
                 'id'=>'filter-form',
@@ -146,8 +147,8 @@ echo CHtml::link('Add New Filter', '#', array('id' => 'upload-filter','class'=>'
     
     $this->endWidget('zii.widgets.jui.CJuiDialog');  ?>
             
-            </td>
-            	<td><?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save',array('class'=>'button')); ?></td>
+            <!--</td>-->
+            	<td><?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Update',array('class'=>'button')); ?></td>
 	</div>
         </tr>
 <?php $this->endWidget(); ?>

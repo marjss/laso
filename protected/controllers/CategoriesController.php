@@ -36,7 +36,7 @@ class CategoriesController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','Updateorder','Activeinactive'),
+				'actions'=>array('admin','delete','Updateorder','Activeinactive','sort'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -56,7 +56,23 @@ class CategoriesController extends Controller
 			'model'=>$this->loadModel($id),
 		));
 	}
-
+        /**
+         * Action to drag drop the sorting of the categories
+         */
+        public function actionSort()
+            {
+            if( Yii::app()->request->isAjaxRequest )
+                {   
+                if( isset( $_POST[ 'items' ] ) && is_array( $_POST[ 'items' ] ) )
+                    {
+                    foreach( $_POST[ 'items' ] as $key => $val )
+                        {
+                        Categories::model()->updateByPk( $val, array (
+                                'sortOrder' => ( $key + 1 )));
+                        }
+                    }
+                }
+            }
 	/**
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
@@ -144,7 +160,7 @@ class CategoriesController extends Controller
 			$model->attributes=$_GET['Categories'];
 
 		$this->render('admin',array(
-			'model'=>$model,'list'=>$list
+			'model'=>$model
 		));
 	}
 

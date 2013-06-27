@@ -17,7 +17,7 @@
                         <ul class="options-list">
                             <?php foreach ($filters as $filter){?>
                             <li class="dark-gray"><?php echo CHtml::encode($filter->title);?> <?php echo CHtml::CheckBox($filter->id,'',Chtml::listData(Filters::model()->findAll(),'id','title') ); ?>
-<!--                                <input type="checkbox" value="" />-->
+                                <!--<input type="checkbox" value="" class="che" />-->
                             </li>
                             <?php }?>
                         </ul>
@@ -32,9 +32,9 @@
         <?php $this->endWidget(); ?>
     </div>
 <script>
-    $(document).ready(function(){
-        $('.jNiceCheckbox').click(function(){
+    $(document).on('click','a.jNiceCheckbox', function(){
+            
             alert($(this));
-        })
+        
     })
 </script>

@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 3.3.9
+-- version 3.4.5
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jun 26, 2013 at 03:40 AM
--- Server version: 5.5.8
--- PHP Version: 5.3.5
+-- Generation Time: Jun 27, 2013 at 04:01 PM
+-- Server version: 5.5.16
+-- PHP Version: 5.3.8
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -34,11 +35,6 @@ CREATE TABLE IF NOT EXISTS `ld_api` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `ld_api`
---
-
-
 -- --------------------------------------------------------
 
 --
@@ -52,14 +48,15 @@ CREATE TABLE IF NOT EXISTS `ld_banner` (
   `status` varchar(3) DEFAULT NULL,
   `adddate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `ld_banner`
 --
 
 INSERT INTO `ld_banner` (`id`, `banner_name`, `banner_image`, `status`, `adddate`) VALUES
-(1, 'test', 'banner/49975586_4utpstg.jpg', '1', '2013-06-25 23:44:33');
+(1, 'test', 'banner/49975586_4utpstg.jpg', '1', '2013-06-27 07:27:30'),
+(2, 'Loerm Ipsm', 'banner/83865356_80465698_18_09_2008_0954610001221752191_soemone.jpg', '1', '2013-06-27 01:57:08');
 
 -- --------------------------------------------------------
 
@@ -71,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `ld_categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
   `description` varchar(500) NOT NULL,
-  `pos` int(11) DEFAULT NULL,
+  `sortOrder` int(11) DEFAULT NULL,
   `added_date` datetime DEFAULT NULL,
   `modified_date` datetime DEFAULT NULL,
   `status` tinyint(4) DEFAULT NULL,
@@ -82,13 +79,11 @@ CREATE TABLE IF NOT EXISTS `ld_categories` (
 -- Dumping data for table `ld_categories`
 --
 
-INSERT INTO `ld_categories` (`id`, `title`, `description`, `pos`, `added_date`, `modified_date`, `status`) VALUES
-(1, 'place', 'places', 3, '2013-06-20 00:00:00', '2013-06-20 00:00:00', 1),
-(2, 'interior', 'interiors', 2, '2013-06-20 00:00:00', '2013-06-20 00:00:00', 1),
-(3, 'street', 'street', 1, '2013-06-20 00:00:00', '2013-06-20 00:00:00', 1),
-(4, 'views', 'views', 4, '2013-06-20 00:00:00', '2013-06-20 00:00:00', 1),
-(5, 'test 2', 'test 2', 5, '2013-06-20 00:00:00', '2013-06-20 00:00:00', 1),
-(6, 'test1', 'test1', 6, '2013-06-20 00:00:00', '2013-06-20 00:00:00', 1);
+INSERT INTO `ld_categories` (`id`, `title`, `description`, `sortOrder`, `added_date`, `modified_date`, `status`) VALUES
+(1, 'place', 'places', 1, '2013-06-20 00:00:00', '2013-06-20 00:00:00', 1),
+(2, 'interior', 'interiors', 3, '2013-06-20 00:00:00', '2013-06-20 00:00:00', 1),
+(3, 'street', 'street', 2, '2013-06-20 00:00:00', '2013-06-20 00:00:00', 1),
+(4, 'views', 'views', 4, '2013-06-20 00:00:00', '2013-06-20 00:00:00', 1);
 
 -- --------------------------------------------------------
 
@@ -103,11 +98,6 @@ CREATE TABLE IF NOT EXISTS `ld_cities` (
   `city_name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
---
--- Dumping data for table `ld_cities`
---
-
 
 -- --------------------------------------------------------
 
@@ -124,11 +114,6 @@ CREATE TABLE IF NOT EXISTS `ld_contactus` (
   `add_date` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
---
--- Dumping data for table `ld_contactus`
---
-
 
 -- --------------------------------------------------------
 
@@ -423,16 +408,19 @@ CREATE TABLE IF NOT EXISTS `ld_filters` (
   `status` int(2) DEFAULT NULL,
   `note` varchar(1024) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `ld_filters`
 --
 
 INSERT INTO `ld_filters` (`id`, `cat_id`, `hotel_id`, `title`, `description`, `pos`, `added_date`, `status`, `note`) VALUES
-(1, 2, 1, 'refrigerator', 'refrigerator', 1, '2013-06-20 17:32:02', 1, 'asdasd'),
-(2, 2, 1, 'A.C', 'A.C', 2, '2013-06-20 17:51:04', 1, 'asdasd'),
-(3, 1, 1, 'New Place', 'New okca', 2, '2013-06-20 17:53:13', 1, 'asdasd');
+(1, 2, 0, 'A.C', '', NULL, '2013-06-26 20:49:35', 1, ''),
+(2, 2, 0, 'Refrigerator', '', NULL, '2013-06-26 20:49:56', 1, ''),
+(3, 2, 0, 'T.V', '', NULL, '2013-06-26 20:50:10', 1, ''),
+(4, 1, 0, 'jaipur', '', NULL, '2013-06-26 20:50:22', 1, ''),
+(5, 4, 0, 'Pool Side', '', NULL, '2013-06-26 20:50:42', 1, ''),
+(6, 4, 0, 'Mountain View', '', NULL, '2013-06-26 20:50:57', 1, '');
 
 -- --------------------------------------------------------
 
@@ -483,21 +471,15 @@ CREATE TABLE IF NOT EXISTS `ld_hotels` (
   `other` varchar(1024) DEFAULT '0',
   `status` varchar(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `ld_hotels`
 --
 
 INSERT INTO `ld_hotels` (`id`, `user_id`, `name`, `description`, `avatar`, `street`, `city`, `address`, `state`, `country`, `album_id`, `other`, `status`) VALUES
-(1, 0, 'test', 'this is test description in the htoel description', 'avatar/77456665_16.JPG', 'test', 'test', 'test', 'test', 'test', 1, 'test note', '1'),
-(2, 0, 'new hotel', 'this is new hotel description', 'avatar/92407226_4zapytj.jpg', 'street', 'city', 'address sddress', 'state', 'country', 2, 'other notes', '1'),
-(3, 0, 'tester', 'the main test list', 'avatar/52655029_Penguins.jpg', 'street', 'city', 'address', 'state', 'country', 1, '1', '1'),
-(4, 0, 'raju', 'this is for test only', 'avatar/97592163_Penguins.jpg', 'sodala', 'jaipur', '@5 ashok poura sodala', 'Rajasthan', '102', 5, 'TEsting', '1'),
-(5, 0, 'Raj Plaza', 'Awesome Hotel', 'avatar/88409423_Tulips.jpg', '25 ashok pura', 'Jaipur', 'Jaipur', 'Rajasthan', '102', 1234, 'TEsting', '0'),
-(6, 0, 'enter10n', 'entertainment', 'avatar/34616089_Hydrangeas.jpg', '0', '0', '0', '0', '102', 78, 'hfj', '0'),
-(12, 0, 'testing', 'hello for test', '', '0', '0', '0', '0', '101', 0, '0', '0'),
-(13, 0, 'Raj Plaza', 'Awesome Hotel', '', '0', '0', '0', '0', '', 0, '0', '0');
+(1, 0, '5 Star', 'this is test description in the htoel description', 'avatar/73825073_57.jpg', 'test street', 'Test City', 'test Address', 'Test State', '102', 1, '11', '0'),
+(2, 0, '3 star', 'test desc', 'avatar/52160645_53.jpg', 'test street', 'Test City', 'test address', 'Test State', '2', 2, '1', '1');
 
 -- --------------------------------------------------------
 
@@ -511,16 +493,15 @@ CREATE TABLE IF NOT EXISTS `ld_hotel_filters` (
   `filter_id` varchar(255) NOT NULL,
   `status` enum('1','0') DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `ld_hotel_filters`
 --
 
 INSERT INTO `ld_hotel_filters` (`id`, `hotel_id`, `filter_id`, `status`) VALUES
-(1, 1, '1', '1'),
-(2, 2, '2', '1'),
-(3, 13, 'a:1:{s:5:"title";a:3:{i:0;s:1:"2";i:1;s:1:"3";i:2;s:1:"1";}}', '1');
+(1, 1, '1,5,2,3', '1'),
+(2, 2, '6,5', '1');
 
 -- --------------------------------------------------------
 
@@ -570,11 +551,6 @@ CREATE TABLE IF NOT EXISTS `ld_social_network` (
   `status` enum('Y','N') DEFAULT 'N',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
---
--- Dumping data for table `ld_social_network`
---
-
 
 -- --------------------------------------------------------
 
@@ -644,11 +620,6 @@ CREATE TABLE IF NOT EXISTS `ld_user_details` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `ld_user_details`
---
-
-
 -- --------------------------------------------------------
 
 --
@@ -670,9 +641,13 @@ CREATE TABLE IF NOT EXISTS `tbl_subscriber` (
 --
 
 INSERT INTO `tbl_subscriber` (`id`, `subscriber_name`, `subscriber_email`, `subscriber_group`, `status`, `adddate`, `modifydate`) VALUES
-(10, 'manjeet singh ghandhi', 'manjeets@gmail.com', '1', 'Y', '2012-11-26 19:19:26', '0000-00-00 00:00:00'),
-(11, 'cmdhakar', 'cmcs.dhk@gmail.com', '1', 'Y', '2012-11-26 19:20:01', '0000-00-00 00:00:00'),
-(12, 'fdgdf', 'motilalsoni@gamil.com', NULL, 'N', '2013-02-01 12:12:01', '0000-00-00 00:00:00'),
-(13, 'ssdfs', 'dfgdf@gmail.com', '1', 'N', '2013-02-01 12:12:17', '0000-00-00 00:00:00'),
-(14, 'fddg', 'dfgdf@gmail.com', '2', 'N', '2013-02-04 17:08:07', '0000-00-00 00:00:00'),
-(15, 'fgd', 'motilalsoni@gamil.com', '2', 'Y', '2013-02-05 13:16:05', '0000-00-00 00:00:00');
+(10, 'manjeet singh ghandhi', 'manjeets@gmail.com', '1', 'Y', '2012-11-26 13:49:26', '0000-00-00 00:00:00'),
+(11, 'cmdhakar', 'cmcs.dhk@gmail.com', '1', 'Y', '2012-11-26 13:50:01', '0000-00-00 00:00:00'),
+(12, 'fdgdf', 'motilalsoni@gamil.com', NULL, 'N', '2013-02-01 06:42:01', '0000-00-00 00:00:00'),
+(13, 'ssdfs', 'dfgdf@gmail.com', '1', 'N', '2013-02-01 06:42:17', '0000-00-00 00:00:00'),
+(14, 'fddg', 'dfgdf@gmail.com', '2', 'N', '2013-02-04 11:38:07', '0000-00-00 00:00:00'),
+(15, 'fgd', 'motilalsoni@gamil.com', '2', 'Y', '2013-02-05 07:46:05', '0000-00-00 00:00:00');
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

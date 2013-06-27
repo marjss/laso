@@ -1,3 +1,43 @@
+<?php 
+$actionId =  Yii::app()->controller->action->id;
+$controller = Yii::app()->controller->id;
+
+          $_SERVER['REQUEST_URI_PATH'] = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+	  $seg = $_SERVER['REQUEST_URI_PATH'];
+          echo $seg;
+          $segments = explode('/', $_SERVER['REQUEST_URI_PATH']);
+			echo "<pre>"; print_r($segments); echo '</pre>';
+//          echo $segments[2];
+?>
+<script>
+$(document).ready(function(){
+    var segments = '<?php echo $seg; ?>';
+    alert(segments);
+   var i = $('ul li ul li').find('a.cls').attr('href');
+   console.log(i);
+   if(i==segments){
+       console.log(this);
+       $(this).parent().parent().parent().css('display','block');
+       
+   }
+//   $(i).parent().find('div').css('display','block');    
+});
+/**
+ * $(document).on('click','.closed',function(){
+    var segments = '<?php echo $seg; ?>';
+    var i = $(this).parent().find('a.cls').attr('href');
+   console.log(i);
+   if(i==segments){
+       console.log(this)
+       $(this).parent().find('div').css('display','block');
+   }
+//   $(i).parent().find('div').css('display','block');
+        
+    
+    
+});
+ * ***/
+</script>
 <ul>
                               <li><a href="#" class="parent">Admin Manager</a><span></span>
                                 <div>
@@ -17,18 +57,18 @@
                               <li><a href="#">Category Manager</a><span></span>
                                 <div>
                                   <ul>
-                                      <li><span></span><a href="<?php echo Yii::app()->createUrl('categories/admin'); ?>">Manage Categories</a></li>
-                                      <li><span></span><a href="<?php echo Yii::app()->createUrl('categories/create'); ?>">Add Category</a></li>
-                                      <li><span></span><a href="<?php echo Yii::app()->createUrl('filters/admin'); ?>">Manage Filters</a></li>
-                                      <li><span></span><a href="<?php echo Yii::app()->createUrl('filters/create'); ?>">Add Filter</a></li>
+                                      <li><span></span><a href="<?php echo Yii::app()->createUrl('categories/admin');  ?>" class="cls">Manage Categories</a></li>
+                                      <li><span></span><a href="<?php echo Yii::app()->createUrl('categories/create'); ?>" class="cls">Add Category</a></li>
+                                     
                                   </ul>
                                 </div>
                               </li>
-                              <li><a href="#">Feature Manager</a><span></span>
-                                <div>
-                                  <ul>
-                                      <li><span></span><a href="<?php echo Yii::app()->createUrl('admin/admin'); ?>">Manage Features</a></li>
-                                      <li><span></span><a href="<?php echo Yii::app()->createUrl('admin/create'); ?>">Add Feature</a></li>
+                              <li><a href="#">Feature Manager</a>
+                                  <span></span>
+                                  <div>
+                                    <ul>
+                                       <li><span></span><a href="<?php echo Yii::app()->createUrl('filters/admin'); ?>" class="cls">Manage Feature</a></li>
+                                      <li><span></span><a href="<?php echo Yii::app()->createUrl('filters/create'); ?>" class="cls">Add Feature</a></li>
                                   </ul>
                                 </div>
                               </li>

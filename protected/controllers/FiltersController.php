@@ -76,7 +76,7 @@ class FiltersController extends Controller
                         $model->setAttribute('added_date', $date);
                         $model->setAttribute('status',1);
                             $model->setAttribute('hotel_id',$_POST['Hotels']['name']);
-                            $model->setAttribute('cat_id',$_POST['Categories']['title']);
+//                            $model->setAttribute('cat_id',$_POST['Categories']['title']);
 			if($model->save())
 				$this->redirect(array('admin','id'=>$model->id));
 		}

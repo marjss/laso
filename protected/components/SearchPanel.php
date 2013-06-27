@@ -9,10 +9,8 @@ class SearchPanel extends CPortlet
 	{   
             $criteria = new CDbCriteria;
             $criteria->limit =  4;
-            $criteria->order = 'pos';
-            
+            $criteria->order = 'sortOrder';
             $model = Categories::model()->findAll($criteria);
-            
             $this->render('SearchPanel',array('models'=>$model));
 	}
 	

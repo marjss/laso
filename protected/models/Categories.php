@@ -7,6 +7,7 @@
  * @property integer $id
  * @property string $title
  * @property string $description
+ * @property integer $sortOrder
  * @property string $added_date
  * @property string $modified_date
  * @property integer $status
@@ -46,7 +47,7 @@ class Categories extends CActiveRecord
 			array('added_date, modified_date', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, title, description, added_date, modified_date, status', 'safe', 'on'=>'search'),
+			array('id, title, description, added_date,sortOrer, modified_date, status', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -70,6 +71,7 @@ class Categories extends CActiveRecord
 			'id' => 'ID',
 			'title' => 'Title',
 			'description' => 'Description',
+                        'sortOrder' => 'Order',
 			'added_date' => 'Added Date',
 			'modified_date' => 'Modified Date',
 			'status' => 'Status',
@@ -90,12 +92,14 @@ class Categories extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('title',$this->title,true);
 		$criteria->compare('description',$this->description,true);
+                $criteria->compare('sortOrder',$this->sortOrder,true);
 		$criteria->compare('added_date',$this->added_date,true);
 		$criteria->compare('modified_date',$this->modified_date,true);
 		$criteria->compare('status',$this->status);
-
+//                $criteria->order ='sortOrder'; 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
+                        'pagination'=>array('pagesize'=>10),
 		));
 	}
 }

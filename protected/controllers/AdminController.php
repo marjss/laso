@@ -69,6 +69,7 @@ class AdminController extends Controller
 	{
 		$model=new Hotels;
                 $filter = new Filters;
+                $hotelfilter = new HotelFilters;
 		// Uncomment the following line if AJAX validation is needed
 //		 $this->performAjaxValidation($model);
                
@@ -78,7 +79,7 @@ class AdminController extends Controller
                     
                    $model->attributes=$_POST['Hotels'];
                    if($model->validate()) {
-                    
+                    $model->setAttribute('status', 1);
                     if($_FILES['Hotels']['name']['avatar'] != '')
 			{ 
                         
@@ -104,12 +105,13 @@ class AdminController extends Controller
 					}
 				}
                                  if($model->save(false)){
+                                     
                                      $hotel_id = $model->id;
-                                     if(isset($_POST['Filters'])){
-                                          $hotelfilter = new HotelFilters('insert');
-                                        $hotelfilter->hotel_id = $model->id;
-                                                $hotelfilter->filter_id = serialize($_POST['Filters']);
-
+                                     if(isset($_POST['HotelFilters']['filter_id'])){
+                                          
+                                            $hotelfilter->hotel_id = $model->id;
+                                            $hotelfilter->filter_id=implode(',',$_POST['HotelFilters']['filter_id']);
+//                                                $hotelfilter->filter_id = serialize($_POST['HotelFilters']['filter_id']);
                                                         $hotelfilter->save(false);
 
                                      }
@@ -123,9 +125,10 @@ class AdminController extends Controller
 		}
                 
 		$this->render('create',array(
-			'model'=>$model,'filter'=>$filter
+			'model'=>$model,'filter'=>$hotelfilter
 		));
 	}
+        
 
 	/**
 	 * Updates a particular model.
@@ -134,20 +137,57 @@ class AdminController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
+            $this->layout='control_panel';
 		$model=$this->loadModel($id);
-
-		// Uncomment the following line if AJAX validation is needed
+                $data = explode(',',HotelFilters::model()->findByAttributes(array('hotel_id'=>$id))->filter_id);
+                $filter=  HotelFilters::model()->findByAttributes(array('hotel_id'=>$id));
+                $filter->filter_id=explode(',',$filter->filter_id);
+                // Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['Hotels']))
+               if(isset($_POST['Hotels']))
 		{
+                         $avtarimage = $model->avatar;
 			$model->attributes=$_POST['Hotels'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+                        if($_FILES['Hotels']['name']['avatar'] != '')
+			{ 
+                            $model->avatar = CUploadedFile::getInstanceByName('Hotels[avatar]');
+                                    if ($model->avatar instanceof CUploadedFile) {
+                                                $rand = rand(1,99999999);
+						$filename = $this->avatarPath .'/'.  $rand . '_' . $_FILES['Hotels']['name']['avatar'];
+						$thumbfilename = $this->avatarPath .'/thumb/'.  $rand . '_' . $_FILES['Hotels']['name']['avatar'];
+//						echo $filename;die;
+						$model->avatar->saveAs($filename);
+						copy($filename,$thumbfilename);
+						list($width, $height, $type, $attr) = getimagesize($filename);
+						$image = Yii::app()->image->load($filename);
+						$image->resize(250, 290,Image::HEIGHT);
+						$image->save();
+						$image = Yii::app()->image->load($thumbfilename);
+						$image->resize(150, 150);
+						$image->save();
+						
+						$model->avatar = $filename;
+					}
+				}else{ $model->avatar = $avtarimage;	}
+                                 if($model->save(false)){
+                                     $hotel_id = $model->id;
+                                     if(isset($_POST['HotelFilters']['filter_id'])){
+                                          
+                                            $filter->hotel_id = $model->id;
+                                            $filter->filter_id=implode(',',$_POST['HotelFilters']['filter_id']);
+//                                                $hotelfilter->filter_id = serialize($_POST['HotelFilters']['filter_id']);
+                                                        $filter->save(false);
+
+                                     }
+                                     
+                                 Yii::app()->user->setFlash('success', "Success!.");
+				$this->redirect(array('admin','id'=>$model->id));
+                            } else {Yii::app()->user->setFlash('error', "Oh! Please try again."); }
+				$this->redirect(array('admin','id'=>$model->id));
 		}
 
 		$this->render('update',array(
-			'model'=>$model,
+			'model'=>$model,'filter'=>$filter,'data'=>$data
 		));
 	}
 
