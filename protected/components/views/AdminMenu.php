@@ -4,20 +4,20 @@ $controller = Yii::app()->controller->id;
 
           $_SERVER['REQUEST_URI_PATH'] = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 	  $seg = $_SERVER['REQUEST_URI_PATH'];
-          echo $seg;
+//          echo $seg;
           $segments = explode('/', $_SERVER['REQUEST_URI_PATH']);
-			echo "<pre>"; print_r($segments); echo '</pre>';
+//			echo "<pre>"; print_r($segments); echo '</pre>';
 //          echo $segments[2];
 ?>
 <script>
 $(document).ready(function(){
     var segments = '<?php echo $seg; ?>';
-    alert(segments);
+//    alert(segments);
    var i = $('ul li ul li').find('a.cls').attr('href');
    console.log(i);
    if(i==segments){
-       console.log(this);
-       $(this).parent().parent().parent().css('display','block');
+//       console.log(this);
+//       $(this).parent().parent().parent().css('display','block');
        
    }
 //   $(i).parent().find('div').css('display','block');    

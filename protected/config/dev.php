@@ -76,8 +76,8 @@ return array(
 		'db'=>array(
 			'connectionString' => 'mysql:host=localhost;dbname=lasso_dreamax',
 			'emulatePrepare' => true,
-			'username' => 'lasso',
-			'password' => 'XiiggtxK',
+			'username' => 'root',
+			'password' => '',
 			'charset' => 'utf8',
 		),
 		
