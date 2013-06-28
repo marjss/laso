@@ -160,13 +160,13 @@ class CategoriesController extends Controller
 		if(isset($_GET['Categories']))
 			$model->attributes=$_GET['Categories'];
                 $cs=Yii::app()->clientScript;  
-        $cs->scriptMap=array(  
-//            'jquery.ui.bootstrap.css'=>false, 
+       /* $cs->scriptMap=array(  
+            'jquery.ui.bootstrap.css'=>false, 
             'bootstrap-notify.css'=>false,  
-//            'bootstrap-yii.css'=>false,  
-//            'bootstrap-editable.css'=>false,  
+            'bootstrap-yii.css'=>false,  
+            'bootstrap-editable.css'=>false,  
             'bootstrap.css'=>false,  
-            );  
+            );  */
 		$this->render('admin',array(
 			'model'=>$model
 		));

@@ -33,7 +33,7 @@ $('.search-form form').submit(function(){
 <h1>Manage Categories</h1>
 <br>
 
-<?php Yii::app()->clientScript->registerScriptFile('http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js');?>
+<?php //Yii::app()->clientScript->registerScriptFile('http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js');?>
 <?php // echo CHtml::link('Advanced Search','#',array('class'=>'search-button')); ?>
 <div class="search-form" style="display:none">
 <?php // $this->renderPartial('_search',array(
