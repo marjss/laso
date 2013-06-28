@@ -215,10 +215,10 @@ class GalleryController extends Controller
 	 */
 	public function actionAdmin()
 	{
-                    $criteria = new CDbCriteria;
+//                    $criteria = new CDbCriteria;
                     
                     
-             $hotel = new Hotels('search');
+//             $hotels = new Hotels('search');
             $this->layout='control_panel';
 		$model=new Gallery('search');
 		$model->unsetAttributes();  // clear any default values
@@ -227,7 +227,7 @@ class GalleryController extends Controller
 
 		$this->render('admin',array(
 			'model'=>$model,
-                        'hotel'=>$hotel
+//                        'hotel'=>$hotels
 		));
 	}
 
@@ -294,4 +294,18 @@ class GalleryController extends Controller
         echo CHtml::link($imghtml, '', array('class' => 'imgactive', 'rel' => $data->id, 'style' => 'cursor:pointer;',));
     }
 
+    // function for get hotels name by id
+    protected  function get_Hotelname($data,$row){
+             $hname = Webnut::getHotelByname($data->product_id);
+            return $hname;
+        }
+     /**
+	 * Get Country name
+	 * @param CModel the model to be validated
+	 */
+//                protected function get_Hotelname($data,$row){
+//                    
+//                    $cname = Webnut::getCountryname($data->country_id);
+//                    return $cname;
+//                }   
 }

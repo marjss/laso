@@ -18,3 +18,32 @@ $this->widget('ext.isotope.Isotope',array(
             )); ?>
 
 </ul>
+<script>
+     $(document).ready(function(){
+         
+    
+                $('.result-item-btn').click(function(){
+                    var arr =  [];
+                     $('.result-item').each(function() {
+                    var target = $(this);
+                    var a = target.find("input:checkbox").is(":checked");
+                    if (a) {
+                        arr.push($(this).attr('rel'));
+                    }});
+                $.ajax({
+                    type: "POST",
+                    url:'<?php echo Yii::app()->createUrl("hotels/compare"); ?>',
+                    data:{ids:arr},
+                    success:function(resp){
+                    $(document).html('');
+//                    $('header').remove();
+//                    $('footer').remove();
+        //var url= '<?php echo Yii::app()->createUrl("hotels/compare"); ?>';
+                       $('body').html(resp)
+                            }    
+                    });
+                   console.log(arr);
+                    return arr
+                    });
+                });
+            </script>

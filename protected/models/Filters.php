@@ -46,14 +46,14 @@ class Filters extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('title', 'required'),
-			array('cat_id, hotel_id, pos, status', 'numerical', 'integerOnly'=>true),
+			array('cat_id, pos, status', 'numerical', 'integerOnly'=>true),
 			array('title', 'length', 'max'=>255),
 			array('description', 'length', 'max'=>500),
 			array('note', 'length', 'max'=>1024),
-			array('added_date,cat_id, hotel_id,', 'safe'),
+			array('added_date,cat_id,', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, cat_id, hotel_id, title, description, pos, added_date, status, note', 'safe', 'on'=>'search'),
+			array('id, cat_id, title, description, pos, added_date, status, note', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -65,7 +65,7 @@ class Filters extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'hotel' => array(self::HAS_MANY, 'Hotels', 'hotel_id'),
+//			'hotel' => array(self::HAS_MANY, 'Hotels', 'hotel_id'),
                         'cat'=>array(self::HAS_ONE,'Categories','cat_id')
 		);
 	}
@@ -78,7 +78,6 @@ class Filters extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'cat_id' => 'Cat',
-			'hotel_id' => 'Hotel',
 			'title' => 'Title',
 			'description' => 'Description',
 			'pos' => 'Pos',
@@ -101,7 +100,6 @@ class Filters extends CActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('cat_id',$this->cat_id);
-		$criteria->compare('hotel_id',$this->hotel_id);
 		$criteria->compare('title',$this->title,true);
 		$criteria->compare('description',$this->description,true);
 		$criteria->compare('pos',$this->pos);

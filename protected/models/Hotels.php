@@ -67,6 +67,7 @@ class Hotels extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 //                    'feature' => array(self::HAS_MANY, 'Filters', 'hotel_id'),
+                    'gallery' => array(self::HAS_MANY, 'Gallery', 'album_id'),
 		);
 	}
 
@@ -149,4 +150,18 @@ class Hotels extends CActiveRecord
     }
     return new CActiveDataProvider($this, array('criteria' => $criteria,'pagination'=>array('pagesize'=>9)));
 }
+
+// Get Area or Zone
+        public function getAreas()
+        {
+            return array(
+                'east'=>'East',
+                'west'=>'West',
+                'north'=>'North',
+                'south'=>'South',
+                
+            );
+
+        }
+        
 }

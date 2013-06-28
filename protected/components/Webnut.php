@@ -84,6 +84,15 @@ class Webnut extends CController
        $data = unserialize( $hotelfilter->filter_id);
        return $data;
     }
+    
+    public function getHotelByname($hid){
+        if(is_numeric($hid)){
+            $hotel = Hotels::model()->findByPk($hid);
+            
+             return $hotel->name;
+        }
+    }
+   
 }
 
 ?>

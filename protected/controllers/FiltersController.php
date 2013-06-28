@@ -80,12 +80,27 @@ class FiltersController extends Controller
 			if($model->save())
 				$this->redirect(array('admin','id'=>$model->id));
 		}
+                 if( Yii::app()->request->isAjaxRequest )
+                    {
+        $cs=Yii::app()->clientScript;  
+        $cs->scriptMap=array(  
+            'jquery.ui.bootstrap.css'=>false, 
+            'bootstrap-notify.css'=>false,  
+            'bootstrap-yii.css'=>false,  
+            'bootstrap-editable.css'=>false,  
+            'bootstrap.css'=>false,  
+            );  
+                        $this->renderPartial('_form',array('model'=>$model,'hotel'=>$hotel,
+                        'category'=>$category),false,true);
+                    //Yii::app()->end();
+                    }else{
 
 		$this->render('create',array(
 			'model'=>$model,
                         'hotel'=>$hotel,
                         'category'=>$category
 		));
+                    }
 	}
 
 	/**
@@ -242,18 +257,32 @@ class FiltersController extends Controller
         public function actionAjaxfilter(){
             $model=new Filters;
             if(!isset($_GET['Filters']))
-                {
-                
-                if(isset($_POST['Filters']) && !empty($_POST['Filters'])){
-                    //todo
+            {
+                if(isset($_POST['Filters']) && !empty($_POST['Filters']))
+                 {
                     /*saving the posted data into the table ld_filters*/
-                    }
-              }
+                        $model->attributes = $_POST['Filters'];
+                                    if($model->save()){
+                                        if (Yii::app()->request->isAjaxRequest)
+                                        {
+                                            echo CJSON::encode(array(
+                                                'status'=>'success', 
+                                                'div'=>"filter successfully added"
+                                                ));
+                                            exit;               
+                                        }
+                                        else
+                                            $this->redirect('admin/create');
+                                        }
+                                    }
+                        }         
+                  
+              
              /* Ajax Popup Request */
                     if( Yii::app()->request->isAjaxRequest )
-                        {
+                    {
                         $this->renderPartial('_ajaxform',array('model'=>$model),false,true);
-                        //Yii::app()->end();
-                        }else{}
+                    //Yii::app()->end();
+                    }else{}
         }
 }

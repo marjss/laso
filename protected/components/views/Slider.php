@@ -4,9 +4,12 @@
         <div class="carousel-inner">
             <div class="active item">
                 <?php foreach($banner as $key=>$bannerx){?>
-                <img src="<?php echo Yii::app()->request->baseUrl.'/'.$bannerx->banner_image; ?>" alt="" />
-                <h3 class="slide-caption">Lorem Ipsum<strong>Lorem Ipsum</strong></h3>
+<!--                <img src="<?php echo Yii::app()->request->baseUrl.'/'.$bannerx->banner_image; ?>" alt="" />
+                <h3 class="slide-caption">Lorem Ipsum<strong>Lorem Ipsum</strong></h3>-->
+                
                 <?php } ?>
+                <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/banner-item-2.jpg" alt="" />
+                <h3 class="slide-caption">Lorem Ipsum<strong>Lorem Ipsum</strong></h3>
             </div>
             <div class="item">
             	<img src="<?php echo Yii::app()->request->baseUrl; ?>/images/banner-item-2.jpg" alt="" />

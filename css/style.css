@@ -221,3 +221,6 @@ h4.error{
 	color: #7B040F;
 	padding: 10px 0;
 }
+span.required{
+    color:#ff0000;
+}

@@ -5,6 +5,7 @@
 
 // This is the main Web application configuration. Any writable
 // CWebApplication properties can be configured here.
+Yii::setPathOfAlias('bootstrap', dirname(__FILE__).'/../extensions/bootstrap');
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'name'=>'Lasso',
@@ -39,6 +40,12 @@ return array(
 
 	// application components
 	'components'=>array(
+             'bootstrap' => array(
+	    'class' => 'ext.bootstrap.components.Bootstrap',
+//	    'responsiveCss' => false,
+//                'coreCss' => true,
+//                'ajaxCssImport' => true,
+	),
 		'user'=>array(
                         'class' => 'WebUser',
 			// enable cookie-based authentication

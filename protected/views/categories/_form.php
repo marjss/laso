@@ -27,44 +27,45 @@
 
 	<p class="note">Fields with <span class="required">*</span> are required.</p>
         <br>
-	<?php echo $form->errorSummary($model); ?>
+	<?php // echo $form->errorSummary($model); ?>
 <table class="formbox">
             <tr>
 	<div class="row">
 		<td><?php echo $form->labelEx($model,'title'); ?></td>
 		<td><?php echo $form->textField($model,'title',array('size'=>60,'maxlength'=>255)); ?></td>
-		<td><?php echo $form->error($model,'title'); ?></td>
+		<td><?php echo $form->error($model,'title',array('style'=>'color:#ff0000;')); ?></td>
 	</div>
         </tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr>
 	<div class="row">
 		<td><?php echo $form->labelEx($model,'description'); ?></td>
-		<td><?php echo $form->textField($model,'description',array('size'=>60,'maxlength'=>500)); ?></td>
-		<td><?php echo $form->error($model,'description'); ?></td>
+		<td><?php echo $form->textArea($model,'description'); ?></td>
+		<td><?php echo $form->error($model,'description',array('style'=>'color:#ff0000;')); ?></td>
 	</div>
         </tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
 
-<tr>
+<!--<tr>
 	<div class="row">
-		<td><?php echo $form->labelEx($model,'added_date'); ?></td>
-		<td><?php echo $form->textField($model,'added_date'); ?></td>
-		<td><?php echo $form->error($model,'added_date'); ?></td>
+		<td><?php // echo $form->labelEx($model,'added_date'); ?></td>
+		<td><?php // echo $form->textField($model,'added_date'); ?></td>
+		<td><?php // echo $form->error($model,'added_date'); ?></td>
 	</div>
-</tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-<tr>
+</tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>-->
+<!--<tr>
 	<div class="row">
-		<td><?php echo $form->labelEx($model,'modified_date'); ?></td>
-		<td><?php echo $form->textField($model,'modified_date'); ?></td>
-		<td><?php echo $form->error($model,'modified_date'); ?></td>
+		<td><?php // echo $form->labelEx($model,'modified_date'); ?></td>
+		<td><?php // echo $form->textField($model,'modified_date'); ?></td>
+		<td><?php // echo $form->error($model,'modified_date'); ?></td>
 	</div>
-</tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-<tr>
+</tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>-->
+<!--<tr>
 	<div class="row">
-		<td><?php echo $form->labelEx($model,'status'); ?></td>
-		<td><?php echo $form->textField($model,'status'); ?></td>
-		<td><?php echo $form->error($model,'status'); ?></td>
+		<td><?php // echo $form->labelEx($model,'status'); ?></td>
+		<td><?php // echo $form->textField($model,'status'); ?></td>
+		<td><?php // echo $form->error($model,'status'); ?></td>
 	</div>
-</tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+</tr>-->
+<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
 <tr>
 	<div class="row buttons">
             <td></td>

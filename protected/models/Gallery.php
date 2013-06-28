@@ -57,7 +57,7 @@ class Gallery extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-                    'hotel' => array(self::BELONGS_TO, 'hotels', 'product_id'),
+                    'hotel0' => array(self::BELONGS_TO, 'hotels', 'product_id'),
     );
 	}
 
@@ -75,7 +75,7 @@ class Gallery extends CActiveRecord
 			'status' => 'Status',
 		);
 	}
-
+        
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
@@ -98,4 +98,6 @@ class Gallery extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+        
+       
 }

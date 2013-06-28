@@ -131,31 +131,137 @@ You can change the position of the category filter by drag and drop.
          $(".error").html("Oh! Some error occured. Try Again.");
          }',
     ),array('class'=>'button'));*/
-$this->widget('zii.widgets.grid.CGridView', array(
-	'id'=>'categories-grid',
-        'itemsCssClass' => 'datagrid',
-	'dataProvider'=>$model->search(),
+//$this->widget('bootstrap.widgets.TbGridView', array(
+//	'id'=>'categories-grid',
+////        'itemsCssClass' => 'datagrid',
+//	'dataProvider'=>$model->search(),
+//        'template' => "{items}",
+////    'rowCssClassExpression'=>'"items[]_{$data->id}"',
+////	'filter'=>$model,
+////        'ajaxUpdate'=>false,
+//	'columns'=>array(
+//		'id',
+//                
+////                'sortOrder',
+//		'title',
+//		'description',
+//		'added_date',
+//		'modified_date',
+//		 array(            
+//                    'name'=>'status',
+//                    'value'=>array($this,'gridStatusColumn'), 
+//                ),
+//                array(
+//                'class' => 'bootstrap.widgets.TbEditableColumn',
+//                'name' => 'sortOrder',
+//                'sortable'=>false,
+//                'editable' => array(
+//                'url' => $this->createUrl('categories/editable'),	
+//                'placement' => 'right',
+//                'inputclass' => 'span3'
+//                )),
+//		array(
+//			'class'=>'CButtonColumn',
+//		),
+//	),
+//)); ?>
+<?php     
+$this->widget('bootstrap.widgets.TbExtendedGridView', array(
+    'type' => 'striped bordered',
+    'itemsCssClass' => 'datagrid',
+    'id'=>'categories-grid',
+    'dataProvider' => $model->search(),
+    'template' => "{items}",
+    'filter'=>$model,
+    'ajaxUpdate'=>false,
     'rowCssClassExpression'=>'"items[]_{$data->id}"',
-	'filter'=>$model,
-        'ajaxUpdate'=>false,
-	'columns'=>array(
-		'id',
-                'sortOrder',
-		'title',
-		'description',
+    'columns' => array_merge(array(
+                array(
+                'class'=>'bootstrap.widgets.TbRelationalColumn',
+                'name' => 'title',
+                'url' => $this->createUrl('categories/relational'),
+                'value'=> $data->title,
+                )),
+                array(
+                    array(
+                'class' => 'bootstrap.widgets.TbEditableColumn',
+                'type'=>'raw',
+                'name' => 'sortOrder',
+                'value'=>$data->sortOrder, 
+                'sortable'=>false,
+                'editable' => array(
+                'url' => $this->createUrl('categories/editable'),
+                'placement' => 'right',
+                'inputclass' => 'span3'
+                )),
+                'title',
+                'description',
 		'added_date',
 		'modified_date',
 		 array(            
                     'name'=>'status',
                     'value'=>array($this,'gridStatusColumn'), 
                 ),
-                
-		array(
+                array(
 			'class'=>'CButtonColumn',
+                        'htmlOptions'=>array('width'=>58),
+		))),));
+        /**
+         * array(
+                'class' => 'bootstrap.widgets.TbEditableColumn',
+                'type'=>'raw',
+                'name' => 'sortOrder',
+                'value'=>$data->sortOrder, 
+                'sortable'=>false,
+                'editable' => array(
+                'url' => $this->createUrl('categories/editable'),
+                'placement' => 'right',
+                'inputclass' => 'span3'
+                )),
+                'title',
+                'description',
+		'added_date',
+		'modified_date',
+		 array(            
+                    'name'=>'status',
+                    'value'=>array($this,'gridStatusColumn'), 
+                ),
+                array(
+			'class'=>'CButtonColumn',
+                        'htmlOptions'=>array('width'=>58),
 		),
-	),
-)); ?>
+   ));
+         */
+               
+ ?>
 </div>
+<?php
+    Yii::app()->clientScript->registerScript('uploadDialog', "
+$(function(){
+    $('#upload-filter').click(function(){
+        $('#filter-form').load('".Yii::app()->createUrl('filters/create')."', function(){
+            $('#filter-form').dialog('open');
+        });
+        return false;
+    });
+});");
+
+echo CHtml::link('Add New Filter', '#', array('id' => 'upload-filter','class'=>'button'));
+    
+    $this->beginWidget('zii.widgets.jui.CJuiDialog',array(
+                'id'=>'filter-form',
+                'options'=>array(
+                    'title'=>Yii::t('Add','Filter'),
+                    'autoOpen'=>false,
+                    'model'=>'true',
+                    'width'=>'auto',
+                    'height'=>'auto'
+                ),
+        
+           
+                ));
+    
+    $this->endWidget('zii.widgets.jui.CJuiDialog');  ?>
 <script>
        $(document).on('click','.imgactive',(function(){
           var cid = $(this).attr('rel');

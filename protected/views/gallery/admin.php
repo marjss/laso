@@ -64,7 +64,7 @@ $this->widget('zii.widgets.jui.CJuiTabs', array(
                     ),
 //		'product_id',
                 array('name'=>'product_id', 
-                     'value'=>'$data->hotel->name',
+                     'value'=>'$data->hotel0->name',
                      'filter' => Webnut::getHotels(),
                      'sortable'=>TRUE),
 		'thumb_image',

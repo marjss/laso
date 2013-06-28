@@ -25,13 +25,13 @@
 		<td><?php echo $form->error($model,'cat_id'); ?></td>
 	</div>
 </tr>
-<tr>
+<!--<tr>
 	<div class="row">
-		<td><?php echo $form->labelEx($model,'hotel_id'); ?></td>
-		<td><?php echo $form->dropDownList($hotel,'name',Webnut::getHotels(),array('empty'=>'Select Hotel'),array('class'=>'selectInput','style'=>'width:20%','options'=>array($model->hotel_id=>array('selected'=>'selected')))); ?></td>
-		<td><?php echo $form->error($model,'hotel_id'); ?></td>
+		<td><?php // echo $form->labelEx($model,'hotel_id'); ?></td>
+		<td><?php // echo $form->dropDownList($hotel,'name',Webnut::getHotels(),array('empty'=>'Select Hotel'),array('class'=>'selectInput','style'=>'width:20%','options'=>array($model->hotel_id=>array('selected'=>'selected')))); ?></td>
+		<td><?php // echo $form->error($model,'hotel_id'); ?></td>
 	</div>
-</tr>
+</tr>-->
 <tr>
 	<div class="row">
 		<td><?php echo $form->labelEx($model,'title'); ?></td>

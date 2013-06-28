@@ -28,7 +28,7 @@ class HotelsController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','create','update','admin','delete'),
+				'actions'=>array('index','view','create','update','admin','delete','compare'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -198,4 +198,94 @@ class HotelsController extends Controller
 			Yii::app()->end();
 		}
 	}
+        public function actionCompare(){
+            
+            $this->layout='compare';
+            $arra =  array();
+            $arra = $_POST['ids'];
+            foreach( $arra as $id){
+                $criteria = new CDbCriteria;
+                $criteria->condition = 'id='.$id;
+                $dataProvider =hotels::model()->find($criteria);
+//            $dataProvider=new CArrayDataProvider($rawData,array(
+////                         'criteria' => array(
+////                        'with' => 'myRelated',
+////                        'together' => true,
+////                        'condition' => 'id=' .$id,
+////                    ),
+//                    'pagination' => false,
+//                        //array(pageSize'=>100),
+//            ));
+            
+            }
+           
+           /** $columnsArray = array(
+                        array(            
+                                'name'=>'',
+                                'type'=>'raw',
+                                'value'=>'$data->name',
+                        ),
+                        array(    
+                                'header'=>Yii::t('app', 'Product A'),
+                                'type'=>'raw',
+                                'htmlOptions'=>array('style'=>'text-align: center'),
+                                'value'=>'$data->name',
+                        ),
+                        array(            
+                                'header'=>Yii::t('app', 'Product B'),
+                                'type'=>'raw',
+                                'htmlOptions'=>array('style'=>'text-align: center'),
+                                'value'=>'$data->id',
+                        )
+                );
+                
+                $comparisonDataProvider=new CActiveDataProvider('hotels',array(
+                         'criteria' => array(
+//                        'with' => 'myRelated',
+//                        'together' => true,
+//                        'condition' => 'user_id=' . Yii::app()->user->id,
+                    ),
+                    'pagination' => false,
+                        //array(pageSize'=>100),
+                ));
+
+                
+                $dataProvider=new CActiveDataProvider('hotels',array(
+                        'criteria'=>array(
+//                                'condition'=>'comparison_spec=0',
+//                                'order'=>'sortorder ASC',
+                        ),
+                ));
+                */
+                $this->render('compare',array(
+                        'product'=>hotels::model()->FindByPk(1),
+                        'comparisonDataProvider'=>$comparisonDataProvider,
+                        'dataProvider'=>$dataProvider,
+                        'columnsArray'=>$columnsArray,
+                ));
+
+            
+            
+        }
+        protected function gridDataName($data,$row)
+     {
+//            echo $row;
+            echo $data->id; echo'<br>';
+            echo $data->name;echo'<br>';
+            echo $data->description;echo'<br>';
+            echo $data->avatar;echo'<br>';
+            echo $data->street;echo'<br>';
+              
+     }
+     protected function gridDataDesc($data,$row)
+     {
+//            echo $row;
+           // echo $data->id;
+           // echo $data->name;
+            echo $data->description;
+           // echo $data->avatar;
+           // echo $data->street;
+              
+     }
+               
 }

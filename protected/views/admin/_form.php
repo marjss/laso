@@ -26,7 +26,8 @@ input[type="radio"], input[type="checkbox"]{margin-left: 21px;margin-right: -11p
 	'id'=>'hotels-form',
 	'enableAjaxValidation'=>false,
         'htmlOptions' => array('enctype' => 'multipart/form-data','class'=>'datagrid_form'),
-'clientOptions'=>array('validateOnSubmit'=>true)));?>
+        'clientOptions'=>array('validateOnSubmit'=>true)));
+?>
 
 	<!--<p class="note">Fields with <span class="required">*</span> are required.</p>-->
 
@@ -55,8 +56,8 @@ input[type="radio"], input[type="checkbox"]{margin-left: 21px;margin-right: -11p
         </tr>
         <tr>
 	<div class="row">
-		<td><?php echo $form->labelEx($model,'street'); ?></td>
-		<td><?php echo $form->textField($model,'street',array('size'=>60,'maxlength'=>255)); ?></td>
+		<td><?php echo $form->labelEx($model,'Area'); ?></td>
+		<td><?php echo $form->dropDownList($model,'street',$model->getAreas(),array('empty'=>'Select Area'),array('class'=>'selectInput')); ?></td>
 		<td><?php echo $form->error($model,'street'); ?></td>
 	</div>
         </tr>
@@ -140,8 +141,9 @@ $(function(){
                     'autoOpen'=>false,
                     'model'=>'true',
                     'width'=>'340px',
-                    'height'=>'auto',
+                    'height'=>'auto'
                 ),
+        
            
                 ));
     

@@ -34,7 +34,14 @@
 		<td><?php echo $form->dropDownList($model,'cat_id',Webnut::getCategories(),array('empty'=>'Select Category'),array('class'=>'selectInput','style'=>'width:20%')); ?></td>
 		<td><?php echo $form->error($model,'cat_id'); ?></td>
 	</div>
-</tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+</tr>
+<tr>
+<!--	<div class="row">
+		<td><?php // echo $form->labelEx($model,'hotel_id'); ?></td>
+		<td><?php // echo $form->dropDownList($hotel,'name',Webnut::getHotels(),array('empty'=>'Select Hotel'),array('class'=>'selectInput','style'=>'width:20%','options'=>array($model->hotel_id=>array('selected'=>'selected')))); ?></td>
+		<td><?php // echo $form->error($model,'hotel_id'); ?></td>
+	</div>-->
+</tr>
 <!--<tr>
 	<div class="row">
 		<td><?php echo $form->labelEx($model,'hotel_id'); ?></td>
@@ -48,14 +55,14 @@
 		<td><?php echo $form->textField($model,'title',array('size'=>60,'maxlength'=>255)); ?></td>
 		<td><?php echo $form->error($model,'title'); ?></td>
 	</div>
-</tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+</tr>
 <tr>
 	<div class="row">
 		<td><?php echo $form->labelEx($model,'description'); ?></td>
 		<td><?php echo $form->textArea($model,'description',array('size'=>60,'maxlength'=>500)); ?></td>
 		<td><?php echo $form->error($model,'description'); ?></td>
 	</div>
-</tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+</tr>
 <!--<tr>
 	<div class="row">
 		<td><?php // echo $form->labelEx($model,'added_date'); ?></td>
@@ -76,13 +83,13 @@
 		<td><?php echo $form->textField($model,'note',array('size'=>60,'maxlength'=>1024)); ?></td>
 		<td><?php echo $form->error($model,'note'); ?></td>
 	</div>
-</tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+</tr>
 <tr>
 	<div class="row buttons">
             <td></td>
 		<td><?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save',array('class'=>'button')); ?></td>
 	</div>
-</tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+</tr>
 </table>
 <?php $this->endWidget(); ?>
 

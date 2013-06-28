@@ -36,7 +36,7 @@ class CategoriesController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','Updateorder','Activeinactive','sort'),
+				'actions'=>array('admin','delete','Updateorder','Activeinactive','sort','editable','Relational'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -87,6 +87,7 @@ class CategoriesController extends Controller
 
 		if(isset($_POST['Categories']))
 		{
+                    
 			$model->attributes=$_POST['Categories'];
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
@@ -158,7 +159,14 @@ class CategoriesController extends Controller
                 $model->unsetAttributes();  // clear any default values
 		if(isset($_GET['Categories']))
 			$model->attributes=$_GET['Categories'];
-
+                $cs=Yii::app()->clientScript;  
+        $cs->scriptMap=array(  
+//            'jquery.ui.bootstrap.css'=>false, 
+            'bootstrap-notify.css'=>false,  
+//            'bootstrap-yii.css'=>false,  
+//            'bootstrap-editable.css'=>false,  
+            'bootstrap.css'=>false,  
+            );  
 		$this->render('admin',array(
 			'model'=>$model
 		));
@@ -256,4 +264,21 @@ class CategoriesController extends Controller
         $imghtml = CHtml::image(Yii::app()->baseUrl . $image, 'Status', array('rel' => $data->status, 'class' => 'status-' . $data->id));
         echo CHtml::link($imghtml, '', array('class' => 'imgactive', 'rel' => $data->id, 'style' => 'cursor:pointer;',));
     }
+    protected function gridSort($data,$row){ 
+             echo $data->sortOrder;
+    }
+    public function actionEditable(){
+        $id= $_POST['pk'];
+        $val = $_POST['value'];
+       Categories::model()->updateByPk($id,array('sortOrder'=>$val));
+    }
+    public function actionRelational()
+                {
+                // partially rendering "_relational" view
+                $this->renderPartial('_relational', array(
+                'id' => Yii::app()->getRequest()->getParam('id'),
+                'gridDataProvider' => $this->getGridDataProvider(),
+                'gridColumns' => $this->getGridColumns()
+                ));
+                }
 }
