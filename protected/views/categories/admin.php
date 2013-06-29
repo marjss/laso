@@ -32,6 +32,11 @@ ul, ol {
     margin: 0 0 0px 0px;
     padding: 0;
 }
+
+#treeMenu ul {
+    list-style: none outside none;
+    margin: -8px 2px 14px -11px !important;
+}
 </style>
 <?php
 /* @var $this CategoriesController */
