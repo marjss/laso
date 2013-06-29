@@ -234,14 +234,14 @@ $this->widget('bootstrap.widgets.TbExtendedGridView', array(
                 'class'=>'bootstrap.widgets.TbRelationalColumn',
                 'name' => 'title',
                 'url' => $this->createUrl('categories/relational'),
-                'value'=> $data->title,
+               // 'value'=> $data->title,
                 )),
                 array(
                     array(
                 'class' => 'bootstrap.widgets.TbEditableColumn',
                 'type'=>'raw',
                 'name' => 'sortOrder',
-                'value'=>$data->sortOrder, 
+                //'value'=>$data->sortOrder, 
                 'sortable'=>false,
                 'editable' => array(
                 'url' => $this->createUrl('categories/editable'),
@@ -301,7 +301,8 @@ $(function(){
 });");
 
 echo CHtml::link('Add New Filter', '#', array('id' => 'upload-filter','class'=>'button'));
-    
+?>&nbsp;&nbsp;<?php
+echo CHtml::link('Add New Category', Yii::app()->createUrl("categories/create"), array('id' => 'upload-category','class'=>'button'));    
     $this->beginWidget('zii.widgets.jui.CJuiDialog',array(
                 'id'=>'filter-form',
                 'options'=>array(
