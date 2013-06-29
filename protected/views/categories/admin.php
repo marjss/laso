@@ -1,3 +1,38 @@
+<style>
+    
+#treeMenu ul li a {
+    color: #4D5F6B;
+    display: inline-block;
+    float: left;
+    font-size: 16px;
+    padding: 0px 0px;
+    text-decoration: none;
+    width: 182px;
+}
+
+h3 {
+    cursor: s-resize;
+    margin: -13px 0 0;
+}
+h4.success {
+    background: url("../images/icons/icn_alert_success.png") no-repeat scroll 10px 10px #E2F6C5;
+    border: 1px solid #79C20D;
+    color: #32510F;
+    padding: 7px 0;
+}
+h4.alert {
+    border-radius: 5px 5px 5px 5px;
+    display: block;
+    font-size: 14px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    text-indent: 40px;
+}
+ul, ol {
+    margin: 0 0 0px 0px;
+    padding: 0;
+}
+</style>
 <?php
 /* @var $this CategoriesController */
 /* @var $model Categories */
@@ -45,7 +80,7 @@ $('.search-form form').submit(function(){
 <h3 style="cursor: s-resize; ">Categories Grid</h3>
 
 </div>
-    <h4 class="alert success" style="display:none;"></h4>
+    <h4 class="alert success" style="display:none;">Successfully Changed</h4>
     <h4 class="alert error" style="display:none;"></h4>
     <p>
 You can change the position of the category filter by drag and drop.
@@ -81,7 +116,8 @@ You can change the position of the category filter by drag and drop.
                     'type': 'post',
                     'data': serial,
                     'success': function(data){
-//                    $('#categories-grid').yiiGridView('update');
+                    $('.success').css('display','block');
+//                  $('#categories-grid').yiiGridView('update');
                     return false;
                     },
                     'error': function(request, status, error){
@@ -169,6 +205,19 @@ You can change the position of the category filter by drag and drop.
 $this->widget('bootstrap.widgets.TbExtendedGridView', array(
     'type' => 'striped bordered',
     'itemsCssClass' => 'datagrid',
+    'pager'=>array(
+        'header'=>'',
+        'cssFile'=>true,
+        'maxButtonCount'=>25,
+        'selectedPageCssClass'=>'active',
+        'hiddenPageCssClass'=>'disabled',
+        'firstPageCssClass'=>'previous',
+        'lastPageCssClass'=>'next',
+        'firstPageLabel'=>'<<',
+        'lastPageLabel'=>'>>',
+        'prevPageLabel'=>'<',
+        'nextPageLabel'=>'>',
+        ),
     'id'=>'categories-grid',
     'dataProvider' => $model->search(),
     'template' => "{items}",

@@ -160,13 +160,13 @@ class CategoriesController extends Controller
 		if(isset($_GET['Categories']))
 			$model->attributes=$_GET['Categories'];
                 $cs=Yii::app()->clientScript;  
-       /* $cs->scriptMap=array(  
-            'jquery.ui.bootstrap.css'=>false, 
-            'bootstrap-notify.css'=>false,  
-            'bootstrap-yii.css'=>false,  
-            'bootstrap-editable.css'=>false,  
-            'bootstrap.css'=>false,  
-            );  */
+        $cs->scriptMap=array(  
+//            'jquery.ui.bootstrap.css'=>false, 
+//            'bootstrap-notify.css'=>false,  
+//            'bootstrap-yii.css'=>false,  
+//            'bootstrap-editable.css'=>true,  
+//            'bootstrap.css'=>false,  
+            ); 
 		$this->render('admin',array(
 			'model'=>$model
 		));
@@ -275,10 +275,11 @@ class CategoriesController extends Controller
     public function actionRelational()
                 {
                 // partially rendering "_relational" view
+                $id = Yii::app()->getRequest()->getParam('id');
+                $gridDataProvider= Filters::model()->GetFilters($id);
                 $this->renderPartial('_relational', array(
-                'id' => Yii::app()->getRequest()->getParam('id'),
-                'gridDataProvider' => $this->getGridDataProvider(),
-                'gridColumns' => $this->getGridColumns()
+                'gridDataProvider' =>$gridDataProvider ,
+                
                 ));
                 }
 }

@@ -111,6 +111,13 @@ class Filters extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
-        
+        public function getfilters($id){
+            $criteria=new CDbCriteria;
+            $criteria->condition = 'cat_id =' .$id ;
+//            $criteria->compare('title',$this->title);
+            return new CActiveDataProvider($this, array(
+			'criteria'=>$criteria,
+		));
+        }
         
 }

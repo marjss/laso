@@ -2,5 +2,7 @@
 'type'=>'striped bordered',
 'dataProvider' => $gridDataProvider,
 'template' => "{items}",
-'columns' => array_merge(array(array('class'=>'bootstrap.widgets.TbImageColumn')),$gridColumns),
+'columns' => array(
+    //'cat_id',
+    'title'),
 ));?>
