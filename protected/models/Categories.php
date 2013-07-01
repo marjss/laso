@@ -40,11 +40,12 @@ class Categories extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
+                        array('sortOrder','unique'),
 			array('title, description', 'required'),
 			array('status', 'numerical', 'integerOnly'=>true),
 			array('title', 'length', 'max'=>255),
 			array('description', 'length', 'max'=>500),
-			array('added_date,sortOrder, modified_date', 'safe'),
+			array('added_date, modified_date', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, title, description, added_date,sortOrer, modified_date, status', 'safe', 'on'=>'search'),

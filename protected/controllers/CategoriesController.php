@@ -89,13 +89,27 @@ class CategoriesController extends Controller
 		{
                     
 			$model->attributes=$_POST['Categories'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+			if($model->save()){
+                          $this->redirect(array('admin','id'=>$model->id));
+                        }
 		}
-
+        if( Yii::app()->request->isAjaxRequest )
+                            {
+                $cs=Yii::app()->clientScript;  
+                $cs->scriptMap=array(  
+                    'jquery.ui.bootstrap.css'=>false, 
+                    'bootstrap-notify.css'=>false,  
+                    'bootstrap-yii.css'=>false,  
+                    'bootstrap-editable.css'=>false,  
+                    'bootstrap.css'=>false,  
+                    );  
+                                $this->renderPartial('_form',array('model'=>$model,
+                               ),false,true);
+                            //Yii::app()->end();
+                            }else{
 		$this->render('create',array(
 			'model'=>$model,
-		));
+                    )); }
 	}
 
 	/**
@@ -259,7 +273,8 @@ class CategoriesController extends Controller
         protected function gridStatusColumn($data,$row){ 
              if ($data->status == 1) {
                  $image = '/images/active.png';}
-             else{ 
+             else{
+                 $data->status = 0;
                  $image = '/images/inactive.png';}
         $imghtml = CHtml::image(Yii::app()->baseUrl . $image, 'Status', array('rel' => $data->status, 'class' => 'status-' . $data->id));
         echo CHtml::link($imghtml, '', array('class' => 'imgactive', 'rel' => $data->id, 'style' => 'cursor:pointer;',));
@@ -268,17 +283,34 @@ class CategoriesController extends Controller
              echo $data->sortOrder;
     }
     public function actionEditable(){
+        
         $id= $_POST['pk'];
         $val = $_POST['value'];
-       Categories::model()->updateByPk($id,array('sortOrder'=>$val));
+                                $categories = Categories::model()->findByPk($id);
+                               $prev = $categories->sortOrder;
+                                $categories->sortOrder = $val;
+                                if($categories->validate()){
+                                    $categories->save(false);
+                            echo 'passed';
+                                    
+                                }else {
+                                  echo $prev;
+                                    
+                                }
+//       Categories::model()->updateByPk($id,array('sortOrder'=>$val));
     }
     public function actionRelational()
                 {
+        $this->layout='blank';
                 // partially rendering "_relational" view
                 $id = Yii::app()->getRequest()->getParam('id');
                 $gridDataProvider= Filters::model()->GetFilters($id);
-                $this->renderPartial('_relational', array(
-                'gridDataProvider' =>$gridDataProvider ,
+        $cs = Yii::app()->getClientScript();  
+        $cs->registerScript('bootstrap-editable.js','');
+//        Yii::app()->registerClientScript('bootstrap-editable.js');
+     $this->render('_relational', array(
+                'id'=>$id,
+                'gridDataProvider' =>$gridDataProvider ,true,false
                 
                 ));
                 }

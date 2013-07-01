@@ -4,7 +4,7 @@
 
 $this->breadcrumbs=array(
 	'Categories'=>array('index'),
-	$model->title,
+	$model->name,
 );
 
 $this->menu=array(
@@ -17,18 +17,23 @@ $this->menu=array(
 ?>
 <div class="content-box">
 <div class="content-box-header">
-<h3 style="cursor: s-resize; ">View Categories #<?php echo $model->id; ?></h3>
+<h3 style="cursor: s-resize; ">View Hotels #<?php echo $model->id; ?></h3>
 
 </div>
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
 	'attributes'=>array(
 		'id',
-		'title',
+		'name',
 		'description',
-		'added_date',
-		'modified_date',
-		'status',
+		 array(      
+                    'name'=>'avatar',
+                     'type'=>'image',
+                     'value'=>Yii::app()->baseUrl.'/'.$model->avatar
+			    ),
+		'street',
+		'city',
+                'state'
 	),
 )); ?>
 </div>

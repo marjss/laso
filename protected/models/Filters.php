@@ -12,6 +12,8 @@
  * @property integer $pos
  * @property string $added_date
  * @property integer $status
+ * @property string $home 
+ * @property string $site
  * @property string $note
  *
  * The followings are the available model relations:
@@ -50,10 +52,10 @@ class Filters extends CActiveRecord
 			array('title', 'length', 'max'=>255),
 			array('description', 'length', 'max'=>500),
 			array('note', 'length', 'max'=>1024),
-			array('added_date,cat_id,', 'safe'),
+			array('added_date,cat_id,home,site', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, cat_id, title, description, pos, added_date, status, note', 'safe', 'on'=>'search'),
+			array('id, cat_id, title, description, pos,home,site, added_date, status, note', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -105,6 +107,8 @@ class Filters extends CActiveRecord
 		$criteria->compare('pos',$this->pos);
 		$criteria->compare('added_date',$this->added_date,true);
 		$criteria->compare('status',$this->status);
+                $criteria->compare('home',$this->home,true);
+                $criteria->compare('site',$this->site,true);
 		$criteria->compare('note',$this->note,true);
 
 		return new CActiveDataProvider($this, array(

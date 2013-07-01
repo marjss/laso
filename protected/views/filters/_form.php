@@ -24,8 +24,8 @@
 	'enableAjaxValidation'=>false,
 )); ?>
 
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
-        
+	<p class="note" style="font-weight: bold;">Fields with <span class="required">*</span> are required.</p>
+        <p>&nbsp;</p>
 	<?php echo $form->errorSummary($model); ?>
 <table class="formbox">
     <tr>
@@ -35,6 +35,7 @@
 		<td><?php echo $form->error($model,'cat_id'); ?></td>
 	</div>
 </tr>
+
 <tr>
 <!--	<div class="row">
 		<td><?php // echo $form->labelEx($model,'hotel_id'); ?></td>
@@ -42,6 +43,7 @@
 		<td><?php // echo $form->error($model,'hotel_id'); ?></td>
 	</div>-->
 </tr>
+<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
 <!--<tr>
 	<div class="row">
 		<td><?php echo $form->labelEx($model,'hotel_id'); ?></td>
@@ -56,6 +58,7 @@
 		<td><?php echo $form->error($model,'title'); ?></td>
 	</div>
 </tr>
+<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
 <tr>
 	<div class="row">
 		<td><?php echo $form->labelEx($model,'description'); ?></td>
@@ -76,14 +79,16 @@
 		<!--<td><?php echo $form->textField($model,'status'); ?></td>-->
 		<!--<td><?php echo $form->error($model,'status'); ?></td>-->
 	<!--</div>-->
-<!--</tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>-->
+</tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
 <tr>
+   
 	<div class="row">
 		<td><?php echo $form->labelEx($model,'note'); ?></td>
 		<td><?php echo $form->textField($model,'note',array('size'=>60,'maxlength'=>1024)); ?></td>
 		<td><?php echo $form->error($model,'note'); ?></td>
 	</div>
 </tr>
+ <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
 <tr>
 	<div class="row buttons">
             <td></td>

@@ -36,7 +36,7 @@ class FiltersController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','create','update','ajaxfilter'),
+				'actions'=>array('admin','delete','create','update','ajaxfilter','editable','Edittitle','togglehome','togglesite'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -51,6 +51,7 @@ class FiltersController extends Controller
 	 */
 	public function actionView($id)
 	{
+            $this->layout = 'control_panel';
 		$this->render('view',array(
 			'model'=>$this->loadModel($id),
 		));
@@ -70,15 +71,15 @@ class FiltersController extends Controller
                 $hotel = new Hotels;
                 $category = new Categories;
 		if(isset($_POST['Filters']))
-		{       
+                    {       
                         $date = date('Y-m-d h:i:s');
 			$model->attributes=$_POST['Filters'];
                         $model->setAttribute('added_date', $date);
                         $model->setAttribute('status',1);
-                            $model->setAttribute('hotel_id',$_POST['Hotels']['name']);
+//                            $model->setAttribute('hotel_id',$_POST['Hotels']['name']);
 //                            $model->setAttribute('cat_id',$_POST['Categories']['title']);
 			if($model->save())
-				$this->redirect(array('admin','id'=>$model->id));
+				$this->redirect(array('categories/admin'));
 		}
                  if( Yii::app()->request->isAjaxRequest )
                     {
@@ -285,4 +286,50 @@ class FiltersController extends Controller
                     //Yii::app()->end();
                     }else{}
         }
+     // Edit filters positions in categories grid.   
+        public function actionEditable(){
+        $id= $_POST['pk'];
+        $val = $_POST['value'];
+        Filters::model()->updateByPk($id,array('pos'=>$val));
+    }
+    // Edit filters positions in categories grid.   
+        public function actionEdittitle(){
+        $id= $_POST['pk'];
+        $val = $_POST['value'];
+        Filters::model()->updateByPk($id,array('title'=>$val));
+    }
+    public function actiontogglehome(){
+         $id= $_POST['Type_id'];
+         $status = $_POST['status'];
+         if($status == 1){
+        if(Filters::model()->updateByPk($id,array('home'=>0))){
+        echo '0';
+            }
+        }
+        else{
+            Filters::model()->updateByPk($id,array('home'=>1));
+            echo '1';}
+        
+    }
+    public function actiontogglesite(){
+        $id= $_POST['Type_id'];
+         $status = $_POST['status'];
+         if($status == 1){
+        if(Filters::model()->updateByPk($id,array('site'=>0))){
+        echo '0';
+            }
+        }
+        else{
+            Filters::model()->updateByPk($id,array('site'=>1));
+            echo '1';}
+        
+    }
+    public function filterStatusColumn($data,$row){ 
+             if ($data->status == 1) {
+                 $image = '/images/active.png';}
+             else{ 
+                 $image = '/images/inactive.png';}
+        $imghtml = CHtml::image(Yii::app()->baseUrl . $image, 'Status', array('rel' => $data->status, 'class' => 'status-' . $data->id));
+        echo CHtml::link($imghtml, '', array('class' => 'imgactive', 'rel' => $data->id, 'style' => 'cursor:pointer;',));
+    }
 }

@@ -43,7 +43,7 @@ input[type="radio"], input[type="checkbox"]{margin-left: 21px;margin-right: -11p
             <tr>
 	<div class="row">
 		<td><?php echo $form->labelEx($model,'description'); ?></td>
-		<td><?php echo $form->textField($model,'description',array('size'=>60,'maxlength'=>5000)); ?></td>
+		<td><?php echo $form->textArea($model,'description',array('size'=>60,'maxlength'=>5000)); ?></td>
 		<td><?php echo $form->error($model,'description'); ?></td>
 	</div>
         </tr>
@@ -52,8 +52,14 @@ input[type="radio"], input[type="checkbox"]{margin-left: 21px;margin-right: -11p
 		<td><?php echo $form->labelEx($model,'avatar'); ?></td>
 		<td><?php echo $form->fileField($model,'avatar',array('size'=>60,'maxlength'=>255)); ?></td>
 		<td><?php echo $form->error($model,'avatar'); ?></td>
+                
 	</div>
         </tr>
+        <?php if(($model->avatar != '') && ($avatari != 'create')){ ?>
+        <div id="hotelimage" style="float:right; margin-top: 200px;"><?php echo CHtml::image(Yii::app()->baseUrl.'/'.$model->avatar, 'DORE',array('style'=>'width:250px;')); ?>
+  <div style="clear:both; margin: 15px 0 0 0px;"><?php echo CHtml::button('Remove Image',array('class'=>'button','id'=>'remove_img','rel'=>$model->id)) ?></div></div>
+  <?php } ?>
+  <input type="hidden" name="imageview" id="imageview" value="<?php if($model->avatar != ''){ echo 1; }else{ echo 0; } ?>" />
         <tr>
 	<div class="row">
 		<td><?php echo $form->labelEx($model,'Area'); ?></td>
@@ -113,7 +119,7 @@ input[type="radio"], input[type="checkbox"]{margin-left: 21px;margin-right: -11p
         <tr class="filter">
                 
 		<td><?php echo $form->labelEx($filter,'Filter',array('display'=>'inline-block')); ?></td>
-                <td><?php echo $form->checkBoxList($filter,'filter_id',Webnut::getFilters(),array('separator'=>'')); ?></div></td>
+                <td><?php echo $form->checkBoxList($filter,'filter_id',Webnut::getFilters(),array('separator'=>'&nbsp;')); ?></div></td>
 		<td><?php echo $form->error($filter,'filter_id'); ?></td>
 	
         </tr>
@@ -157,5 +163,25 @@ $(function(){
 </table>
 </div>
     </div>
+    <script>
+       $(document).on('click','#remove_img',(function(){
+          var cid = $(this).attr('rel');
+          $.ajax({
+              type:'POST',
+              data:{cid:cid},
+              url: '<?php echo Yii::app()->baseUrl;?>/admin/Removeimage',
+              success:function(res){
+                    if(res == 1){
+                        $('#hotelimage').css('display','none');
+                       $('#imageview').attr('value',0);
+                    }
+                    else{
+                            
+                    }    
+                    return false;
+                 }
+          })
+       })); 
     
+    </script>
     <!-- form -->

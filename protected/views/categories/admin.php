@@ -87,6 +87,7 @@ $('.search-form form').submit(function(){
 </div>
     <h4 class="alert success" style="display:none;">Successfully Changed</h4>
     <h4 class="alert error" style="display:none;"></h4>
+    <h4 class="alert error boot" style="display:none;">Already assigned value.Please Choose Another.</h4>
     <p>
 You can change the position of the category filter by drag and drop.
 </p><br>
@@ -102,110 +103,40 @@ You can change the position of the category filter by drag and drop.
 </h4>
 <?php } ?>
 <?php
-    $str_js = "
-        var fixHelper = function(e, ui) {
-            ui.children().each(function() {
-                $(this).width($(this).width());
-            });
-            return ui;
-        };
- 
-        $('#categories-grid table.datagrid tbody').sortable({
-            forcePlaceholderSize: true,
-            forceHelperSize: true,
-            items: 'tr',
-            update : function () {
-                serial = $('#categories-grid table.datagrid tbody').sortable('serialize', {key: 'items[]', attribute: 'class'});
-                $.ajax({
-                    'url': '" . $this->createUrl('//categories/sort') . "',
-                    'type': 'post',
-                    'data': serial,
-                    'success': function(data){
-                    $('.success').css('display','block');
-//                  $('#categories-grid').yiiGridView('update');
-                    return false;
-                    },
-                    'error': function(request, status, error){
-                        alert('We are unable to set the sort order at this time.  Please try again in a few minutes.');
-                    }
-                });
-            },
-            helper: fixHelper
-        }).disableSelection();
-    ";
- 
-    Yii::app()->clientScript->registerScript('sortable-project', $str_js);
+//    $str_js = "
+//        var fixHelper = function(e, ui) {
+//            ui.children().each(function() {
+//                $(this).width($(this).width());
+//            });
+//            return ui;
+//        };
+// 
+//        $('#categories-grid table.datagrid tbody').sortable({
+//            forcePlaceholderSize: true,
+//            forceHelperSize: true,
+//            items: 'tr',
+//            update : function () {
+//                serial = $('#categories-grid table.datagrid tbody').sortable('serialize', {key: 'items[]', attribute: 'class'});
+//                $.ajax({
+//                    'url': '" . $this->createUrl('//categories/sort') . "',
+//                    'type': 'post',
+//                    'data': serial,
+//                    'success': function(data){
+//                    $('.success').css('display','block');
+////                  $('#categories-grid').yiiGridView('update');
+//                    return false;
+//                    },
+//                    'error': function(request, status, error){
+//                        alert('We are unable to set the sort order at this time.  Please try again in a few minutes.');
+//                    }
+//                });
+//            },
+//            helper: fixHelper
+//        }).disableSelection();
+//    ";
+// 
+//    Yii::app()->clientScript->registerScript('sortable-project', $str_js);
 ?>
-
-
-
-
-
-
-
-
-
-<?php //$data =Webnut::getCats();
-//$this->widget('zii.widgets.jui.CJuiSortable', array(
-//    'id'=>'sortable',
-//    'items'=>$data,
-//    'options'=>array(
-//        'cursor'=>'n-resize',
-//        'class'=>'ui-icon ui-icon-arrowthick-2-n-s',
-//        'opacity'=>0.6, //set the dragged object's opacity to 0.6
-//      ),
-//    ));
- /*echo CHtml::ajaxButton('Submit Changes', 'Updateorder', array(
-        'type' => 'POST',
-        'data' => array(
-            // Turn the Javascript array into a PHP-friendly string
-            'Order' => 'js:$("ul.ui-sortable").sortable("toArray").toString()',
-        ),
-     'success'=>'function(resp){
-         $("#categories-grid").yiiGridView("update");
-          $(".success").css("display","block");
-         $(".success").html("Success");
-         }',
-     'error'=>'function(resp){
-         $("#categories-grid").yiiGridView("update");
-          $(".error").css("display","block");
-         $(".error").html("Oh! Some error occured. Try Again.");
-         }',
-    ),array('class'=>'button'));*/
-//$this->widget('bootstrap.widgets.TbGridView', array(
-//	'id'=>'categories-grid',
-////        'itemsCssClass' => 'datagrid',
-//	'dataProvider'=>$model->search(),
-//        'template' => "{items}",
-////    'rowCssClassExpression'=>'"items[]_{$data->id}"',
-////	'filter'=>$model,
-////        'ajaxUpdate'=>false,
-//	'columns'=>array(
-//		'id',
-//                
-////                'sortOrder',
-//		'title',
-//		'description',
-//		'added_date',
-//		'modified_date',
-//		 array(            
-//                    'name'=>'status',
-//                    'value'=>array($this,'gridStatusColumn'), 
-//                ),
-//                array(
-//                'class' => 'bootstrap.widgets.TbEditableColumn',
-//                'name' => 'sortOrder',
-//                'sortable'=>false,
-//                'editable' => array(
-//                'url' => $this->createUrl('categories/editable'),	
-//                'placement' => 'right',
-//                'inputclass' => 'span3'
-//                )),
-//		array(
-//			'class'=>'CButtonColumn',
-//		),
-//	),
-//)); ?>
 <?php     
 $this->widget('bootstrap.widgets.TbExtendedGridView', array(
     'type' => 'striped bordered',
@@ -227,28 +158,42 @@ $this->widget('bootstrap.widgets.TbExtendedGridView', array(
     'dataProvider' => $model->search(),
     'template' => "{items}",
     'filter'=>$model,
-    'ajaxUpdate'=>false,
+    'ajaxUpdate'=>true,
     'rowCssClassExpression'=>'"items[]_{$data->id}"',
     'columns' => array_merge(array(
-                array(
-                'class'=>'bootstrap.widgets.TbRelationalColumn',
-                'name' => 'title',
-                'url' => $this->createUrl('categories/relational'),
-               // 'value'=> $data->title,
-                )),
+               ),
                 array(
                     array(
                 'class' => 'bootstrap.widgets.TbEditableColumn',
                 'type'=>'raw',
                 'name' => 'sortOrder',
-                //'value'=>$data->sortOrder, 
+               // 'value'=>$data->sortOrder, 
                 'sortable'=>false,
                 'editable' => array(
                 'url' => $this->createUrl('categories/editable'),
-                'placement' => 'right',
-                'inputclass' => 'span3'
-                )),
-                'title',
+                'success'=>'function(resp,xhr){
+                  var i = resp;
+                    if(resp != "passed"){
+                    $(".boot").css("display","block");
+                    $(".success").css("display","none");
+                    $(".popover").css("display","none");   
+                    $("#categories-grid").yiiGridView("update");
+                     }
+                    else{
+                    $("#categories-grid table.datagrid tbody").sortable({});
+                    $(".boot").css("display","none");
+                    $(".success").css("display","block");
+                    $("#categories-grid").yiiGridView("update");
+                    }
+                    
+                    }'
+                )), array(
+                'class'=>'bootstrap.widgets.TbRelationalColumn',
+                'name' => 'title',
+                'url' => $this->createUrl('categories/relational'),
+                'value'=> '$data->title',
+                ),
+                //'title',
                 'description',
 		'added_date',
 		'modified_date',
@@ -298,11 +243,17 @@ $(function(){
         });
         return false;
     });
+    $('#upload-category').click(function(){
+        $('#cate-form').load('".Yii::app()->createUrl('categories/create')."', function(){
+            $('#cate-form').dialog('open');
+        });
+        return false;
+    });
 });");
 
-echo CHtml::link('Add New Filter', '#', array('id' => 'upload-filter','class'=>'button'));
-?>&nbsp;&nbsp;<?php
-echo CHtml::link('Add New Category', Yii::app()->createUrl("categories/create"), array('id' => 'upload-category','class'=>'button'));    
+echo CHtml::link('Add New Filter', '#', array('id' => 'upload-filter','class'=>'button')); ?>
+   &nbsp;&nbsp;<?php
+echo CHtml::link('Add New Category', '#', array('id' => 'upload-category','class'=>'button'));  
     $this->beginWidget('zii.widgets.jui.CJuiDialog',array(
                 'id'=>'filter-form',
                 'options'=>array(
@@ -316,7 +267,23 @@ echo CHtml::link('Add New Category', Yii::app()->createUrl("categories/create"),
            
                 ));
     
-    $this->endWidget('zii.widgets.jui.CJuiDialog');  ?>
+    $this->endWidget('zii.widgets.jui.CJuiDialog'); 
+    
+    $this->beginWidget('zii.widgets.jui.CJuiDialog',array(
+                'id'=>'cate-form',
+                'options'=>array(
+                    'title'=>Yii::t('Add','Category'),
+                    'autoOpen'=>false,
+                    'model'=>'true',
+                    'width'=>'auto',
+                    'height'=>'auto'
+                ),
+        
+           
+                ));
+    
+    $this->endWidget('zii.widgets.jui.CJuiDialog'); 
+    ?>
 <script>
        $(document).on('click','.imgactive',(function(){
           var cid = $(this).attr('rel');

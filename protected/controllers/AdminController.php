@@ -29,7 +29,7 @@ class AdminController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','create','update','admin','delete','Administrator','login','logout','banner','banneradmin','Activeinactive','hotelActiveinactive'),
+				'actions'=>array('index','view','create','update','admin','delete','Administrator','login','logout','banner','banneradmin','Activeinactive','hotelActiveinactive','Removeimage'),
 				'users'=>array('admin'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -56,6 +56,7 @@ class AdminController extends Controller
 	 */
 	public function actionView($id)
 	{
+            $this->layout = 'control_panel';
 		$this->render('view',array(
 			'model'=>$this->loadModel($id),
 		));
@@ -145,11 +146,12 @@ class AdminController extends Controller
                 // Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
                if(isset($_POST['Hotels']))
-		{
+		{                          
                          $avtarimage = $model->avatar;
 			$model->attributes=$_POST['Hotels'];
                         if($_FILES['Hotels']['name']['avatar'] != '')
 			{ 
+                            if($_POST['imageview'] != 1){
                             $model->avatar = CUploadedFile::getInstanceByName('Hotels[avatar]');
                                     if ($model->avatar instanceof CUploadedFile) {
                                                 $rand = rand(1,99999999);
@@ -168,6 +170,10 @@ class AdminController extends Controller
 						
 						$model->avatar = $filename;
 					}
+                                    }else{
+                                        Yii::app()->user->setFlash('error', "Please remove the avatar image first, before new avatar image upload.");
+                                       $this->redirect(array('update','id'=>$model->id));
+                                    }   
 				}else{ $model->avatar = $avtarimage;	}
                                  if($model->save(false)){
                                      $hotel_id = $model->id;
@@ -425,6 +431,21 @@ class AdminController extends Controller
             }
         }
        
-    
+    public function actionRemoveimage(){
+        if(isset($_POST['cid']) && !empty($_POST['cid'])){
+                $cid = $_POST['cid'];
+                                $model = Hotels::model()->findByPk($cid);                                                    
+                                $image = Yii::app()->request->baseUrl."/".$model->avatar;
+                $exploded    = explode("/",$image);
+//                $relpath= $exploded[1];
+                if(unlink(getcwd().'/'.$model->avatar)){
+                            Hotels::model()->updateByPk($cid,array('avatar'=>''));
+                            echo 1;
+                            
+                        }else
+                            echo 0;
+                        }
+                }
+                
         
 }

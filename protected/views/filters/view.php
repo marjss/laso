@@ -15,19 +15,29 @@ $this->menu=array(
 	array('label'=>'Manage Filters', 'url'=>array('admin')),
 );
 ?>
+<div class="content-box">
+<div class="content-box-header">
+<h3 style="cursor: s-resize; ">View Filters #<?php echo $model->id; ?></h3>
 
-<h1>View Filters #<?php echo $model->id; ?></h1>
+</div>
+
 
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
 	'attributes'=>array(
 		'id',
-		'cat_id',
-		'hotel_id',
+		array(
+                    'name'=>'cat_id',
+                    'value'=>FiltersController::get_categoryname($model,'')
+                ),
 		'title',
 		'description',
-		'added_date',
+		array(
+                    'name'=>'added_date',
+                            'value'=>date('F j Y',strtotime($model->added_date))
+                    ),
 		'status',
 		'note',
 	),
 )); ?>
+</div>

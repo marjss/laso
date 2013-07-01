@@ -15,4 +15,6 @@ $this->menu=array(
 
 
 
-<?php echo $this->renderPartial('_form', array('model'=>$model,'filter'=>$filter)); ?>
+<?php 
+$avatari = 'create';
+echo $this->renderPartial('_form', array('model'=>$model,'filter'=>$filter,'avatari'=>$avatari)); ?>

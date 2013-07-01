@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 3.3.9
+-- version 3.4.5
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jun 28, 2013 at 03:49 AM
--- Server version: 5.5.8
--- PHP Version: 5.3.5
+-- Generation Time: Jul 01, 2013 at 11:06 AM
+-- Server version: 5.5.16
+-- PHP Version: 5.3.8
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -34,11 +35,6 @@ CREATE TABLE IF NOT EXISTS `ld_api` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `ld_api`
---
-
-
 -- --------------------------------------------------------
 
 --
@@ -59,8 +55,8 @@ CREATE TABLE IF NOT EXISTS `ld_banner` (
 --
 
 INSERT INTO `ld_banner` (`id`, `banner_name`, `banner_image`, `status`, `adddate`) VALUES
-(1, 'test', 'banner/49975586_4utpstg.jpg', '1', '2013-06-27 12:57:30'),
-(2, 'Loerm Ipsm', 'banner/83865356_80465698_18_09_2008_0954610001221752191_soemone.jpg', '1', '2013-06-27 07:27:08');
+(1, 'test', 'banner/49975586_4utpstg.jpg', '1', '2013-06-27 07:27:30'),
+(2, 'Loerm Ipsm', 'banner/83865356_80465698_18_09_2008_0954610001221752191_soemone.jpg', '1', '2013-06-27 01:57:08');
 
 -- --------------------------------------------------------
 
@@ -77,18 +73,17 @@ CREATE TABLE IF NOT EXISTS `ld_categories` (
   `modified_date` datetime DEFAULT NULL,
   `status` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `ld_categories`
 --
 
 INSERT INTO `ld_categories` (`id`, `title`, `description`, `sortOrder`, `added_date`, `modified_date`, `status`) VALUES
-(1, 'place', 'places', 1, '2013-06-20 00:00:00', '2013-06-20 00:00:00', 1),
-(2, 'interior', 'interiors', 2, '2013-06-20 00:00:00', '2013-06-20 00:00:00', 1),
-(3, 'street', 'street', 3, '2013-06-20 00:00:00', '2013-06-20 00:00:00', 1),
-(4, 'views', 'views', 4, '2013-06-20 00:00:00', '2013-06-20 00:00:00', 1),
-(5, 'test', 'hello for test', NULL, NULL, NULL, NULL);
+(1, 'place', 'places', 2, '2013-06-20 00:00:00', '2013-06-20 00:00:00', 1),
+(2, 'interior', 'interiors', 4, '2013-06-20 00:00:00', '2013-06-20 00:00:00', 1),
+(3, 'area', 'area', 1, '2013-06-20 00:00:00', '2013-06-20 00:00:00', 1),
+(4, 'views', 'views', 3, '2013-06-20 00:00:00', '2013-06-20 00:00:00', 1);
 
 -- --------------------------------------------------------
 
@@ -103,11 +98,6 @@ CREATE TABLE IF NOT EXISTS `ld_cities` (
   `city_name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
---
--- Dumping data for table `ld_cities`
---
-
 
 -- --------------------------------------------------------
 
@@ -124,11 +114,6 @@ CREATE TABLE IF NOT EXISTS `ld_contactus` (
   `add_date` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
---
--- Dumping data for table `ld_contactus`
---
-
 
 -- --------------------------------------------------------
 
@@ -421,21 +406,28 @@ CREATE TABLE IF NOT EXISTS `ld_filters` (
   `pos` int(11) DEFAULT NULL,
   `added_date` timestamp NULL DEFAULT NULL,
   `status` int(2) DEFAULT NULL,
+  `home` int(2) DEFAULT NULL,
+  `site` int(2) DEFAULT NULL,
   `note` varchar(1024) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
 --
 -- Dumping data for table `ld_filters`
 --
 
-INSERT INTO `ld_filters` (`id`, `cat_id`, `hotel_id`, `title`, `description`, `pos`, `added_date`, `status`, `note`) VALUES
-(1, 2, 0, 'A.C', '', NULL, '2013-06-27 02:19:35', 1, ''),
-(2, 2, 0, 'Refrigerator', '', NULL, '2013-06-27 02:19:56', 1, ''),
-(3, 2, 0, 'T.V', '', NULL, '2013-06-27 02:20:10', 1, ''),
-(4, 1, 0, 'jaipur', '', NULL, '2013-06-27 02:20:22', 1, ''),
-(5, 4, 0, 'Pool Side', '', NULL, '2013-06-27 02:20:42', 1, ''),
-(6, 4, 0, 'Mountain View', '', NULL, '2013-06-27 02:20:57', 1, '');
+INSERT INTO `ld_filters` (`id`, `cat_id`, `hotel_id`, `title`, `description`, `pos`, `added_date`, `status`, `home`, `site`, `note`) VALUES
+(1, 2, 0, 'A.', '', 5, '2013-06-26 20:49:35', 1, 1, 0, ''),
+(2, 2, 0, 'Refrigerator', '', NULL, '2013-06-26 20:49:56', 1, 1, 1, ''),
+(3, 2, 0, 'T.V', '', NULL, '2013-06-26 20:50:10', 1, 1, 1, ''),
+(4, 1, 0, 'jaipur', '', NULL, '2013-06-26 20:50:22', 1, 0, 1, ''),
+(5, 4, 0, 'Pool Side', '', 2, '2013-06-26 20:50:42', 1, 1, 0, ''),
+(6, 4, 0, 'Mountain View', '', NULL, '2013-06-26 20:50:57', 1, 0, 1, ''),
+(7, 1, 0, 'jaipur', '', NULL, '2013-06-27 22:01:47', 1, 0, 1, ''),
+(8, 1, 0, 'asdasd', 'asd', NULL, '2013-06-27 22:13:27', 1, 1, 1, ''),
+(9, 3, 0, 'North', 'this is test north area', NULL, '2013-06-27 22:40:26', 1, 1, 1, 'this is test note in the hotel model?'),
+(10, 3, 0, 'South', 'South', NULL, '2013-06-30 23:18:44', 1, 1, 0, 'nothing'),
+(11, 3, 0, 'West', 'West', NULL, '2013-06-30 23:20:23', 1, 0, 1, '');
 
 -- --------------------------------------------------------
 
@@ -565,11 +557,6 @@ CREATE TABLE IF NOT EXISTS `ld_social_network` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `ld_social_network`
---
-
-
 -- --------------------------------------------------------
 
 --
@@ -638,11 +625,6 @@ CREATE TABLE IF NOT EXISTS `ld_user_details` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `ld_user_details`
---
-
-
 -- --------------------------------------------------------
 
 --
@@ -664,9 +646,13 @@ CREATE TABLE IF NOT EXISTS `tbl_subscriber` (
 --
 
 INSERT INTO `tbl_subscriber` (`id`, `subscriber_name`, `subscriber_email`, `subscriber_group`, `status`, `adddate`, `modifydate`) VALUES
-(10, 'manjeet singh ghandhi', 'manjeets@gmail.com', '1', 'Y', '2012-11-26 19:19:26', '0000-00-00 00:00:00'),
-(11, 'cmdhakar', 'cmcs.dhk@gmail.com', '1', 'Y', '2012-11-26 19:20:01', '0000-00-00 00:00:00'),
-(12, 'fdgdf', 'motilalsoni@gamil.com', NULL, 'N', '2013-02-01 12:12:01', '0000-00-00 00:00:00'),
-(13, 'ssdfs', 'dfgdf@gmail.com', '1', 'N', '2013-02-01 12:12:17', '0000-00-00 00:00:00'),
-(14, 'fddg', 'dfgdf@gmail.com', '2', 'N', '2013-02-04 17:08:07', '0000-00-00 00:00:00'),
-(15, 'fgd', 'motilalsoni@gamil.com', '2', 'Y', '2013-02-05 13:16:05', '0000-00-00 00:00:00');
+(10, 'manjeet singh ghandhi', 'manjeets@gmail.com', '1', 'Y', '2012-11-26 13:49:26', '0000-00-00 00:00:00'),
+(11, 'cmdhakar', 'cmcs.dhk@gmail.com', '1', 'Y', '2012-11-26 13:50:01', '0000-00-00 00:00:00'),
+(12, 'fdgdf', 'motilalsoni@gamil.com', NULL, 'N', '2013-02-01 06:42:01', '0000-00-00 00:00:00'),
+(13, 'ssdfs', 'dfgdf@gmail.com', '1', 'N', '2013-02-01 06:42:17', '0000-00-00 00:00:00'),
+(14, 'fddg', 'dfgdf@gmail.com', '2', 'N', '2013-02-04 11:38:07', '0000-00-00 00:00:00'),
+(15, 'fgd', 'motilalsoni@gamil.com', '2', 'Y', '2013-02-05 07:46:05', '0000-00-00 00:00:00');
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
