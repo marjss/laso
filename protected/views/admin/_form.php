@@ -55,6 +55,41 @@ input[type="radio"], input[type="checkbox"]{margin-left: 21px;margin-right: -11p
                 
 	</div>
         </tr>
+        <tr>
+	<div class="row">
+		<td><?php echo $form->labelEx($model,'capacity'); ?></td>
+		<td><?php echo $form->textField($model,'capacity',array('size'=>60,'maxlength'=>255)); ?></td>
+		<td><?php echo $form->error($model,'capacity'); ?></td>
+	</div>
+            </tr>
+        <tr>
+	<div class="row">
+		<td><?php echo $form->labelEx($model,'phone'); ?></td>
+		<td><?php echo $form->textField($model,'phone',array('size'=>60,'maxlength'=>255)); ?></td>
+		<td><?php echo $form->error($model,'phone'); ?></td>
+	</div>
+            </tr>
+            <tr>
+	<div class="row">
+		<td><?php echo $form->labelEx($model,'website'); ?></td>
+		<td><?php echo $form->textField($model,'website',array('size'=>60,'maxlength'=>255)); ?></td>
+		<td><?php echo $form->error($model,'website'); ?></td>
+	</div>
+            </tr>
+            <tr>
+	<div class="row">
+		<td><?php echo $form->labelEx($model,'email'); ?></td>
+		<td><?php echo $form->textField($model,'email',array('size'=>60,'maxlength'=>255)); ?></td>
+		<td><?php echo $form->error($model,'email'); ?></td>
+	</div>
+            </tr>
+            <tr>
+	<div class="row">
+		<td><?php echo $form->labelEx($model,'summary'); ?></td>
+		<td><?php echo $form->textArea($model,'summary',array('size'=>60,'maxlength'=>5000)); ?></td>
+		<td><?php echo $form->error($model,'summary'); ?></td>
+	</div>
+        </tr>
         <?php if(($model->avatar != '') && ($avatari != 'create')){ ?>
         <div id="hotelimage" style="float:right; margin-top: 200px;"><?php echo CHtml::image(Yii::app()->baseUrl.'/'.$model->avatar, 'DORE',array('style'=>'width:250px;')); ?>
   <div style="clear:both; margin: 15px 0 0 0px;"><?php echo CHtml::button('Remove Image',array('class'=>'button','id'=>'remove_img','rel'=>$model->id)) ?></div></div>
@@ -118,9 +153,12 @@ input[type="radio"], input[type="checkbox"]{margin-left: 21px;margin-right: -11p
         </tr>-->
         <tr class="filter">
                 
-		<td><?php echo $form->labelEx($filter,'Filter',array('display'=>'inline-block')); ?></td>
-                <td><?php echo $form->checkBoxList($filter,'filter_id',Webnut::getFilters(),array('separator'=>'&nbsp;')); ?></div></td>
-		<td><?php echo $form->error($filter,'filter_id'); ?></td>
+		<td><?php echo $form->labelEx($model,'Filter',array('display'=>'inline-block')); ?></td>
+                <td><?php 
+                
+                echo $form->CheckBoxList($model,'categoryIds',Chtml::listData(Filters::model()->findAll(),'id','title'),array('separator'=>'&nbsp;','multiple'=>'multiple','size'=>5)
+                        ); ?></div></td>
+		<td><?php echo $form->error($model,'categoryIds'); ?></td>
 	
         </tr>
         <tr>

@@ -10,6 +10,7 @@
                         $criteria2= new CDbCriteria;
                         $criteria2->limit = 5;
                         $criteria2->condition = 'cat_id = '.$model->id;
+                        $criteria2->order = 'home asc';
                         $filters = Filters::model()->findAll($criteria2);
                         ?>
                     <li class="options-col">
@@ -25,7 +26,7 @@
                     <?php }?>
                   </ul>
                 <div class="search-submitter">
-                        <?php echo CHtml::submitButton('',array('class'=>'submit-options')); ?>
+                        <?php echo CHtml::submitButton('',array('class'=>'submit-options','name'=>0)); ?>
                 	<!--<input type="text" value="" class="submit-options" />-->
                     <a href="#"><strong>לאבק בזכות</strong></a>
                 </div>

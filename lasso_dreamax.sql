@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jul 01, 2013 at 11:06 AM
+-- Generation Time: Jul 02, 2013 at 05:13 PM
 -- Server version: 5.5.16
 -- PHP Version: 5.3.8
 
@@ -417,17 +417,16 @@ CREATE TABLE IF NOT EXISTS `ld_filters` (
 --
 
 INSERT INTO `ld_filters` (`id`, `cat_id`, `hotel_id`, `title`, `description`, `pos`, `added_date`, `status`, `home`, `site`, `note`) VALUES
-(1, 2, 0, 'A.', '', 5, '2013-06-26 20:49:35', 1, 1, 0, ''),
+(1, 2, 0, 'A.C', '', 5, '2013-06-26 20:49:35', 1, 1, 0, ''),
 (2, 2, 0, 'Refrigerator', '', NULL, '2013-06-26 20:49:56', 1, 1, 1, ''),
 (3, 2, 0, 'T.V', '', NULL, '2013-06-26 20:50:10', 1, 1, 1, ''),
-(4, 1, 0, 'jaipur', '', NULL, '2013-06-26 20:50:22', 1, 0, 1, ''),
-(5, 4, 0, 'Pool Side', '', 2, '2013-06-26 20:50:42', 1, 1, 0, ''),
-(6, 4, 0, 'Mountain View', '', NULL, '2013-06-26 20:50:57', 1, 0, 1, ''),
-(7, 1, 0, 'jaipur', '', NULL, '2013-06-27 22:01:47', 1, 0, 1, ''),
-(8, 1, 0, 'asdasd', 'asd', NULL, '2013-06-27 22:13:27', 1, 1, 1, ''),
-(9, 3, 0, 'North', 'this is test north area', NULL, '2013-06-27 22:40:26', 1, 1, 1, 'this is test note in the hotel model?'),
-(10, 3, 0, 'South', 'South', NULL, '2013-06-30 23:18:44', 1, 1, 0, 'nothing'),
-(11, 3, 0, 'West', 'West', NULL, '2013-06-30 23:20:23', 1, 0, 1, '');
+(4, 1, 0, 'test2', '', 2, '2013-06-26 20:50:22', 1, 0, 1, ''),
+(5, 4, 0, 'Pool Side', '', 1, '2013-06-26 20:50:42', 1, 1, 0, ''),
+(6, 4, 0, 'Mountain View', '', 2, '2013-06-26 20:50:57', 1, 0, 1, ''),
+(7, 1, 0, 'jaipur', '', 1, '2013-06-27 22:01:47', 1, 0, 1, ''),
+(9, 3, 0, 'North', 'this is test north area', 3, '2013-06-27 22:40:26', 1, 1, 1, 'this is test note in the hotel model?'),
+(10, 3, 0, 'South', 'South', 2, '2013-06-30 23:18:44', 1, 1, 0, 'nothing'),
+(11, 3, 0, 'West', 'West', 1, '2013-06-30 23:20:23', 1, 0, 1, '');
 
 -- --------------------------------------------------------
 
@@ -467,6 +466,11 @@ CREATE TABLE IF NOT EXISTS `ld_hotels` (
   `name` varchar(255) NOT NULL,
   `description` varchar(5000) NOT NULL,
   `avatar` varchar(255) DEFAULT '0',
+  `capacity` int(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `phone` int(20) DEFAULT NULL,
+  `website` varchar(255) DEFAULT NULL,
+  `summary` varchar(2000) DEFAULT NULL,
   `street` varchar(255) DEFAULT '0',
   `city` varchar(255) DEFAULT '0',
   `address` varchar(1024) DEFAULT '0',
@@ -476,15 +480,17 @@ CREATE TABLE IF NOT EXISTS `ld_hotels` (
   `other` varchar(1024) DEFAULT '0',
   `status` varchar(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `ld_hotels`
 --
 
-INSERT INTO `ld_hotels` (`id`, `user_id`, `name`, `description`, `avatar`, `street`, `city`, `address`, `state`, `country`, `album_id`, `other`, `status`) VALUES
-(1, 0, '5 Star', 'this is test description in the htoel description', 'avatar/73825073_57.jpg', 'test street', 'Test City', 'test Address', 'Test State', '102', 1, '11', '0'),
-(2, 0, '3 star', 'test desc', 'avatar/52160645_53.jpg', 'test street', 'Test City', 'test address', 'Test State', '2', 2, '1', '1');
+INSERT INTO `ld_hotels` (`id`, `user_id`, `name`, `description`, `avatar`, `capacity`, `email`, `phone`, `website`, `summary`, `street`, `city`, `address`, `state`, `country`, `album_id`, `other`, `status`) VALUES
+(1, 0, '5 Star', 'this is test description in the htoel description', 'avatar/73825073_57.jpg', NULL, 'asdasdj@asd.com', 1412327744, 'http://www.google.com', 'this is test summary nothing likks asqwensa askhsfn', 'west', 'Test City', 'test Address', 'Test State', '102', 1, '11', '1'),
+(2, 0, '3 star', 'test desc', 'avatar/52160645_53.jpg', NULL, 'test@testing.com', 232444445, 'http://www.yahoo.com', 'this is thestsa ;orem ipsum dummy text', 'north', 'Test City', 'test address', 'Test State', '2', 2, '1', '1'),
+(3, 0, '2 star', 'test', 'avatar/41586304_437789_4utpstg.jpg', NULL, 'bingp@gmail.com', 98989897, 'http://www.rediff.com', 'lorwen soaifh ashosad hsaodih soadhsaod bzxkcnxzoi sahoasidhas ashdioashd aoshdasidh asodhasidh asodhasdo sadasohdsaoidhas dohsaidh', 'west', 'jaipur', 'thi is asihf sadoash', 'rajasthan', '102', 2, '42', '1'),
+(4, 0, '22', '22', 'avatar/48202515_16.JPG', 89, 'teas@teast.com', 1234567890, 'http://www.google.com', 'thaskahs asodhas asldkhasiodas asodhaskdh asodkhasodhas dasodiasndoashd asodhasoidhaso asodhasodk asdoiashd', 'west', 'jaipur', 'this is test adress', 'rajasthan', '102', 21, '11', '1');
 
 -- --------------------------------------------------------
 
@@ -495,18 +501,39 @@ INSERT INTO `ld_hotels` (`id`, `user_id`, `name`, `description`, `avatar`, `stre
 CREATE TABLE IF NOT EXISTS `ld_hotel_filters` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `hotel_id` int(11) NOT NULL,
-  `filter_id` varchar(255) NOT NULL,
+  `filter_id` int(11) NOT NULL,
   `status` enum('1','0') DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=60 ;
 
 --
 -- Dumping data for table `ld_hotel_filters`
 --
 
 INSERT INTO `ld_hotel_filters` (`id`, `hotel_id`, `filter_id`, `status`) VALUES
-(1, 1, '1,5,2,3', '1'),
-(2, 2, '6,5', '1');
+(5, 5, 5, '1'),
+(26, 8, 3, '1'),
+(27, 8, 4, '1'),
+(28, 8, 5, '1'),
+(29, 8, 10, '1'),
+(30, 8, 11, '1'),
+(43, 1, 2, '1'),
+(44, 1, 3, '1'),
+(45, 1, 6, '1'),
+(46, 1, 7, '1'),
+(47, 2, 1, '1'),
+(48, 2, 2, '1'),
+(49, 2, 3, '1'),
+(50, 2, 6, '1'),
+(51, 3, 2, '1'),
+(52, 3, 5, '1'),
+(53, 3, 7, '1'),
+(54, 3, 10, '1'),
+(55, 3, 11, '1'),
+(56, 4, 1, '1'),
+(57, 4, 2, '1'),
+(58, 4, 3, '1'),
+(59, 4, 11, '1');
 
 -- --------------------------------------------------------
 

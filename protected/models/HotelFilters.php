@@ -11,6 +11,7 @@
  */
 class HotelFilters extends CActiveRecord
 {
+    public $categoryIds;
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -53,7 +54,11 @@ class HotelFilters extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-                    'hotel' => array(self::HAS_MANY, 'Hotels', 'hotel_id'),
+                    'hotel' => array(self::HAS_MANY, 'Hotels', 'id'),
+//                    'filtr'=>array(self::HAS_MANY, 'Filters', 'filter_id'),
+//                    'tags' => array(self::MANY_MANY, 'Filters', 'ld_hotel_filters(filter_id,hotel_id)'),
+//                      'filter' => array(self::MANY_MANY, 
+//                            'Filters', 'ld_hotel_filters(hotel_id,filter_id)','index'=>'id'),
 		);
 	}
 
@@ -97,4 +102,38 @@ class HotelFilters extends CActiveRecord
 			'criteria'=>$criteria,
 		));
         }
+//        public function afterFind()
+//        {
+//	$this->categoryIds = array_keys($this->filter);
+//        parent::afterFind();
+//        }
+        public function getunserials($id){
+        
+        
+        $keys = array_keys($id);
+
+        $criteria = new CDbCriteria();
+ 
+        // $criteria->compare((str_getcsv("filter_id",",")),implode(",",$keys),true);
+        if ($keys) {
+                 
+                     $criteria2 = new CDbCriteria();
+                    foreach($keys as $c) {
+                $criteria2->compare($this->filter_id,$c, "OR");
+                //$criteria2->compare(str_getcsv($this->filter_id,","),$c, "OR");
+        } 
+        $criteria->mergeWith($criteria2);
+
+//                      $criteria->addInCondition($fil,$keys);
+                 
+                  }
+        foreach ($id as $filteringCriteria=>$value) {
+            
+        $hotelfilter = HotelFilters::model()->find(array('filter_id'=> $filteringCriteria));
+        $data = explode(',', $fil->filter_id);
+        
+        }
+//                unserialize( $hotelfilter->filter_id);
+       return $data;
+    }
 }

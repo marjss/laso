@@ -108,12 +108,18 @@ class AdminController extends Controller
                                  if($model->save(false)){
                                      
                                      $hotel_id = $model->id;
-                                     if(isset($_POST['HotelFilters']['filter_id'])){
-                                          
-                                            $hotelfilter->hotel_id = $model->id;
-                                            $hotelfilter->filter_id=implode(',',$_POST['HotelFilters']['filter_id']);
+                                     if(isset($_POST['HotelFilters']['tags'])){
+                                            foreach($_POST['HotelFilters']['tags'] as $fil){
+                                                $hotelfilter = new HotelFilters;
+                                                $hotelfilter->hotel_id = $model->id;
+                                                $hotelfilter->filter_id = $fil;
+                                                $hotelfilter->save(false);
+                                            }
+                                            
+                                            
+                                            //$hotelfilter->filter_id=implode(',',$_POST['HotelFilters']['filter_id']);
 //                                                $hotelfilter->filter_id = serialize($_POST['HotelFilters']['filter_id']);
-                                                        $hotelfilter->save(false);
+                                                        
 
                                      }
                                      
@@ -139,10 +145,10 @@ class AdminController extends Controller
 	public function actionUpdate($id)
 	{
             $this->layout='control_panel';
-		$model=$this->loadModel($id);
+		$model=  Hotels::model()->findByPk($id);
                 $data = explode(',',HotelFilters::model()->findByAttributes(array('hotel_id'=>$id))->filter_id);
                 $filter=  HotelFilters::model()->findByAttributes(array('hotel_id'=>$id));
-                $filter->filter_id=explode(',',$filter->filter_id);
+                
                 // Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
                if(isset($_POST['Hotels']))
@@ -177,15 +183,15 @@ class AdminController extends Controller
 				}else{ $model->avatar = $avtarimage;	}
                                  if($model->save(false)){
                                      $hotel_id = $model->id;
-                                     if(isset($_POST['HotelFilters']['filter_id'])){
-                                          
-                                            $filter->hotel_id = $model->id;
-                                            $filter->filter_id=implode(',',$_POST['HotelFilters']['filter_id']);
-//                                                $hotelfilter->filter_id = serialize($_POST['HotelFilters']['filter_id']);
-                                                        $filter->save(false);
-
-                                     }
-                                     
+                                      if(isset($_POST['Hotels']['categoryIds'])){
+                                          HotelFilters::model()->deleteAllByAttributes(array('hotel_id'=>$hotel_id));
+                                            foreach($_POST['Hotels']['categoryIds'] as $fil){
+                                                $hotelfilter = new HotelFilters; 
+                                                $hotelfilter->hotel_id = $model->id;
+                                                $hotelfilter->filter_id = $fil;
+                                                $hotelfilter->save(false);
+                                            }
+                                      }
                                  Yii::app()->user->setFlash('success', "Success!.");
 				$this->redirect(array('admin','id'=>$model->id));
                             } else {Yii::app()->user->setFlash('error', "Oh! Please try again."); }

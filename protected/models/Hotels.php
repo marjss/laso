@@ -9,6 +9,10 @@
  * @property string $name
  * @property string $description
  * @property string $avatar
+ * @property string $email
+ * @property integer $phone 
+ * @property string $website
+ * @property string $summary
  * @property string $street
  * @property string $city
  * @property string $address
@@ -20,6 +24,7 @@
  */
 class Hotels extends CActiveRecord
 {
+     public $categoryIds;
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -47,14 +52,17 @@ class Hotels extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('name, description', 'required'),
-			array('id, user_id, album_id', 'numerical', 'integerOnly'=>true),
+			array('id, user_id, album_id,phone,capacity', 'numerical', 'integerOnly'=>true),
 			array('name, avatar, street, city, state, country', 'length', 'max'=>255),
 			array('description', 'length', 'max'=>5000),
 			array('address, other', 'length', 'max'=>1024),
+                        array('summary', 'length', 'max'=>2000),
 			array('status', 'length', 'max'=>11),
+                        array('email','email'),
+                        array('website', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, user_id, name, description, avatar, street, city, address, state, country, album_id, other, status', 'safe', 'on'=>'search'),
+			array('id, user_id, name,capacity, description, avatar,phone,website,email,summary, street, city, address, state, country, album_id, other, status', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -68,6 +76,8 @@ class Hotels extends CActiveRecord
 		return array(
 //                    'feature' => array(self::HAS_MANY, 'Filters', 'hotel_id'),
                     'gallery' => array(self::HAS_MANY, 'Gallery', 'album_id'),
+                    'filter' => array(self::MANY_MANY, 
+                            'Filters', 'ld_hotel_filters(hotel_id,filter_id)','index'=>'id'),
 		);
 	}
 
@@ -82,6 +92,11 @@ class Hotels extends CActiveRecord
 			'name' => 'Name',
 			'description' => 'Description',
 			'avatar' => 'Avatar',
+                        'capacity'=>'Capacity',
+                        'phone' => 'Phone',
+                        'website' => 'Web Address',
+                        'summary' => 'Summary',
+                        'email' => 'Email',
 			'street' => 'Street',
 			'city' => 'City',
 			'address' => 'Address',
@@ -92,7 +107,11 @@ class Hotels extends CActiveRecord
 			'status' => 'Status',
 		);
 	}
-
+public function afterFind()
+        {
+	$this->categoryIds = array_keys($this->filter);
+        parent::afterFind();
+        }
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
@@ -109,6 +128,11 @@ class Hotels extends CActiveRecord
 		$criteria->compare('name',$this->name,true);
 		$criteria->compare('description',$this->description,true);
 		$criteria->compare('avatar',$this->avatar,true);
+                $criteria->compare('capacity',$this->capacity,true);
+                $criteria->compare('phone',$this->phone,true);
+                $criteria->compare('website',$this->website,true);
+                $criteria->compare('email',$this->email,true);
+                $criteria->compare('summary',$this->summary,true);
 		$criteria->compare('street',$this->street,true);
 		$criteria->compare('city',$this->city,true);
 		$criteria->compare('address',$this->address,true);
@@ -136,19 +160,29 @@ class Hotels extends CActiveRecord
         /**
          * The filter function to display the filtered hotels choosen by the users
          */
-        public function hotsearch($id)
-	{       
-        $criteria = new CDbCriteria;
-        if ($id) {
-        $criteria2 = new CDbCriteria;
-        foreach ($id as $filteringCriteria=>$value) {
-            $filtermodel= HotelFilters::model()->findByAttributes(array('filter_id'=>$filteringCriteria));
-            $uid = $filtermodel['hotel_id']; 
-            $criteria2->compare('id', $uid, false, 'OR');
-        }
-        $criteria->mergeWith($criteria2);
+       public function hotsearch($id)
+	{ 
+     $criteria = new CDbCriteria;
+     if ($id) {
+      $criteria2 = new CDbCriteria;
+      $filteringCriteria =  array_keys($id);
+      foreach ($filteringCriteria as $filt){
+           $filtermodel= HotelFilters::model()->findAllByAttributes(array('filter_id'=>$filt));
+           foreach($filtermodel as $filter){
+            $uid = $filter->hotel_id; 
+            $criteria2->compare('id', $uid,true,'OR');
+            }
+         }
+         return new CActiveDataProvider('hotels', array('criteria' => $criteria2,'pagination'=>array('pagesize'=>9)));
     }
-    return new CActiveDataProvider($this, array('criteria' => $criteria,'pagination'=>array('pagesize'=>9)));
+    
+}
+public function getCompare($id){
+    foreach ($id as $filt){
+           $criteria=array('condition'=>'id='.$filt);
+     
+            }
+          return new CActiveDataProvider($this, array('criteria' => $criteria,'pagination'=>array('pagesize'=>9)));  
 }
 
 // Get Area or Zone

@@ -68,7 +68,8 @@ class Filters extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 //			'hotel' => array(self::HAS_MANY, 'Hotels', 'hotel_id'),
-                        'cat'=>array(self::HAS_ONE,'Categories','cat_id')
+                        'cat'=>array(self::HAS_ONE,'Categories','cat_id'),
+                        'filter' => array(self::HAS_MANY, 'HotelFilters', 'filter_id'),
 		);
 	}
 
@@ -118,6 +119,8 @@ class Filters extends CActiveRecord
         public function getfilters($id){
             $criteria=new CDbCriteria;
             $criteria->condition = 'cat_id =' .$id ;
+            $criteria->order = 'home';
+            
 //            $criteria->compare('title',$this->title);
             return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

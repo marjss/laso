@@ -114,20 +114,62 @@ class HotelsController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
+            $this->layout='control_panel';
 		$model=$this->loadModel($id);
-
-		// Uncomment the following line if AJAX validation is needed
+                $data = explode(',',HotelFilters::model()->findByAttributes(array('hotel_id'=>$id))->filter_id);
+//                $filter=  HotelFilters::model()->findByAttributes(array('hotel_id'=>$id));
+                
+                // Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['Hotels']))
-		{
+               if(isset($_POST['Hotels']))
+		{                          
+                         $avtarimage = $model->avatar;
 			$model->attributes=$_POST['Hotels'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+                        if($_FILES['Hotels']['name']['avatar'] != '')
+			{ 
+                            if($_POST['imageview'] != 1){
+                            $model->avatar = CUploadedFile::getInstanceByName('Hotels[avatar]');
+                                    if ($model->avatar instanceof CUploadedFile) {
+                                                $rand = rand(1,99999999);
+						$filename = $this->avatarPath .'/'.  $rand . '_' . $_FILES['Hotels']['name']['avatar'];
+						$thumbfilename = $this->avatarPath .'/thumb/'.  $rand . '_' . $_FILES['Hotels']['name']['avatar'];
+//						echo $filename;die;
+						$model->avatar->saveAs($filename);
+						copy($filename,$thumbfilename);
+						list($width, $height, $type, $attr) = getimagesize($filename);
+						$image = Yii::app()->image->load($filename);
+						$image->resize(250, 290,Image::HEIGHT);
+						$image->save();
+						$image = Yii::app()->image->load($thumbfilename);
+						$image->resize(150, 150);
+						$image->save();
+						
+						$model->avatar = $filename;
+					}
+                                    }else{
+                                        Yii::app()->user->setFlash('error', "Please remove the avatar image first, before new avatar image upload.");
+                                       $this->redirect(array('update','id'=>$model->id));
+                                    }   
+				}else{ $model->avatar = $avtarimage;	}
+                                 if($model->save(false)){
+                                     $hotel_id = $model->id;
+                                      if(isset($_POST['HotelFilters']['tags'])){
+                                          HotelFilters::model()->deleteAllByAttributes(array('hotel_id'=>$hotel_id));
+                                            foreach($_POST['HotelFilters']['tags'] as $fil){
+                                                $hotelfilter = new HotelFilters; 
+                                                $hotelfilter->hotel_id = $model->id;
+                                                $hotelfilter->filter_id = $fil;
+                                                $hotelfilter->save(false);
+                                            }
+                                      }
+                                 Yii::app()->user->setFlash('success', "Success!.");
+				$this->redirect(array('admin','id'=>$model->id));
+                            } else {Yii::app()->user->setFlash('error', "Oh! Please try again."); }
+				$this->redirect(array('admin','id'=>$model->id));
 		}
 
 		$this->render('update',array(
-			'model'=>$model,
+			'model'=>$model,'filter'=>$filter,'data'=>$data
 		));
 	}
 
@@ -203,70 +245,18 @@ class HotelsController extends Controller
             $this->layout='compare';
             $arra =  array();
             $arra = $_POST['ids'];
-            foreach( $arra as $id){
-                $criteria = new CDbCriteria;
-                $criteria->condition = 'id='.$id;
-                $dataProvider =hotels::model()->find($criteria);
-//            $dataProvider=new CArrayDataProvider($rawData,array(
-////                         'criteria' => array(
-////                        'with' => 'myRelated',
-////                        'together' => true,
-////                        'condition' => 'id=' .$id,
-////                    ),
-//                    'pagination' => false,
-//                        //array(pageSize'=>100),
-//            ));
-            
-            }
-           
-           /** $columnsArray = array(
-                        array(            
-                                'name'=>'',
-                                'type'=>'raw',
-                                'value'=>'$data->name',
-                        ),
-                        array(    
-                                'header'=>Yii::t('app', 'Product A'),
-                                'type'=>'raw',
-                                'htmlOptions'=>array('style'=>'text-align: center'),
-                                'value'=>'$data->name',
-                        ),
-                        array(            
-                                'header'=>Yii::t('app', 'Product B'),
-                                'type'=>'raw',
-                                'htmlOptions'=>array('style'=>'text-align: center'),
-                                'value'=>'$data->id',
-                        )
-                );
-                
-                $comparisonDataProvider=new CActiveDataProvider('hotels',array(
-                         'criteria' => array(
-//                        'with' => 'myRelated',
-//                        'together' => true,
-//                        'condition' => 'user_id=' . Yii::app()->user->id,
-                    ),
-                    'pagination' => false,
-                        //array(pageSize'=>100),
-                ));
-
-                
-                $dataProvider=new CActiveDataProvider('hotels',array(
-                        'criteria'=>array(
-//                                'condition'=>'comparison_spec=0',
-//                                'order'=>'sortorder ASC',
-                        ),
-                ));
-                */
-                $this->render('compare',array(
+            $dataProvider = Hotels::model()->getCompare($arra);
+            $this->render('compare',array(
                         'product'=>hotels::model()->FindByPk(1),
                         'comparisonDataProvider'=>$comparisonDataProvider,
-                        'dataProvider'=>$dataProvider,
+                        'dataProvider'=>$arra,
                         'columnsArray'=>$columnsArray,
                 ));
-
+          
             
-            
-        }
+        
+        
+            }
         protected function gridDataName($data,$row)
      {
 //            echo $row;
