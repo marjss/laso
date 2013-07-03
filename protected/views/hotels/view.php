@@ -26,7 +26,7 @@ $this->menu=array(
 		'name',
 		'description',
 		'avatar',
-		'area',
+		'street',
 		'city',
 		'address',
 		'state',

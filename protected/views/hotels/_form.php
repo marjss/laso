@@ -62,9 +62,9 @@ input[type="radio"], input[type="checkbox"]{margin-left: 21px;margin-right: -11p
   <input type="hidden" name="imageview" id="imageview" value="<?php if($model->avatar != ''){ echo 1; }else{ echo 0; } ?>" />
         <tr>
 	<div class="row">
-		<td><?php echo $form->labelEx($model,'area'); ?></td>
-		<td><?php echo $form->dropDownList($model,'area',$model->getAreas(),array('empty'=>'Select Area'),array('class'=>'selectInput')); ?></td>
-		<td><?php echo $form->error($model,'area'); ?></td>
+		<td><?php echo $form->labelEx($model,'Area'); ?></td>
+		<td><?php echo $form->dropDownList($model,'street',$model->getAreas(),array('empty'=>'Select Area'),array('class'=>'selectInput')); ?></td>
+		<td><?php echo $form->error($model,'street'); ?></td>
 	</div>
         </tr>
         <tr>

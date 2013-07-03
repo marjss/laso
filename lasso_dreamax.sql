@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jul 03, 2013 at 05:02 PM
+-- Generation Time: Jul 02, 2013 at 05:13 PM
 -- Server version: 5.5.16
 -- PHP Version: 5.3.8
 
@@ -471,7 +471,7 @@ CREATE TABLE IF NOT EXISTS `ld_hotels` (
   `phone` int(20) DEFAULT NULL,
   `website` varchar(255) DEFAULT NULL,
   `summary` varchar(2000) DEFAULT NULL,
-  `area` varchar(255) DEFAULT '0',
+  `street` varchar(255) DEFAULT '0',
   `city` varchar(255) DEFAULT '0',
   `address` varchar(1024) DEFAULT '0',
   `state` varchar(255) DEFAULT '0',
@@ -486,7 +486,7 @@ CREATE TABLE IF NOT EXISTS `ld_hotels` (
 -- Dumping data for table `ld_hotels`
 --
 
-INSERT INTO `ld_hotels` (`id`, `user_id`, `name`, `description`, `avatar`, `capacity`, `email`, `phone`, `website`, `summary`, `area`, `city`, `address`, `state`, `country`, `album_id`, `other`, `status`) VALUES
+INSERT INTO `ld_hotels` (`id`, `user_id`, `name`, `description`, `avatar`, `capacity`, `email`, `phone`, `website`, `summary`, `street`, `city`, `address`, `state`, `country`, `album_id`, `other`, `status`) VALUES
 (1, 0, '5 Star', 'this is test description in the htoel description', 'avatar/73825073_57.jpg', NULL, 'asdasdj@asd.com', 1412327744, 'http://www.google.com', 'this is test summary nothing likks asqwensa askhsfn', 'west', 'Test City', 'test Address', 'Test State', '102', 1, '11', '1'),
 (2, 0, '3 star', 'test desc', 'avatar/52160645_53.jpg', NULL, 'test@testing.com', 232444445, 'http://www.yahoo.com', 'this is thestsa ;orem ipsum dummy text', 'north', 'Test City', 'test address', 'Test State', '2', 2, '1', '1'),
 (3, 0, '2 star', 'test', 'avatar/41586304_437789_4utpstg.jpg', NULL, 'bingp@gmail.com', 98989897, 'http://www.rediff.com', 'lorwen soaifh ashosad hsaodih soadhsaod bzxkcnxzoi sahoasidhas ashdioashd aoshdasidh asodhasidh asodhasdo sadasohdsaoidhas dohsaidh', 'west', 'jaipur', 'thi is asihf sadoash', 'rajasthan', '102', 2, '42', '1'),

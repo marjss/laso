@@ -25,7 +25,7 @@
 	<?php echo CHtml::encode($data->avatar); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('area')); ?>:</b>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('street')); ?>:</b>
 	<?php echo CHtml::encode($data->street); ?>
 	<br />
 

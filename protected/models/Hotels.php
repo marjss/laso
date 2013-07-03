@@ -13,7 +13,7 @@
  * @property integer $phone 
  * @property string $website
  * @property string $summary
- * @property string $area
+ * @property string $street
  * @property string $city
  * @property string $address
  * @property string $state
@@ -53,7 +53,7 @@ class Hotels extends CActiveRecord
 		return array(
 			array('name, description', 'required'),
 			array('id, user_id, album_id,phone,capacity', 'numerical', 'integerOnly'=>true),
-			array('name, avatar, area, city, state, country', 'length', 'max'=>255),
+			array('name, avatar, street, city, state, country', 'length', 'max'=>255),
 			array('description', 'length', 'max'=>5000),
 			array('address, other', 'length', 'max'=>1024),
                         array('summary', 'length', 'max'=>2000),
@@ -62,7 +62,7 @@ class Hotels extends CActiveRecord
                         array('website', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, user_id, name,capacity, description, avatar,phone,website,email,summary, area, city, address, state, country, album_id, other, status', 'safe', 'on'=>'search'),
+			array('id, user_id, name,capacity, description, avatar,phone,website,email,summary, street, city, address, state, country, album_id, other, status', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -97,7 +97,7 @@ class Hotels extends CActiveRecord
                         'website' => 'Web Address',
                         'summary' => 'Summary',
                         'email' => 'Email',
-			'area' => 'Area',
+			'street' => 'Street',
 			'city' => 'City',
 			'address' => 'Address',
 			'state' => 'State',
@@ -133,7 +133,7 @@ public function afterFind()
                 $criteria->compare('website',$this->website,true);
                 $criteria->compare('email',$this->email,true);
                 $criteria->compare('summary',$this->summary,true);
-		$criteria->compare('area',$this->area,true);
+		$criteria->compare('street',$this->street,true);
 		$criteria->compare('city',$this->city,true);
 		$criteria->compare('address',$this->address,true);
 		$criteria->compare('state',$this->state,true);

@@ -241,30 +241,16 @@ class HotelsController extends Controller
 		}
 	}
         public function actionCompare(){
-            $filters = Filters::model()->findAll();
+            
             $this->layout='compare';
             $arra =  array();
             $arra = $_POST['ids'];
             $dataProvider = Hotels::model()->getCompare($arra);
-            foreach ($dataProvider as $id){
-            $model = Hotels::model()->findByPk($id);}
-            $modelfilter = HotelFilters::model()->findAllByAttributes(array('hotel_id'=>$id)); 
-           foreach($modelfilter as $modelfil) 
-              if($modelfil->filter_id == $filter->id){
-                            $img ='<img src="'.Yii::app()->request->baseUrl.'/images/v_icon.png" alt="Yes" />'; 
-                        }else if($modelfil->filter_id != $filter->id){ $img ='<img src="'. Yii::app()->request->baseUrl.'/images/x_icon.png" alt="No" />';  
-                      
-                         }
-                  
-            
-            
-            
             $this->render('compare',array(
                         'product'=>hotels::model()->FindByPk(1),
                         'comparisonDataProvider'=>$comparisonDataProvider,
                         'dataProvider'=>$arra,
                         'columnsArray'=>$columnsArray,
-                        
                 ));
           
             
