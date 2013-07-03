@@ -31,7 +31,7 @@ $this->menu=array(
                      'type'=>'image',
                      'value'=>Yii::app()->baseUrl.'/'.$model->avatar
 			    ),
-		'street',
+		'area',
 		'city',
                 'state'
 	),
